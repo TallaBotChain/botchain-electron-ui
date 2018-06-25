@@ -2,10 +2,23 @@
 // import { start as startTxObserver } from './txObserverActions';
 // import TxStatus from '../helpers/TxStatus'
 // // import {reset} from 'redux-form';
+import KeyTools from '../blockchain/KeyTools';
+
+const keyTools = new KeyTools("https://kovan.infura.io/quylRadtDHfbMF9rF15R"); // TODO: config for rpc
 
 export const WalletActions = {
   SET_WALLET_ATTRIBUTE: 'SET_WALLET_ATTRIBUTE',
   RESET_STATE: 'WALLET_RESET_STATE'
+}
+
+export const generateMnemonic = () => {
+  let mnemonic = keyTools.generateMnemonic();
+  return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'mnemonic', value: mnemonic };
+}
+
+export const saveMnemonic = (password) => (dispatch, getState) => {
+  let state = getState();
+  keyTools.applyMnemonic(state.wallet.mnemonic,password);
 }
 
 export const setError = (error) => {
