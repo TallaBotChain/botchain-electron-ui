@@ -1,16 +1,20 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import keyTools from '../blockchain/KeyTools';
 
 
 const WalletRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      //TODO use KeyTools for  
-      false ? (
+      keyTools.walletReady  ? (
         <Component {...props} />
       ) : (
-          <Redirect to="/" />
+          keyTools.privateKeyPresent ? (
+          <Redirect to="/wallet/unlock" />
+          ) : (
+          <Redirect to="/wallet/missing" />
+          )
         )
     }
   />

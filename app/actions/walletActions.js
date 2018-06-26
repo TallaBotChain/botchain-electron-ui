@@ -2,13 +2,22 @@
 // import { start as startTxObserver } from './txObserverActions';
 // import TxStatus from '../helpers/TxStatus'
 // // import {reset} from 'redux-form';
-import KeyTools from '../blockchain/KeyTools';
-
-const keyTools = new KeyTools("https://kovan.infura.io/quylRadtDHfbMF9rF15R"); // TODO: config for rpc
+import keyTools from '../blockchain/KeyTools';
+import { push } from "react-router-redux";
 
 export const WalletActions = {
   SET_WALLET_ATTRIBUTE: 'SET_WALLET_ATTRIBUTE',
   RESET_STATE: 'WALLET_RESET_STATE'
+}
+
+export const unlockWallet = (password) => (dispatch) => {
+  try {
+    keyTools.decryptAndLoad(password);
+    dispatch( setError(null) );
+    dispatch( push('/wallet') );
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
 }
 
 export const generateMnemonic = () => {
@@ -19,6 +28,7 @@ export const generateMnemonic = () => {
 export const saveMnemonic = (password) => (dispatch, getState) => {
   let state = getState();
   keyTools.applyMnemonic(state.wallet.mnemonic,password);
+  dispatch( push('/wallet') );
 }
 
 export const setError = (error) => {

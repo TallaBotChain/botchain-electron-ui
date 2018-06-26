@@ -4,9 +4,28 @@ import bip39 from 'bip39'
 import createHash from 'create-hash'
 
 class KeyTools {
+
+  static _instance = null;
+
+  static get instance() {
+    if(! KeyTools._instance) KeyTools._instance = new KeyTools("https://kovan.infura.io/quylRadtDHfbMF9rF15R"); // TODO: config
+    return KeyTools._instance;
+  }
+
   constructor(rpcUrl) {
     this.web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
-    if( this.savedPK ) this.privateKey = this.savedPK;
+  }
+
+  get walletReady() {
+    return this.privateKeyPresent && this.privateKeyUnlocked;
+  }
+
+  get privateKeyPresent() {
+    return ! (localStorage.getItem(this.walletStorageKey) === null);
+  }
+
+  get privateKeyUnlocked() {
+    return this.web3.eth.accounts.wallet.length > 0;
   }
 
   get address() {
@@ -47,7 +66,7 @@ class KeyTools {
   }
 
   decryptAndLoad(password) {
-    this.web3.eth.accounts.wallet.load(password, this.walletStorageKey);
+    return this.web3.eth.accounts.wallet.load(password, this.walletStorageKey);
   }
 }
-export default KeyTools;
+export default KeyTools.instance;
