@@ -2,6 +2,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
+import WalletRoute from './components/WalletRoute';
+
 import VotingPage from './containers/VotingPage';
 import SettingsPage from './containers/SettingsPage';
 import WalletPage from './containers/WalletPage';
@@ -13,12 +15,12 @@ import ImportWalletPage from './containers/ImportWalletPage';
 export default () => (
   <App>
     <Switch>
-      <Route exact path="/voting" component={VotingPage} />
+      <WalletRoute exact path="/voting" component={VotingPage} />
       <Route exact path="/" component={NoWalletPage} />
       <Route exact path="/wallet/new" component={CreateWalletPage} />
       <Route exact path="/wallet/import" component={ImportWalletPage} />
-      <Route path="/settings" component={SettingsPage} />
-      <Route path="/wallet" component={WalletPage} />
+      <WalletRoute path="/settings" component={SettingsPage} />
+      <WalletRoute path="/wallet" component={WalletPage} />
     </Switch>
   </App>
 );
