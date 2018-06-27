@@ -65,6 +65,12 @@ class KeyTools {
     this.web3.eth.accounts.wallet.save(password, this.walletStorageKey);
   }
 
+  encryptWithNewPassword(current_password, password) {
+    this.decryptAndLoad(current_password)
+    let privateKey = this.web3.eth.accounts.wallet[0].privateKey
+    this.encryptAndSave(privateKey, password)
+  }
+
   decryptAndLoad(password) {
     return this.web3.eth.accounts.wallet.load(password, this.walletStorageKey);
   }

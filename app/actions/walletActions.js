@@ -1,7 +1,7 @@
 // import BotCoin from '../blockchain/BotCoin';
 // import { start as startTxObserver } from './txObserverActions';
 // import TxStatus from '../helpers/TxStatus'
-// // import {reset} from 'redux-form';
+import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import { push } from "react-router-redux";
 
@@ -56,6 +56,17 @@ export const resetTransferState = () => (dispatch) => {
   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferTxId', value: null });
   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferSuccess', value: false });
   dispatch(setError(null))
+}
+
+
+export const updatePassword = (current_password, password, password_confirmation) => (dispatch, getState) => {
+  try {
+    keyTools.encryptWithNewPassword(current_password, password);
+    dispatch(reset('password'));
+    alert("Password was successfully changed!");
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
 }
 
 // export const getBalances = () => (dispatch) => {
