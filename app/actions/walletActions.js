@@ -2,10 +2,33 @@
 // import { start as startTxObserver } from './txObserverActions';
 // import TxStatus from '../helpers/TxStatus'
 // // import {reset} from 'redux-form';
+import keyTools from '../blockchain/KeyTools';
+import { push } from "react-router-redux";
 
 export const WalletActions = {
   SET_WALLET_ATTRIBUTE: 'SET_WALLET_ATTRIBUTE',
   RESET_STATE: 'WALLET_RESET_STATE'
+}
+
+export const unlockWallet = (password) => (dispatch) => {
+  try {
+    keyTools.decryptAndLoad(password);
+    dispatch( setError(null) );
+    dispatch( push('/wallet') );
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
+}
+
+export const generateMnemonic = () => {
+  let mnemonic = keyTools.generateMnemonic();
+  return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'mnemonic', value: mnemonic };
+}
+
+export const saveMnemonic = (password) => (dispatch, getState) => {
+  let state = getState();
+  keyTools.applyMnemonic(state.wallet.mnemonic,password);
+  dispatch( push('/wallet') );
 }
 
 export const setError = (error) => {

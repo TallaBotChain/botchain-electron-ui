@@ -199,8 +199,10 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "bip39": "^2.5.0",
     "devtron": "^1.4.0",
     "electron-debug": "^1.5.0",
+    "ethereumjs-wallet": "^0.6.0",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "immutability-helper": "^2.7.1",
@@ -213,8 +215,11 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-form-validators": "^2.7.1",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.6",
+    "web3": "^1.0.0-beta.34"
   },
   "devEngines": {
     "node": ">=7.x",
