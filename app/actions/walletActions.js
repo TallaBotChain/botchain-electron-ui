@@ -10,6 +10,17 @@ export const WalletActions = {
   RESET_STATE: 'WALLET_RESET_STATE'
 }
 
+export const importMnemonic = (mnemonic,password) => (dispatch) => {
+  console.log("importing mnemonic: ", mnemonic);
+  if(keyTools.isValidMnemonic(mnemonic)) {
+    keyTools.applyMnemonic(mnemonic, password);
+    alert("Successfully imported wallet");
+    dispatch( push('/wallet') );
+  } else {
+    dispatch( setError("Invalid mnemonic") );
+  }
+}
+
 export const unlockWallet = (password) => (dispatch) => {
   try {
     keyTools.decryptAndLoad(password);

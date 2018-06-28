@@ -68,5 +68,9 @@ class KeyTools {
   decryptAndLoad(password) {
     return this.web3.eth.accounts.wallet.load(password, this.walletStorageKey);
   }
+
+  isValidMnemonic(mnemonic) {
+    return bip39.validateMnemonic(mnemonic)
+  }
 }
 export default KeyTools.instance;
