@@ -36,6 +36,10 @@ class KeyTools {
     return bip39.generateMnemonic();
   }
 
+  applyPrivateKey(pk, password) {
+    this.encryptAndSave(this.web3.utils.isHexStrict(pk) ? pk : "0x"+pk, password);
+  }
+
   applyMnemonic(mnemonic, password) {
     console.log("mnemonic: ", mnemonic);
     let pk = this.privateKeyFromMnemonic(mnemonic);

@@ -21,6 +21,19 @@ export const importMnemonic = (mnemonic,password) => (dispatch) => {
   }
 }
 
+export const importPrivateKey = (private_key,password) => (dispatch) => {
+  console.log("importing PK: ", private_key);
+  try {
+    keyTools.applyPrivateKey(private_key, password);
+    alert("Successfully imported private key");
+    console.log("Imported address: ", keyTools.address);
+    dispatch( push('/wallet') );
+  }catch(ex) {
+    dispatch( setError("Invalid private key") );
+  }
+}
+
+
 export const unlockWallet = (password) => (dispatch) => {
   try {
     keyTools.decryptAndLoad(password);
