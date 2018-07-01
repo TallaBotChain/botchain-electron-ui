@@ -32,6 +32,14 @@ class KeyTools {
     return this.web3.eth.accounts.wallet[0].address;
   }
 
+  get privateKey() {
+    return this.web3.eth.accounts.wallet[0].privateKey;
+  }
+
+  encryptedKeystore (password) {
+    return this.web3.eth.accounts.wallet.encrypt(password);
+  }
+
   generateMnemonic() {
     return bip39.generateMnemonic();
   }

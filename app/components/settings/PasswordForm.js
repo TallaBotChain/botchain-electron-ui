@@ -24,7 +24,7 @@ class PasswordForm extends Component {
             required(),
             length({min: 8})
           ]}/>
-        <button className='primary' type="submit">Change</button>
+        <button className='btn btn-default' type="submit">Change</button>
       </form>
     );
   }

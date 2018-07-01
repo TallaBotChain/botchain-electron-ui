@@ -69,6 +69,38 @@ export const updatePassword = (current_password, password, password_confirmation
   }
 }
 
+export const exportWallet = (format, password) => (dispatch ) => {
+  dispatch( setError(null) );
+  try {
+    keyTools.decryptAndLoad(password);
+    let blob = null
+    switch (format) {
+      case 'json':
+        blob = new Blob([JSON.stringify(keyTools.encryptedKeystore(password))], {type: 'application/json'}) 
+        download(blob, "backup.json")
+        break;
+      default:
+        console.log(keyTools.privateKey)
+        blob = new Blob([keyTools.privateKey], {type: 'text/plain'}) 
+        download(blob, "backup.txt")
+        break;
+    }
+    dispatch(reset('export'));
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
+}
+
+const download = (file_blob, file_name) => {
+  var a = window.document.createElement('a');
+  a.href = window.URL.createObjectURL(file_blob);
+  a.download = file_name
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+
 // export const getBalances = () => (dispatch) => {
 //   dispatch(setInProgress(true))
 //   let botCoin = new BotCoin()
