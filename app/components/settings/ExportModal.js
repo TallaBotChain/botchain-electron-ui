@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Alert } from 'react-bootstrap';
 import ExportForm from './ExportForm';
 
 
@@ -13,6 +13,7 @@ export default class ExportModal extends Component {
           <Modal.Title>Export</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
           <ExportForm onSubmit={this.props.export} {...this.props}/>
         </Modal.Body>
         <Modal.Footer>

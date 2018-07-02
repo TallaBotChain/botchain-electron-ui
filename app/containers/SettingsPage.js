@@ -19,6 +19,7 @@ class SettingsPage extends Component {
 
   toggleExportModal = () => {
     this.setState({ show_export_modal: !this.state.show_export_modal });
+    this.props.cleanError();
   }
 
   exportWallet = (values) => {
@@ -26,6 +27,10 @@ class SettingsPage extends Component {
     this.props.exportWallet(values.format, values.password);
   }
 
+  componentDidMount () {
+    this.props.cleanError();
+  }
+ 
 
 
   render() {
@@ -34,8 +39,8 @@ class SettingsPage extends Component {
         <div>
           <h1>Settings</h1>
           <div>
-            {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
             <h3>1. Change Password</h3>
+            {((!this.state.show_export_modal && this.props.wallet.error) ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
             <PasswordForm onSubmit={this.updatePassword} {...this.props} />
             <h3>2. Backup</h3>
             <button className='btn btn-default' type="button" onClick={this.toggleExportModal}>Export Wallet</button>
@@ -60,6 +65,9 @@ const mapDispatchToProps = dispatch => {
     },
     exportWallet: (format, password) => {
       return dispatch(WalletActions.exportWallet(format, password));
+    },
+    cleanError: () => {
+      return dispatch(WalletActions.setError(null));
     }
   }
 }
