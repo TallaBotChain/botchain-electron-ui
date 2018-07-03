@@ -1,7 +1,7 @@
 // import BotCoin from '../blockchain/BotCoin';
 // import { start as startTxObserver } from './txObserverActions';
 // import TxStatus from '../helpers/TxStatus'
-// // import {reset} from 'redux-form';
+import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import { push } from "react-router-redux";
 
@@ -57,6 +57,49 @@ export const resetTransferState = () => (dispatch) => {
   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferSuccess', value: false });
   dispatch(setError(null))
 }
+
+
+export const updatePassword = (current_password, password, password_confirmation) => (dispatch, getState) => {
+  try {
+    keyTools.encryptWithNewPassword(current_password, password);
+    dispatch(reset('password'));
+    alert("Password was successfully changed!");
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
+}
+
+export const exportWallet = (format, password) => (dispatch ) => {
+  dispatch( setError(null) );
+  try {
+    keyTools.decryptAndLoad(password);
+    let blob = null
+    switch (format) {
+      case 'json':
+        blob = new Blob([JSON.stringify(keyTools.encryptedKeystore(password))], {type: 'application/json'}) 
+        download(blob, "backup.json")
+        break;
+      default:
+        console.log(keyTools.privateKey)
+        blob = new Blob([keyTools.privateKey], {type: 'text/plain'}) 
+        download(blob, "backup.txt")
+        break;
+    }
+    dispatch(reset('export'));
+  }catch(ex) {
+    dispatch( setError("Wrong password") );
+  }
+}
+
+const download = (file_blob, file_name) => {
+  var a = window.document.createElement('a');
+  a.href = window.URL.createObjectURL(file_blob);
+  a.download = file_name
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 
 // export const getBalances = () => (dispatch) => {
 //   dispatch(setInProgress(true))
