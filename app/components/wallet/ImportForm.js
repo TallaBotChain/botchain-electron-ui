@@ -57,10 +57,10 @@ ImportForm = reduxForm({
 const selector = formValueSelector('import') // <-- same as form name
 
 ImportForm = connect(
-      state => {
-        const importFormat = selector(state, 'import_format')
-                                 return { importFormat };
-      }
+  state => {
+    const importFormat = selector(state, 'import_format')
+    return { importFormat };
+  }
 )(ImportForm);
 
 export default ImportForm;
