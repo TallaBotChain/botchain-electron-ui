@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap';
 
 export const inputField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => (
   <FormGroup controlId={input.name}>
@@ -10,6 +10,23 @@ export const inputField = ({ input, label, type, meta: { asyncValidating, touche
     {appendComponent}
   </FormGroup>
 )
+
+export const radioField = ({ input, label, type }) => (
+    <Radio {...input}>{label}</Radio>
+)
+
+export const fileField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => {
+  delete input.value
+  return (
+    <FormGroup controlId={input.name}>
+      <ControlLabel>{label}</ControlLabel>
+      <FormControl {...input} type={type} />
+      {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
+      {asyncValidating && (<span>validating...</span>)}
+      {appendComponent}
+    </FormGroup>
+  );
+}
 
 export const textareaField = ({ input, label, readOnly, placeholder, meta: { asyncValidating, touched, error, warning } }) => (
   <div>

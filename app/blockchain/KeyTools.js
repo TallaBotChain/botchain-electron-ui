@@ -46,6 +46,14 @@ class KeyTools {
     this.encryptAndSave(pk, password);
   }
 
+  applyKeystore(json, password) {
+    let keystore = JSON.parse(json);
+    console.log("keystore: ", keystore);
+    this.web3.eth.accounts.wallet.clear();
+    this.web3.eth.accounts.wallet.decrypt(keystore, password);
+    this.web3.eth.accounts.wallet.save(password, this.walletStorageKey);
+  }
+
   privateKeyFromMnemonic(mnemonic) {
     let hdkey = EthereumHDKey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
     let walletPath = "m/44'/60'/0'/0/";

@@ -12,6 +12,7 @@ export const WalletActions = {
 
 export const importMnemonic = (mnemonic,password) => (dispatch) => {
   console.log("importing mnemonic: ", mnemonic);
+  dispatch( setError(null) );
   if(keyTools.isValidMnemonic(mnemonic)) {
     keyTools.applyMnemonic(mnemonic, password);
     alert("Successfully imported wallet");
@@ -24,12 +25,27 @@ export const importMnemonic = (mnemonic,password) => (dispatch) => {
 export const importPrivateKey = (private_key,password) => (dispatch) => {
   console.log("importing PK: ", private_key);
   try {
+    dispatch( setError(null) );
     keyTools.applyPrivateKey(private_key, password);
     alert("Successfully imported private key");
     console.log("Imported address: ", keyTools.address);
     dispatch( push('/wallet') );
   }catch(ex) {
+    console.log(ex);
     dispatch( setError("Invalid private key") );
+  }
+}
+
+export const importKeystore = (json, password) => (dispatch) => {
+  try {
+    dispatch( setError(null) );
+    keyTools.applyKeystore(json, password);
+    alert("Successfully imported JSON backup");
+    console.log("Imported address: ", keyTools.address);
+    dispatch( push('/wallet') );
+  }catch(ex) {
+    console.log(ex);
+    dispatch( setError("Wrong password, unable to decrypt backup") );
   }
 }
 
