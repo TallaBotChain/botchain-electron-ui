@@ -44,10 +44,22 @@ class KeyTools {
     return bip39.generateMnemonic();
   }
 
+  applyPrivateKey(pk, password) {
+    this.encryptAndSave(this.web3.utils.isHexStrict(pk) ? pk : "0x"+pk, password);
+  }
+
   applyMnemonic(mnemonic, password) {
     console.log("mnemonic: ", mnemonic);
     let pk = this.privateKeyFromMnemonic(mnemonic);
     this.encryptAndSave(pk, password);
+  }
+
+  applyKeystore(json, password) {
+    let keystore = JSON.parse(json);
+    console.log("keystore: ", keystore);
+    this.web3.eth.accounts.wallet.clear();
+    this.web3.eth.accounts.wallet.decrypt(keystore, password);
+    this.web3.eth.accounts.wallet.save(password, this.walletStorageKey);
   }
 
   privateKeyFromMnemonic(mnemonic) {
@@ -81,6 +93,10 @@ class KeyTools {
 
   decryptAndLoad(password) {
     return this.web3.eth.accounts.wallet.load(password, this.walletStorageKey);
+  }
+
+  isValidMnemonic(mnemonic) {
+    return bip39.validateMnemonic(mnemonic)
   }
 }
 export default KeyTools.instance;

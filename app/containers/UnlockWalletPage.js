@@ -3,6 +3,8 @@ import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as WalletActions from '../actions/walletActions';
 import UnlockWalletForm from '../components/wallet/UnlockWalletForm';
+import { ButtonToolbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class UnlockWalletPage extends Component {
 
@@ -12,12 +14,14 @@ class UnlockWalletPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className='text-center'>
         <h1>Unlock wallet</h1>
         {( this.props.error ? <Alert bsStyle="danger">{ this.props.error }</Alert> : "" )}
         <UnlockWalletForm onSubmit={ this.submit } {...this.props} />
+        <Link to="/wallet/import" className="btn btn-link">Import wallet</Link>
+        <Link to="/wallet/import" className="btn btn-link">Forgot password?</Link>
       </div>
-      );
+    );
   }
 }
 
