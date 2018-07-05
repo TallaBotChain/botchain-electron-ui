@@ -7,6 +7,7 @@ import WalletRoute from './components/WalletRoute';
 import VotingPage from './containers/VotingPage';
 import SettingsPage from './containers/SettingsPage';
 import WalletEthereumPage from './containers/WalletEthereumPage';
+import WalletBotcoinPage from './containers/WalletBotcoinPage';
 import NoWalletPage from './containers/NoWalletPage';
 import CreateWalletPage from './containers/CreateWalletPage';
 import ImportWalletPage from './containers/ImportWalletPage';
@@ -26,7 +27,7 @@ export default () => (
         <Redirect to="/wallet/ethereum" />
       )} />
       <WalletRoute path="/wallet/ethereum" component={WalletEthereumPage} />
-      <WalletRoute path="/wallet/botcoin" component={WalletEthereumPage} />
+      <WalletRoute path="/wallet/botcoin" component={WalletBotcoinPage} />
     </Switch>
   </App>
 );

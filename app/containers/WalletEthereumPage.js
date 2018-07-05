@@ -20,7 +20,7 @@ class WalletEthereumPage extends Component {
 
 function mapStateToProps(state) {
     return {
-      ethereum: state.ethereum,
+      walletData: state.ethereum,
     };
 }
 

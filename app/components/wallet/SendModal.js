@@ -16,14 +16,14 @@ export default class SendModal extends Component {
           <Modal.Title>Send</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {this.props.ethereum.transferTxId && !this.props.ethereum.transferTxMined ? (
-            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.ethereum.transferTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
+          {this.props.walletData.transferTxId && !this.props.walletData.transferTxMined ? (
+            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.walletData.transferTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
           ) : (
               <div>
-                {this.props.ethereum.transferTxMined && (
-                  <Well>{this.props.ethereum.transferSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
+                {this.props.walletData.transferTxMined && (
+                  <Well>{this.props.walletData.transferSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
-                <h3>Available Balance: {this.props.ethereum.balance} ETH</h3>
+                <h3>Available Balance: {this.props.walletData.balance} {this.props.currencyName}</h3>
                 <SendForm onSubmit={this.handleSubmit} {...this.props} />
               </div>
             )}

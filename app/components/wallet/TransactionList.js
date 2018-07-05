@@ -14,7 +14,7 @@ export default class TransactionList extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.ethereum.transactions.map(
+          {this.props.walletData.transactions.map(
             (tx, i) => (
               <tr key={i}>
                 <td><a href={`${"https://kovan.etherscan.io"}/tx/${tx.tx_id}`} target='_blank'>{tx.tx_id.substring(0,20)}...</a></td>

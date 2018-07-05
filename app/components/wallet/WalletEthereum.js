@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Well, Button } from 'react-bootstrap'
-import ReceiveModal from './ethereum/ReceiveModal';
-import SendModal from './ethereum/SendModal';
-import TransactionList from './ethereum/TransactionList'
+import ReceiveModal from './ReceiveModal';
+import SendModal from './SendModal';
+import TransactionList from './TransactionList'
 import WalletNav from './WalletNav'
 import KeyTools from '../../blockchain/KeyTools'
 
@@ -36,7 +36,7 @@ export default class WalletEthereum extends Component {
           <Well>
             <div className="text-center">
               <h4>Balance</h4>
-              {this.props.ethereum.balance} ETH
+              {this.props.walletData.balance} ETH
             </div>
           </Well>
           <Row className="show-grid">
@@ -51,7 +51,12 @@ export default class WalletEthereum extends Component {
           <TransactionList {...this.props}/>
         </Col>
         <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} />
-        <SendModal show={this.state.show_send_modal} handleClose={this.toggleSendModal} {...this.props} />
+        <SendModal 
+          show={this.state.show_send_modal} 
+          handleClose={this.toggleSendModal}
+          currencyName="ETH"
+          {...this.props}
+        />
       </Row>
     )
   }
