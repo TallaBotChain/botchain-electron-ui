@@ -206,6 +206,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "immutability-helper": "^2.7.1",
+    "qrcode.react": "^0.8.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",

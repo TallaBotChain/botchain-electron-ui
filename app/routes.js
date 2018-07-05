@@ -1,12 +1,12 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import App from './containers/App';
 import WalletRoute from './components/WalletRoute';
 
 import VotingPage from './containers/VotingPage';
 import SettingsPage from './containers/SettingsPage';
-import WalletPage from './containers/WalletPage';
+import WalletEthereumPage from './containers/WalletEthereumPage';
 import NoWalletPage from './containers/NoWalletPage';
 import CreateWalletPage from './containers/CreateWalletPage';
 import ImportWalletPage from './containers/ImportWalletPage';
@@ -22,7 +22,11 @@ export default () => (
       <Route exact path="/wallet/import" component={ImportWalletPage} />
       <Route exact path="/wallet/unlock" component={UnlockWalletPage} />
       <WalletRoute path="/settings" component={SettingsPage} />
-      <WalletRoute path="/wallet" component={WalletPage} />
+      <Route exact path='/wallet' render={() => (
+        <Redirect to="/wallet/ethereum" />
+      )} />
+      <WalletRoute path="/wallet/ethereum" component={WalletEthereumPage} />
+      <WalletRoute path="/wallet/botcoin" component={WalletEthereumPage} />
     </Switch>
   </App>
 );
