@@ -2,6 +2,9 @@ import BotCoin from '../blockchain/BotCoin';
 import { start as startTxObserver } from './txObserverActions';
 import TxStatus from '../utils/TxStatus'
 import {reset} from 'redux-form';
+import keyTools from '../blockchain/KeyTools';
+import axios from 'axios'
+import {remote} from 'electron';
 
 export const BotcoinActions = {
   SET_BOTCOIN_ATTRIBUTE: 'SET_BOTCOIN_ATTRIBUTE',
@@ -40,7 +43,7 @@ export const getBalance = () => (dispatch) => {
   dispatch(setInProgress(true))
   let botCoin = new BotCoin()
   // ethers
-  botCoin.getBalance().then((balance) => {
+  botCoin.getTokenBalance().then((balance) => {
     dispatch(setBallance(botCoin.web3.utils.fromWei(balance, 'ether')))
     dispatch(setInProgress(false))
   }, (error) => {
@@ -58,7 +61,7 @@ export const transfer = (to, amount) => async (dispatch) => {
   dispatch(setInProgress(true))
   let botCoin = new BotCoin()
   try {
-    let txId = await botCoin.transferEther(to, amount);
+    let txId = await botCoin.transferTokens(to, amount);
     dispatch( { type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferTxId', value: txId });
     dispatch(startTxObserver(txId, transferTxMined));
   }catch(e) {
@@ -75,13 +78,27 @@ const transferTxMined = (status) => (dispatch) => {
   if(status == TxStatus.SUCCEED){
     dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferSuccess', value: true });
     dispatch(getBalance())
+    dispatch(getTransactionList())
   } else {
     dispatch( setError("Transfer transaction failed." ));
   }
 }
 
 export const getTransactionList = () => (dispatch) => {
-  let botCoin = new BotCoin()
-  let txs = botCoin.transactionList()
-  dispatch(setTransactions(txs))
+  axios.get(remote.getGlobal('config').etherscan_api_url, {
+    params: {
+      module: "account",
+      action: "tokentx",
+      address: keyTools.address,
+      contractaddress: remote.getGlobal('config').botcoin_contract,
+      sort: "desc",
+      apikey: remote.getGlobal('config').etherscan_api_key
+    }
+  })
+  .then(function (response) {
+    dispatch(setTransactions(response.data.result))
+  })
+  .catch(function (error) {
+    dispatch( setError("Failed to retreive transaction history." ));
+  })
 }

@@ -1,10 +1,12 @@
 import KeyTools from './KeyTools'
 import artifact from './abi/BotCoin.json'
+import {remote} from 'electron';
+
 
 class BotCoin {
   constructor() {
     this.web3 = KeyTools.web3;
-    //this.contract = new this.web3.eth.Contract(artifact.abi, window.app_config.botcoin_contract);
+    this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').botcoin_contract);
     this.decimals = 18;
     this.gasPrice = 100000000;
     //console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
@@ -88,10 +90,10 @@ class BotCoin {
 
   transferTokens(to, amount) {
     let self = this;
-    let fromAddress = this.web3.eth.accounts.wallet[0].address
-    return self.contract.methods.transfer(to, amount).estimateGas({from: fromAddress}).then(function(gas) {
+    let fromAddress = this.account
+    return self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether")).estimateGas({from: fromAddress}).then(function(gas) {
       return new Promise(function(resolve, reject) {
-        self.contract.methods.transfer(to, amount)
+        self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether"))
         .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
           function(err, tx_id) {
             if (!err) {
@@ -124,16 +126,6 @@ class BotCoin {
         });
       });
     })
-  }
-
-  transactionList() {
-    //TODO fetch real data
-    return [
-      {tx_id: "0x3b986cd68e199aee022ab216526ba8a4c1c28b5a4221f15ce9ecdaeeac7beb5f", value: "0.05", direction: "IN"},
-      {tx_id: "0x3b986cd68e199aee022ab216526ba8a4c1c28b5a4221f15ce9ecdaeeac7beb5f", value: "0.03", direction: "IN"},
-      {tx_id: "0x3b986cd68e199aee022ab216526ba8a4c1c28b5a4221f15ce9ecdaeeac7beb5f", value: "0.05", direction: "OUT"},
-      {tx_id: "0x3b986cd68e199aee022ab216526ba8a4c1c28b5a4221f15ce9ecdaeeac7beb5f", value: "0.01", direction: "OUT"},
-    ]
   }
   
 }

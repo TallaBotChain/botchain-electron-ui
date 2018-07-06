@@ -58,7 +58,7 @@ export default class WalletBotcoin extends Component {
               <Well>
                 <div className="text-center">
                   <h4>Available Balance</h4>
-                  150 BOTC
+                  {this.props.walletData.balance} BOTC
             </div>
               </Well>
             </Col>
