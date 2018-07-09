@@ -1,13 +1,15 @@
-import Web3 from 'web3'
+import KeyTools from './KeyTools'
 import artifact from './abi/BotCoin.json'
+import {remote} from 'electron';
+
 
 class BotCoin {
   constructor() {
-    this.web3 = window.keyTools.web3;
-    this.contract = new this.web3.eth.Contract(artifact.abi, window.app_config.botcoin_contract);
+    this.web3 = KeyTools.web3;
+    this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').botcoin_contract);
     this.decimals = 18;
     this.gasPrice = 100000000;
-    console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
+    //console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
   }
 
   get account() {
@@ -88,10 +90,10 @@ class BotCoin {
 
   transferTokens(to, amount) {
     let self = this;
-    let fromAddress = this.web3.eth.accounts.wallet[0].address
-    return self.contract.methods.transfer(to, amount).estimateGas({from: fromAddress}).then(function(gas) {
+    let fromAddress = this.account
+    return self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether")).estimateGas({from: fromAddress}).then(function(gas) {
       return new Promise(function(resolve, reject) {
-        self.contract.methods.transfer(to, amount)
+        self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether"))
         .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
           function(err, tx_id) {
             if (!err) {
@@ -105,6 +107,28 @@ class BotCoin {
       });
     })
   }
+
+  transferEther(to, amount) {
+    let self = this;
+    let fromAddress = this.account
+    return self.web3.eth.estimateGas({from: fromAddress, to: to, value: self.web3.utils.toWei(amount.toString(), "ether")}).then(function(gas) {
+      console.log("Gas = ", gas)
+      return new Promise(function(resolve, reject) {
+        self.web3.eth.sendTransaction({from: fromAddress, to: to, value: self.web3.utils.toWei(amount.toString(), "ether"), gas: gas},
+          function(err, tx_id) {
+            if (!err) {
+              console.log("transfer tx_id:", tx_id);
+              resolve(tx_id);
+            }
+          }
+        ).catch((err) => {
+          reject(err);
+        });
+      });
+    })
+  }
+  
 }
+
 
 export default BotCoin;

@@ -1,6 +1,4 @@
-// import BotCoin from '../blockchain/BotCoin';
-// import { start as startTxObserver } from './txObserverActions';
-// import TxStatus from '../helpers/TxStatus'
+import BotCoin from '../blockchain/BotCoin';
 import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import { push } from "react-router-redux";
@@ -139,56 +137,3 @@ const download = (file_blob, file_name) => {
   a.click();
   a.remove();
 }
-
-
-// export const getBalances = () => (dispatch) => {
-//   dispatch(setInProgress(true))
-//   let botCoin = new BotCoin()
-//   // ethers
-//   botCoin.getBalance().then((balance)=>{
-//     dispatch(setBallance(botCoin.web3.utils.fromWei(balance, 'ether')))
-//   }, (error) => {
-//     console.log(error)
-//     dispatch(setBallance(0))
-//     dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'error', value: "Failed to retrieve ballance" })
-//   });
-
-//   // tokens
-//   botCoin.getTokenBalance().then((balance) => {
-//     dispatch(setTokenBallance(botCoin.web3.utils.fromWei(balance, 'ether')))
-//     dispatch(setInProgress(false))
-//   }, (error) => {
-//     dispatch(setTokenBallance(0))
-//     dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'error', value: "Failed to retrieve token ballance" })
-//     dispatch(setInProgress(false))
-//   });
-// }
-
-
-
-// export const transferTokens = (to, amount) => async (dispatch) => {
-//   dispatch(setInProgress(true))
-//   let botCoin = new BotCoin()
-//   let amount_wei = botCoin.web3.utils.toWei(amount.toString(), 'ether');
-//   try {
-//     let txId = await botCoin.transferTokens(to, amount_wei);
-//     dispatch( { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferTxId', value: txId });
-//     dispatch(startTxObserver(txId, transferTxMined));
-//   }catch(e) {
-//     console.log(e);
-//     dispatch( setError( "Failed to initiate transfer." ));
-//     dispatch(setInProgress(false))
-//   }
-// }
-
-// const transferTxMined = (status) => (dispatch) => {
-//   dispatch(setInProgress(false))
-//   dispatch(reset('transfer'));
-//   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferTxMined', value: true });
-//   if(status == TxStatus.SUCCEED){
-//     dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferSuccess', value: true });
-//     dispatch(getBalances())
-//   } else {
-//     dispatch( setError("Transfer transaction failed." ));
-//   }
-// }

@@ -12,8 +12,11 @@
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
+import { config } from './config';
 
 let mainWindow = null;
+
+global.config = config
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

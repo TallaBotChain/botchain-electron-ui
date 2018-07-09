@@ -5,11 +5,7 @@ import update from 'immutability-helper';
 const initialState = {
   inProgress: false,
   error: null,
-  balance: 0,
   tokenBalance: 0,
-  transferTxId: null,
-  transferTxMined: false,
-  transferSuccess: false,
   mnemonic: null
 }
 
