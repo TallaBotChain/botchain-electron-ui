@@ -2,13 +2,14 @@ import Web3 from 'web3'
 import EthereumHDKey from 'ethereumjs-wallet/hdkey'
 import bip39 from 'bip39'
 import createHash from 'create-hash'
+import {remote} from 'electron';
 
 class KeyTools {
 
   static _instance = null;
 
   static get instance() {
-    if(! KeyTools._instance) KeyTools._instance = new KeyTools("https://kovan.infura.io/quylRadtDHfbMF9rF15R"); // TODO: config
+    if(! KeyTools._instance) KeyTools._instance = new KeyTools(remote.getGlobal('config').geth_rpc_url);
     return KeyTools._instance;
   }
 
