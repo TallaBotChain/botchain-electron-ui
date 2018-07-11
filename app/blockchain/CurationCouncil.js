@@ -1,16 +1,12 @@
-import KeyTools from './KeyTools'
+import BaseConnector from './BaseConnector'
 import artifact from './abi/CurationCouncilRegistryDelegate.json'
 import {remote} from 'electron';
 
-export default class CurationCouncil {
+export default class CurationCouncil extends BaseConnector {
   constructor() {
-    this.web3 = KeyTools.web3;
+    super();
     this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').couration_council_contract);
     console.log("curation council: ", this.contract);
-  }
-
-  get account() {
-    return this.web3.eth.accounts.wallet[0].address;
   }
 
   joinCouncil(stake) {
@@ -21,11 +17,8 @@ export default class CurationCouncil {
     // this.contract.methids.leaveCouncil()
   }
 
-  getRewardBalance() {
-    return Promise.resolve(16.422222222);
-  }
-
   getAvailableReward() {
+    // TODO: deprictate it
     return Promise.resolve(1.2);
   }
 }

@@ -1,4 +1,5 @@
 import CurationCouncil from '../blockchain/CurationCouncil';
+import TokenVault from '../blockchain/TokenVault';
 
 export const VotingActions = {
   SET_VOTING_ATTRIBUTE: 'SET_VOTING_ATTRIBUTE',
@@ -23,8 +24,8 @@ const setAvailableReward = (val) => {
 
 export const getRewardBalance = () => (dispatch) => {
   dispatch(setInProgress(true));
-  let council = new CurationCouncil();
-  council.getRewardBalance().then((balance) => {
+  let vault = new TokenVault();
+  vault.getRewardBalance().then((balance) => {
     dispatch(setRewardBalance(balance));
     dispatch(setInProgress(false));
   }, (error) => {
