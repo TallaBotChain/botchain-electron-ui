@@ -6,15 +6,50 @@ export default class CurationCouncil extends BaseConnector {
   constructor() {
     super();
     this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').couration_council_contract);
-    console.log("curation council: ", this.contract);
   }
 
   joinCouncil(stake) {
-    // this.contract.methods.joinCouncil(stake)
+    let self = this;
+    let fromAddress = this.account
+    return self.contract.methods.joinCouncil(self.web3.utils.toWei(stake.toString(), "ether")).estimateGas({from: fromAddress}).then(function(gas) {
+      return new Promise(function(resolve, reject) {
+        self.contract.methods.joinCouncil(self.web3.utils.toWei(stake.toString(), "ether"))
+        .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
+          function(err, tx_id) {
+            if (!err) {
+              console.log("transfer tx_id:", tx_id);
+              resolve(tx_id);
+            }
+          }
+        ).catch((err) => {
+          reject(err);
+        });
+      });
+    })
   }
 
   leaveCouncil() {
-    // this.contract.methids.leaveCouncil()
+    let self = this;
+    let fromAddress = this.account
+    return self.contract.methods.leaveCouncil().estimateGas({from: fromAddress}).then(function(gas) {
+      return new Promise(function(resolve, reject) {
+        self.contract.methods.leaveCouncil()
+        .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
+          function(err, tx_id) {
+            if (!err) {
+              console.log("transfer tx_id:", tx_id);
+              resolve(tx_id);
+            }
+          }
+        ).catch((err) => {
+          reject(err);
+        });
+      });
+    })
+  }
+
+  getStakedBalance() {
+    return this.contract.methods.getStakeAmount(this.account).call({from: this.account});
   }
 
   getAvailableReward() {
