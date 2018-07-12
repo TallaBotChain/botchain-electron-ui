@@ -9,7 +9,6 @@ export default class StakeModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("StakeModal componentWillReceiveProps" + nextProps)
     if (this.props.curationCouncil.stakedBalance == 0 && nextProps.curationCouncil.stakedBalance > 0) {
       this.props.handleClose()
     }
