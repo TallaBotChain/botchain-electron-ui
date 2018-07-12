@@ -84,7 +84,6 @@ export default class WalletBotcoin extends Component {
         <SendModal 
           show={this.state.show_send_modal} 
           handleClose={this.toggleSendModal}
-          currencyName="BOTC"
           {...this.props}
         />
         <StakeModal show={this.state.show_stake_modal} handleClose={this.toggleStakeModal} {...this.props} />

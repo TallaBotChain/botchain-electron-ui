@@ -54,7 +54,6 @@ export default class WalletEthereum extends Component {
         <SendModal 
           show={this.state.show_send_modal} 
           handleClose={this.toggleSendModal}
-          currencyName="ETH"
           {...this.props}
         />
       </Row>

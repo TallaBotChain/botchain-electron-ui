@@ -8,7 +8,7 @@ export default class UnstakeModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.curationCouncil.stakedBalance > 0 && nextProps.curationCouncil.stakedBalance == 0) {
+    if (this.props.curationCouncil.stakedBalance > 0 && nextProps.curationCouncil.stakedBalance == 0 && this.props.show) {
       this.props.handleClose()
     }
   }

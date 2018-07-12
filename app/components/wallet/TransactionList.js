@@ -21,7 +21,7 @@ export default class TransactionList extends Component {
               <tr key={i}>
                 <td><a href={`${"https://kovan.etherscan.io"}/tx/${tx.hash}`} target='_blank'>{tx.hash.substring(0,20)}...</a></td>
                 <td>{keyTools.address.toUpperCase() === tx.from.toUpperCase() ? "OUT" : "IN"}</td>
-                <td>{keyTools.web3.utils.fromWei(tx.value)} ETH</td>
+                <td>{keyTools.web3.utils.fromWei(tx.value)} {this.props.walletData.currency}</td>
               </tr>
             )
           )}
