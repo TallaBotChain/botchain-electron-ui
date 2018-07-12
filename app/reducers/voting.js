@@ -7,7 +7,10 @@ const initialState = {
   inProgress: false,
   rewardBalance: null,
   availableReward: null,
-  votes: []
+  votes: [],
+  totalSupply: null,
+  curatorRewardRate: null,
+  lastBlock: null
 }
 
 const voting = (state = initialState, action) => {

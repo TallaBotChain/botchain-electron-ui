@@ -52,8 +52,19 @@ export default class CurationCouncil extends BaseConnector {
     return this.contract.methods.getStakeAmount(this.account).call({from: this.account});
   }
 
-  getAvailableReward() {
-    // TODO: deprictate it
-    return Promise.resolve(1.2);
+  getTotalSupply() {
+    return this.contract.methods.totalSupply().call({from: this.account});
+  }
+
+  ownerOf(idx) {
+    return this.contract.methods.ownerOf(idx).call({from: this.account});
+  }
+
+  getLastBlock() {
+    return this.web3.eth.getBlock('latest');
+  }
+
+  getVoteFinalBlock(idx) {
+    return this.contract.methods.getVoteFinalBlock(idx).call({from: this.account});
   }
 }

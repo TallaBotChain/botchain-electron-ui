@@ -10,7 +10,7 @@ export default class VoteList extends Component {
 
   render() {
     const votes = this.props.votes.map((vote) =>
-      <ListGroupItem className='clearfix' onClick={this.voteClick(vote)}>
+      <ListGroupItem key={vote.key} title={vote.address} className='clearfix' onClick={this.voteClick(vote)}>
         <Col xs={6} md={9}>{vote.name}</Col>
         <Col xs={6} md={3}>Reward {vote.reward}</Col>
       </ListGroupItem>
