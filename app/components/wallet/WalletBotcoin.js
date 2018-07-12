@@ -50,7 +50,7 @@ export default class WalletBotcoin extends Component {
               <Well>
                 <div className="text-center">
                   <h4>Staked Balance</h4>
-                  1000 BOTC
+                  {this.props.curationCouncil.stakedBalance} BOTC
             </div>
               </Well>
             </Col>
@@ -71,10 +71,10 @@ export default class WalletBotcoin extends Component {
               <Button block onClick={this.toggleReceiveModal}>Receive</Button>
             </Col>
             <Col xs={3}>
-              <Button block onClick={this.toggleStakeModal}>Stake</Button>
+              <Button block disabled={this.props.curationCouncil.stakedBalance > 0} onClick={this.toggleStakeModal}>Stake</Button>
             </Col>
             <Col xs={3}>
-              <Button block onClick={this.toggleUnstakeModal}>Unstake</Button>
+              <Button block disabled={this.props.curationCouncil.stakedBalance == 0} onClick={this.toggleUnstakeModal}>Unstake</Button>
             </Col>
           </Row>
           <h3>History</h3>
