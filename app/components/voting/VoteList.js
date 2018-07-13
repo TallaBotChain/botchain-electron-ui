@@ -1,11 +1,27 @@
 // @flow
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
+import VoteModal from './VoteModal'
 
 export default class VoteList extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      vote_to_show: null
+    };
+  }
+
+
   voteClick = (vote) => () => {
-    alert(`Clicked vote: ${vote.name}`);
+    if (!this.props.developer.developers[vote.address]) {
+      this.props.getDeveloperInfo(vote.address) 
+    }
+    this.setState({ vote_to_show: vote.address });
+  }
+
+  hideVote = () => {
+    this.setState({ vote_to_show: null });
   }
 
   render() {
@@ -20,6 +36,7 @@ export default class VoteList extends Component {
         <ListGroup>
           {votes}
         </ListGroup>
+        <VoteModal address={this.state.vote_to_show} handleClose={this.hideVote} {...this.props}/>
       </div>
     )
   }
