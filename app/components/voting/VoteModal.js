@@ -5,7 +5,7 @@ import JsonTable from './JsonTable';
 export default class VoteModal extends Component {
 
   developer = () => {
-    return this.props.developer.developers[this.props.address]
+    return this.props.developer.records[this.props.address]
   }
 
   render() {

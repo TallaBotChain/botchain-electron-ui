@@ -5,7 +5,7 @@ import update from 'immutability-helper';
 const initialState = {
   error: null,
   inProgress: false,
-  developers: {}
+  records: {}
 }
 
 const developer = (state = initialState, action) => {
@@ -13,9 +13,9 @@ const developer = (state = initialState, action) => {
   case DeveloperActions.SET_ATTRIBUTE:
       return update(state, {[action.key]: {$set: action.value}});
   case DeveloperActions.SET_DEVELOPER_ATTRIBUTE:
-      return update(state, {developers: {[action.address]: {[action.key]: {$set: action.value}}}});
+      return update(state, { records: {[action.address]: {[action.key]: {$set: action.value}}}});
   case DeveloperActions.APPEND:
-    return update(state, {developers: {$merge: action.developer}});  
+      return update(state, { records: {$merge: action.developer}});  
   case DeveloperActions.RESET_STATE:
       return update(state, {$set: initialState});
   default:

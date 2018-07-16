@@ -13,7 +13,7 @@ export default class VoteList extends Component {
   }
 
   voteClick = (vote) => () => {
-    if (!this.props.developer.developers[vote.address]) {
+    if (!this.props.developer.records[vote.address]) {
       this.props.getDeveloperInfo(vote.address);
     }
     this.setState({ vote_to_show: vote });
