@@ -4,7 +4,7 @@ import { Modal, Button, Row, Col, Well } from 'react-bootstrap';
 export default class VoteModal extends Component {
 
   developer = () => {
-    return this.props.developer.developers[this.props.address]
+    return this.props.developer.records[this.props.address]
   }
 
   render() {
