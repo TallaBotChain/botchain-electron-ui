@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Col, Well } from 'react-bootstrap';
+import JsonTable from './JsonTable';
 
 export default class VoteModal extends Component {
 
@@ -23,13 +24,13 @@ export default class VoteModal extends Component {
                 </Col>
               </Row>
               <h4>Registration Info</h4>
-              <pre>{JSON.stringify(this.developer().metadata, null, 2)}</pre>
+              <JsonTable data={this.developer().metadata} />
               <Row className="show-grid">
                 <Col xs={6}>
-                  <Button block>Approve</Button>
+                  <Button block onClick={this.props.onApprove}>Approve</Button>
                 </Col>
                 <Col xs={6}>
-                  <Button block>Reject</Button>
+                  <Button block onClick={this.props.onReject}>Reject</Button>
                 </Col>
               </Row>
             </div>
