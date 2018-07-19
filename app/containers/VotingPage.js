@@ -40,8 +40,15 @@ const mapDispatchToProps = dispatch => {
     getVotes: () => {
       dispatch( VotingActions.getVotes() );
     },
+    resetVoteState: () => {
+      dispatch( VotingActions.resetVoteState() );
+    },
     getDeveloperInfo: (address) => {
       dispatch( DeveloperActions.getDeveloperInfo(address) );
+    },
+    castVote: (idx, vote) => {
+      console.log("Voting "+(vote ? "Yes" : "No" )+" for "+idx);
+      dispatch( VotingActions.castVote(idx, vote) );
     }
   }
 }

@@ -13,6 +13,7 @@ export default class VoteList extends Component {
   }
 
   voteClick = (vote) => () => {
+    this.props.resetVoteState();
     if (!this.props.developer.records[vote.address]) {
       this.props.getDeveloperInfo(vote.address);
     }
@@ -25,10 +26,12 @@ export default class VoteList extends Component {
 
   approveVote = () => {
     console.log("approving vote: ", this.state.vote_to_show);
+    this.props.castVote(this.state.vote_to_show.key, true);
   }
 
   rejectVote = () => {
     console.log("rejecting vote: ", this.state.vote_to_show);
+    this.props.castVote(this.state.vote_to_show.key, false);
   }
 
   render() {
