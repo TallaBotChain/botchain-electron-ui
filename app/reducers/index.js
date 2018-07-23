@@ -6,6 +6,7 @@ import voting from './voting';
 import ethereum from './ethereum';
 import botcoin from './botcoin';
 import curationCouncil from './curationCouncil';
+import developer from './developer';
 import { reducer as form } from 'redux-form'
 const rootReducer = combineReducers({
   form,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   ethereum,
   botcoin,
   curationCouncil,
+  developer,
   router
 });
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Balances from '../components/voting/Balances';
 import VoteList from '../components/voting/VoteList';
 import * as VotingActions from '../actions/votingActions';
+import * as DeveloperActions from '../actions/developerActions';
 import { connect } from 'react-redux';
 
 class VotingPage extends Component {
@@ -18,7 +19,7 @@ class VotingPage extends Component {
         <h1>Voting</h1>
         <Balances {...this.props.voting} />
         {this.props.voting.inProgress ? <div className='text-center'>Loading...</div> : "" }
-        <VoteList votes={this.props.voting.votes}  />
+        <VoteList votes={this.props.voting.votes} {...this.props}  />
       </div>
     )
   }
@@ -27,6 +28,7 @@ class VotingPage extends Component {
 function mapStateToProps(state) {
     return {
       voting: state.voting,
+      developer: state.developer
     };
 }
 
@@ -37,6 +39,21 @@ const mapDispatchToProps = dispatch => {
     },
     getVotes: () => {
       dispatch( VotingActions.getVotes() );
+    },
+    resetVoteState: () => {
+      dispatch( VotingActions.resetVoteState() );
+    },
+    getDeveloperInfo: (address) => {
+      dispatch( DeveloperActions.getDeveloperInfo(address) );
+    },
+    showVote: (vote) => {
+      dispatch( VotingActions.showVote(vote) );
+    },
+    hideVote: () => {
+      dispatch( VotingActions.hideVote() );
+    },
+    castVote: (idx, vote) => {
+      dispatch( VotingActions.castVote(idx, vote) );
     }
   }
 }
