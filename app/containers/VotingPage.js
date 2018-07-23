@@ -46,8 +46,13 @@ const mapDispatchToProps = dispatch => {
     getDeveloperInfo: (address) => {
       dispatch( DeveloperActions.getDeveloperInfo(address) );
     },
+    showVote: (vote) => {
+      dispatch( VotingActions.showVote(vote) );
+    },
+    hideVote: () => {
+      dispatch( VotingActions.hideVote() );
+    },
     castVote: (idx, vote) => {
-      console.log("Voting "+(vote ? "Yes" : "No" )+" for "+idx);
       dispatch( VotingActions.castVote(idx, vote) );
     }
   }

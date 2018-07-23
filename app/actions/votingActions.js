@@ -88,6 +88,15 @@ export const getRewardBalance = () => (dispatch) => {
   });
 }
 
+
+export const showVote = (vote) => {
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: vote }
+}
+
+export const hideVote = () => {
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: null }
+}
+
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   dispatch(setInProgress(true));
@@ -107,6 +116,7 @@ const castVoteTxMined = (status) => (dispatch) => {
   dispatch(resetVoteState());
   dispatch(setInProgress(false))
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: true });
+  dispatch(getVotes());
   if(status == TxStatus.SUCCEED){
     dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: true });
   } else {
@@ -119,4 +129,5 @@ export const resetVoteState = () => (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxId', value: null });
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: false });
   dispatch(setError(null));
+  dispatch(hideVote());
 }

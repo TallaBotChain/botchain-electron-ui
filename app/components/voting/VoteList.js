@@ -7,9 +7,6 @@ export default class VoteList extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      vote_to_show: null
-    };
   }
 
   voteClick = (vote) => () => {
@@ -17,21 +14,19 @@ export default class VoteList extends Component {
     if (!this.props.developer.records[vote.address]) {
       this.props.getDeveloperInfo(vote.address);
     }
-    this.setState({ vote_to_show: vote });
+    this.props.showVote(vote);
   }
 
   hideVote = () => {
-    this.setState({ vote_to_show: null });
+    this.props.hideVote();
   }
 
   approveVote = () => {
-    console.log("approving vote: ", this.state.vote_to_show);
-    this.props.castVote(this.state.vote_to_show.key, true);
+    this.props.castVote(this.props.voting.voteToShow.key, true);
   }
 
   rejectVote = () => {
-    console.log("rejecting vote: ", this.state.vote_to_show);
-    this.props.castVote(this.state.vote_to_show.key, false);
+    this.props.castVote(this.props.voting.voteToShow.key, false);
   }
 
   render() {
@@ -46,7 +41,7 @@ export default class VoteList extends Component {
         <ListGroup>
           {votes}
         </ListGroup>
-        <VoteModal address={this.state.vote_to_show ? this.state.vote_to_show.address : null}
+        <VoteModal address={this.props.voting.voteToShow ? this.props.voting.voteToShow.address : null}
           handleClose={this.hideVote}
           onApprove={this.approveVote}
           onReject={this.rejectVote}

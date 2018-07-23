@@ -73,22 +73,22 @@ export default class CurationCouncil extends BaseConnector {
   }
 
   castRegistrationVote(idx, vote) {
-    //return this.contract.methods.castRegistrationVote(idx, vote).estimateGas({from: this.account}).then( (gas) => {
-    let gas = 1000000
+    //return Promise.resolve("0x0d983b3cf4d19dd2c7e1d038f2c4d0cc993435630b27c167a0517ecf0f5fc7be"); // for testing
+    return this.contract.methods.castRegistrationVote(idx, vote).estimateGas({from: this.account}).then( (gas) => {
       return new Promise( (resolve, reject) => {
         console.log("castRegistrationVote ",idx,vote);
         this.contract.methods.castRegistrationVote(idx, vote)
-        .send({gasPrice: this.gasPrice, from: this.account, gas: gas},
-          (err, tx_id) => {
-            if (!err) {
-              console.log("cast vote tx_id:", tx_id);
-              resolve(tx_id);
+          .send({gasPrice: this.gasPrice, from: this.account, gas: gas},
+            (err, tx_id) => {
+              if (!err) {
+                console.log("cast vote tx_id:", tx_id);
+                resolve(tx_id);
+              }
             }
-          }
-        ).catch((err) => {
-          reject(err);
-        });
+          ).catch((err) => {
+            reject(err);
+          });
       });
-    //});
+    });
   }
 }

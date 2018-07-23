@@ -11,6 +11,7 @@ const initialState = {
   totalSupply: null,
   curatorRewardRate: null,
   lastBlock: null,
+  voteToShow: null,
   voteTxId: null,
   voteTxMined: false,
   voteSuccess: false

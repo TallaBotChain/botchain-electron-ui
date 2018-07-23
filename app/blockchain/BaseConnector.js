@@ -4,7 +4,7 @@ export default class BaseConnector {
   constructor() {
     this.web3 = KeyTools.web3;
     this.decimals = 18;
-    this.gasPrice = 100000000;
+    this.gasPrice = 10*10**9; // TODO: move this to settings
   }
 
   get account() {
