@@ -2,12 +2,14 @@
 import React, { Component } from 'react';
 import WalletBotcoin from '../components/wallet/WalletBotcoin';
 import * as BotcoinActions from '../actions/botcoinActions';
+import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import { connect } from 'react-redux';
 
 class WalletBotcoinPage extends Component {
 
   componentDidMount () {
     this.props.getBalance()
+    this.props.getStakedBalance()
     this.props.getTransactionList()
   }
 
@@ -21,6 +23,7 @@ class WalletBotcoinPage extends Component {
 function mapStateToProps(state) {
     return {
       walletData: state.botcoin,
+      curationCouncil: state.curationCouncil
     };
 }
 
@@ -34,6 +37,15 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(BotcoinActions.getTransactionList());
+    },
+    stake: (amount) => {
+      dispatch(CurationCouncilActions.approveJoinPayment(amount));
+    },
+    unstake: () => {
+      dispatch(CurationCouncilActions.leaveCouncil());
+    },
+    getStakedBalance: () => {
+      dispatch(CurationCouncilActions.getStakedBalance());
     }
   }
 }

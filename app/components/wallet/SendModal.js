@@ -23,7 +23,7 @@ export default class SendModal extends Component {
                 {this.props.walletData.transferTxMined && (
                   <Well>{this.props.walletData.transferSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
-                <h3>Available Balance: {this.props.walletData.balance} {this.props.currencyName}</h3>
+                <h3>Available Balance: {this.props.walletData.balance} {this.props.walletData.currency}</h3>
                 <SendForm onSubmit={this.handleSubmit} {...this.props} />
               </div>
             )}

@@ -1,19 +1,14 @@
-import KeyTools from './KeyTools'
+import BaseConnector from './BaseConnector'
 import artifact from './abi/BotCoin.json'
 import {remote} from 'electron';
 
-
-class BotCoin {
+class BotCoin extends BaseConnector{
   constructor() {
-    this.web3 = KeyTools.web3;
+    super();
     this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').botcoin_contract);
     this.decimals = 18;
     this.gasPrice = 100000000;
     //console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
-  }
-
-  get account() {
-    return this.web3.eth.accounts.wallet[0].address;
   }
 
   convertToHuman(bigNumber) {

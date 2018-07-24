@@ -8,7 +8,8 @@ const initialState = {
   transferTxId: null,
   transferTxMined: false,
   transferSuccess: false,
-  transactions: []
+  transactions: [],
+  currency: "BOTC"
 }
 
 const botcoin = (state = initialState, action) => {
