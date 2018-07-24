@@ -17,7 +17,7 @@ class VotingPage extends Component {
     return (
       <div>
         <h1>Voting</h1>
-        <Balances {...this.props.voting} />
+        <Balances {...this.props.voting} payout={this.props.payout} />
         {this.props.voting.inProgress ? <div className='text-center'>Loading...</div> : "" }
         <VoteList votes={this.props.voting.votes} {...this.props}  />
       </div>
@@ -54,6 +54,9 @@ const mapDispatchToProps = dispatch => {
     },
     castVote: (idx, vote) => {
       dispatch( VotingActions.castVote(idx, vote) );
+    },
+    payout: () => {
+      dispatch( VotingActions.payoutReward() );
     }
   }
 }

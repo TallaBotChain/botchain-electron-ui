@@ -1,8 +1,20 @@
 // @flow
 import React, { Component } from 'react';
-import { Row, Col, Well } from 'react-bootstrap'
+import { Row, Col, Well, Button } from 'react-bootstrap'
+import PayoutModal from './PayoutModal';
 
 class Balances extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      show_payout_modal: false
+    };
+  }
+
+  togglePayoutModal = () => {
+    this.setState({ show_payout_modal: !this.state.show_payout_modal });
+  }
 
   render() {
     return (
@@ -14,6 +26,7 @@ class Balances extends Component {
               {this.props.rewardBalance} BOTC
             </div>
           </Well>
+          {(this.props.rewardBalance > 0) && <Button block onClick={this.togglePayoutModal}>Payout reward</Button>}
         </Col>
         <Col xs={6} md={6}>
           <Well>
@@ -23,6 +36,7 @@ class Balances extends Component {
             </div>
           </Well>
         </Col>
+        <PayoutModal show={this.state.show_payout_modal} handleClose={this.togglePayoutModal} {...this.props} />
       </Row>
     );
   }
