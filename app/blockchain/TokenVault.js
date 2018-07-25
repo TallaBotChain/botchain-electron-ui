@@ -16,4 +16,20 @@ export default class TokenVault extends BaseConnector {
   curatorRewardRate() {
     return this.contract.methods.curatorRewardRate().call({from: this.account});
   }
+
+  collectCuratorReward() {
+    return new Promise((resolve, reject) => {
+      return this.contract.methods.collectCuratorReward().estimateGas({from: this.account}).then((gas) => {
+        return this.contract.methods.collectCuratorReward()
+          .send({from: this.account, gas: gas, gasPrice: this.gasPrice},
+            (err, tx_id) => {
+              if (!err) {
+                console.log("transfer tx_id:", tx_id);
+                resolve(tx_id);
+              }
+            })
+          .catch(reject);
+      });
+    });
+  }
 }

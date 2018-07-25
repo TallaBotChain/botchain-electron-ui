@@ -14,7 +14,10 @@ const initialState = {
   voteToShow: null,
   voteTxId: null,
   voteTxMined: false,
-  voteSuccess: false
+  voteSuccess: false,
+  payoutTxId: null,
+  payoutTxMined: false,
+  payoutSuccess: false
 }
 
 const voting = (state = initialState, action) => {

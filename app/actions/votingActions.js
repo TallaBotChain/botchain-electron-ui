@@ -37,7 +37,7 @@ const getTotalSupply = () => async (dispatch) => {
 const getRewardRate = () => async (dispatch) => {
   let vault = new TokenVault();
   let rewardRate = await vault.curatorRewardRate();
-  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'curatorRewardRate', value: parseInt(rewardRate) });
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'curatorRewardRate', value: vault.web3.utils.fromWei(rewardRate, 'ether') });
 }
 
 const getLastBlock = () => async (dispatch) => {
@@ -80,7 +80,7 @@ export const getVotes = () => async (dispatch, getStore) => {
 export const getRewardBalance = () => (dispatch) => {
   let vault = new TokenVault();
   vault.getRewardBalance().then((balance) => {
-    dispatch(setRewardBalance(balance));
+    dispatch(setRewardBalance( vault.web3.utils.fromWei(balance, 'ether') ));
   }, (error) => {
     console.log(error);
     dispatch(setRewardBalance(0));
@@ -131,3 +131,42 @@ export const resetVoteState = () => (dispatch) => {
   dispatch(setError(null));
   dispatch(hideVote());
 }
+
+export const payoutReward = () => async (dispatch) => {
+  let tokenVault = new TokenVault();
+  dispatch(setInProgress(true));
+  try {
+    var txId = await tokenVault.collectCuratorReward();
+    console.log("Collecting curator reward, tx_id: ", txId);
+    dispatch(setPayoutTxId(txId));
+    dispatch(startTxObserver(txId, payoutTxMined));
+  } catch( ex ) {
+    console.log("Collect curator reward error: ", ex);
+    dispatch(setError(ex.message));
+    dispatch(setInProgress(false));
+  }
+}
+
+const payoutTxMined = (status) => (dispatch) => {
+  dispatch(resetPayoutState());
+  dispatch(setInProgress(false));
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxMined', value: true });
+  dispatch(getRewardBalance());
+  if(status == TxStatus.SUCCEED){
+    dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutSuccess', value: true });
+  } else {
+    dispatch( setError("Reward collection failed." ));
+  }
+}
+
+export const resetPayoutState = () => (dispatch) => {
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxMined', value: false });
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxId', value: null });
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutSuccess', value: false });
+  dispatch(setError(null));
+}
+
+const setPayoutTxId = (txId) => {
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxId', value: txId }
+}
+
