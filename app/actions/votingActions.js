@@ -2,6 +2,7 @@ import CurationCouncil from '../blockchain/CurationCouncil';
 import TokenVault from '../blockchain/TokenVault';
 import { start as startTxObserver } from './txObserverActions';
 import TxStatus from '../utils/TxStatus'
+import {BigNumber} from 'bignumber.js';
 
 export const VotingActions = {
   SET_VOTING_ATTRIBUTE: 'SET_VOTING_ATTRIBUTE',
@@ -57,7 +58,7 @@ export const getVotes = () => async (dispatch, getStore) => {
   console.log("totalSupply: ", totalSupply);
   console.log("lastBlock: ", lastBlock);
   let votes = [];
-  let availableReward = 0;
+  let availableReward = new BigNumber(0);
   for(let idx=totalSupply;idx>0;idx--) {
     let finalBlock = await curationCouncil.getVoteFinalBlock(idx);
     console.log("finalBlock: ", finalBlock);
@@ -70,9 +71,10 @@ export const getVotes = () => async (dispatch, getStore) => {
       name: `Vote ${idx}`,
       reward: curatorRewardRate,
       address: address } );
-    availableReward += curatorRewardRate;
+    console.log(typeof curatorRewardRate);
+    availableReward = availableReward.plus( BigNumber(curationCouncil.web3.utils.toWei(curatorRewardRate,'ether') ) );
   }
-  dispatch( setAvailableReward(availableReward) );
+  dispatch( setAvailableReward(curationCouncil.web3.utils.fromWei(availableReward.toString(), 'ether') ) );
   dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
   dispatch(setInProgress(false));
 }
