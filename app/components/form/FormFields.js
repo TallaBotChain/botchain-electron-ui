@@ -48,8 +48,8 @@ export const checkboxField = ({ input, label, type, meta: { asyncValidating, tou
   <div className='checkbox'>
     <input {...input} placeholder={placeholder || label} type={type} id={input.name} />
     <label htmlFor={input.name}>{label}</label>
-    {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
-    {asyncValidating && (<span>validating...</span>)}
+    {touched && ((error && <div className='validation-error'>{error}</div>) || (warning && <div>{warning}</div>))}
+    {asyncValidating && (<div>validating...</div>)}
     {appendComponent}
   </div>
 )
