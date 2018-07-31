@@ -3,6 +3,9 @@ import ImportForm from '../components/wallet/ImportForm';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import * as WalletActions from '../actions/walletActions';
+import CreateWalletNav from '../components/wallet/CreateWalletNav';
+import keyTools from '../blockchain/KeyTools';
+
 
 class ImportWalletPage extends Component {
 
@@ -16,7 +19,9 @@ class ImportWalletPage extends Component {
         <h1>Import wallet</h1>
         {( this.props.error ? <Alert bsStyle="danger">{ this.props.error }</Alert> : "" )}
         <ImportForm onSubmit={ this.submit }/>
-      </div>
+        <hr />
+        {!keyTools.privateKeyPresent && <CreateWalletNav /> }
+        </div>
     );
   }
 }

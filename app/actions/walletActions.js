@@ -66,7 +66,6 @@ export const generateMnemonic = () => {
 export const saveMnemonic = (password) => (dispatch, getState) => {
   let state = getState();
   keyTools.applyMnemonic(state.wallet.mnemonic,password);
-  dispatch( push('/wallet') );
 }
 
 export const setError = (error) => {
