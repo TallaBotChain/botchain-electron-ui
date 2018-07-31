@@ -16,7 +16,7 @@ class CreateWalletPage extends Component {
 
   componentDidMount() {
     if (!this.props.registration.data) {
-      this.props.redirectNext()
+      this.props.redirectToRegistration()
     }
     this.props.generateMnemonic();
   }
@@ -47,8 +47,6 @@ class CreateWalletPage extends Component {
               <CreateWalletForm onSubmit={this.submit} {...this.props} />
             </div>
           )}
-        <hr />
-        <ImportWalletNav />
       </div >
     );
   }
