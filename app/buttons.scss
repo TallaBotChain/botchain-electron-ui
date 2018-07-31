@@ -8,17 +8,19 @@ $placeholder: #8B9096;
 $gray-gradient1: #F6F7F7;
 $gray-gradient2: #E1E2E4;
 $gray-gradient3: #CBCED0;
+$botchain-green: #00BC90;
+$active-green: #3ABCA5;
 
-@mixin form-button ($color, $font-color: #fff) {
+@mixin form-button ($color, $font-color: white) {
   border-color: $color;
-  background-color: $color;
+  background: $color;
   color: $font-color;
   font-weight: 400;
   font-size: 0.875em;
   &:hover, &:active, &:focus, &:active:focus, &:active:hover {
     color: $font-color;
-    border-color: $color;
-    background-color: $color;
+    border: 1px solid $color;
+    background: $color;
     outline: none;
     text-decoration: none;
   }
@@ -26,6 +28,14 @@ $gray-gradient3: #CBCED0;
 
 .orange-button{
   @include form-button($orange);
+  &:hover, &:focus{
+    border-color: $botchain-green;
+    background: $botchain-green;
+  }
+  &:active, &:active:focus, &:active:hover {
+    background: $active-green;
+    border-color: $active-green;
+  }
 }
 
 .default-button{
@@ -71,4 +81,8 @@ $gray-gradient3: #CBCED0;
   letter-spacing: 0.02em;
   border-radius: 4px;
   margin-bottom: 8px;
+}
+
+.width-100 {
+  min-width: 100px;
 }

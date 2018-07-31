@@ -19,7 +19,7 @@ class CreateWalletForm extends Component {
         ]}/>
 
       <button className='btn orange-button cta-button' type="submit">SUBMIT</button>
-    <small className="pull-right gray required">*Required</small>
+      <small className="pull-right gray required">*Required</small>
     </form>);
   }
 }
