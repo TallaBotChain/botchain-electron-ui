@@ -10,7 +10,6 @@ import VotingPage from './containers/VotingPage';
 import SettingsPage from './containers/SettingsPage';
 import WalletEthereumPage from './containers/WalletEthereumPage';
 import WalletBotcoinPage from './containers/WalletBotcoinPage';
-import NoWalletPage from './containers/NoWalletPage';
 import CreateWalletPage from './containers/CreateWalletPage';
 import ImportWalletPage from './containers/ImportWalletPage';
 import UnlockWalletPage from './containers/UnlockWalletPage';
