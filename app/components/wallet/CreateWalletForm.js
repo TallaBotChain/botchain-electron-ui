@@ -18,7 +18,8 @@ class CreateWalletForm extends Component {
         confirmation({field:'password', fieldLabel: 'Password'})
         ]}/>
 
-      <button className='btn btn-primary' type="submit">Save</button>
+      <button className='btn orange-button cta-button' type="submit">SUBMIT</button>
+    <small className="pull-right gray required">*Required</small>
     </form>);
   }
 }

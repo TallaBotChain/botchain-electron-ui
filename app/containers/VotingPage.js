@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { Col } from 'react-bootstrap'
 import Balances from '../components/voting/Balances';
 import VoteList from '../components/voting/VoteList';
 import * as VotingActions from '../actions/votingActions';
@@ -15,12 +16,12 @@ class VotingPage extends Component {
 
   render() {
     return (
-      <div>
+      <Col xs={12} className="content-inner white-bg">
         <h1>Voting</h1>
         <Balances {...this.props.voting} payout={this.props.payout} />
         {this.props.voting.inProgress ? <div className='text-center'>Loading...</div> : "" }
         <VoteList votes={this.props.voting.votes} {...this.props}  />
-      </div>
+      </Col>
     )
   }
 }

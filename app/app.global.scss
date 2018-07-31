@@ -1,9 +1,316 @@
-#navigation {
-    padding-top: 50px;
+@import 'buttons';
+$botchain-green: #00BC90;
+$state: #32373E;
+$light-green: #BFEEE3;
+$gray: #A0A4AA;
+$black: #1D2024;
+$ethereum-gold: #C99D66;
+$ethereum: #6F7CBA;
+$dollar-green: #58C870;
+$ethereum-text: #5364B4;
+$botcoin-text: #BCA400;
+$trans-gray: rgba(255,255,255,.1);
+$gray-text: #757B83;
+$gray-input: rgba(29,32,36,.13);
+$placeholder: #8B9096;
+$error: #DF3C3C;
+$error-placeholder: #E98176;
+$error-bg: #FFF1EE;
+$error-border:#FFDBD5;
+$error-gray-input: rgba(29,32,36,.03);
+$gray-link: #CBCED0;
+$gray-label: #B6B9BD;
+$green-text: #008A6A;
+$yellow-bg: #FFFCE5;
+
+.gray-text {
+  color: $gray-text;
 }
 
+.gray {
+  color: $gray;
+}
+
+.gray-label {
+  color: $gray-label;
+}
+
+.lighter-gray-text {
+  color: $lighter-gray;
+}
+
+::selection {
+  background: #ccc;
+  color: white;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+h3 {
+  font-size: 1.125em;
+  letter-spacing: 0.04em;
+  margin-top: 10px;
+}
+
+small {
+  font-size: 0.875em;
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+.container-state {
+  background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
+  height: 100vh;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.sidenav {
+  height: 100vh;
+  width: 95px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+#navigation {
+  padding-top: 50px;
+}
+.content-container {
+  margin-left: 80px;
+}
 #content {
-    .sub-navigation {
-        padding-top: 50px;
+  .sub-navigation {
+    padding-top: 50px;
+  }
+}
+.content-inner {
+  height: calc(100vh - 30px);
+  border-radius: 13px;
+  padding-bottom: 60px;
+  padding-top: 30px;
+  &.white-bg {
+    background-color: white;
+  }
+  &.trans-bg {
+    background-color: $trans-gray;
+    color: white;
+    p {
+      padding-bottom: 4px;
+      line-height: 1.8em;
     }
+    .form-group {
+      margin-bottom: 5px;
+    }
+    label.control-label {
+      font-weight: 400;
+      font-size: 0.875em;
+      display: none;
+      margin: 0;
+      color: $gray-label;
+    }
+    input.form-control {
+      border: 2px solid $gray-input;
+      box-shadow: inset 0 0 5px $gray-input;
+      height: 47px;
+      color: $state;
+      line-height: 23px;
+      font-size: 1em;
+      border-radius: 6px;
+      &::placeholder {
+        color: $placeholder;
+      }
+      &.error {
+        color: $error;
+        border-color: $error-border;
+        background-color: $error-bg;
+        box-shadow: inset 0 0 5px $error-gray-input;
+        &::placeholder {
+          color: $error-placeholder;
+        }
+      }
+    }
+
+    .validation-error {
+      font-size: 0.875em;
+      color: $error-placeholder;
+      margin-top: 3px;
+      display: block;
+    }
+
+    .gray-link {
+      font-size: 0.875em;
+      color: $gray-link;
+      margin-top: 5px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .radio {
+      label {
+        padding-left: 0;
+      }
+
+      input[type=radio]{
+        display: none;
+        &+span{
+          display: inline-block;
+          font-size: 0.875em;
+          color: $gray-label;
+          padding-left: 10px;
+          min-height: 23px;
+        }
+        &:checked{
+          &+span{
+            color: white;
+          }
+        }
+      }
+    }
+
+    label[for=json] {
+      display: inline-block;
+      margin-bottom: 5px;
+      color: $gray-text;
+      margin-top: 10px;
+    }
+
+    small.gray-label {
+      margin-left: 15px;
+      margin-top: 15px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .required {
+      margin-top: 10px;
+    }
+
+    .well {
+      color: $green-text;
+      font-size: 0.9375em;
+      background: $yellow-bg;
+      border-radius: 1px;
+      font-weight: 500;
+      min-width: 430px;
+      display: inline-block;
+      min-height: 40px;
+      padding: 0 15px;
+      line-height: 40px;
+      border: none;
+      margin-bottom: 5px;
+    }
+  }
+  &.top50 {
+    border-radius: 13px 13px 0 0;
+    height: calc(48.5vh - 16px);
+    padding-bottom: 15px;
+  }
+  &.bottom50 {
+    border-radius: 0 0 13px 13px;
+    height: calc(51.5vh - 16px);
+    padding-bottom: 30px;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.divider {
+  height: 2px;
+}
+
+.list-group.nav-list {
+  .list-group-item {
+    background: none;
+    color: $gray;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    &.active, &:hover {
+      color: white;
+    }
+    span {
+      height: 28px;
+      width: 27px;
+      background: url('img/nav_icons.png') no-repeat;
+      background-size: cover;
+      margin-bottom: 5px;
+    }
+    &.voting {
+      span {
+        width: 30px;
+      }
+      &.active, &:hover {
+        span {
+          background-position: -110px 0;
+        }
+      }
+    }
+    &.wallet {
+      span {
+        background-position: -57px 0;
+      }
+      &.active, &:hover {
+        span {
+          background-position: -167px 0;
+        }
+      }
+    }
+    &.stake {
+      span {
+        background-position: -30px 0;
+      }
+      &.active, &:hover{
+        span {
+          background-position: -140px -1px;
+        }
+      }
+    }
+    &.settings {
+      position: absolute;
+      bottom: 5px;
+      left: 10px;
+      font-size: 0.75em;
+      span {
+        background-position: -83px 0;
+        width: 26px;
+      }
+      &.active, &:hover {
+        span {
+          background-position: -193px -1px;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 15px;
+  height: 55px;
+  line-height: 55px;
+  width: calc(100% - 110px);
+  font-size: 0.875em;
+
+  .logo {
+    display: inline-block;
+    width: 108px;
+    height: 14px;
+    background: url('img/botchain_logo.png') no-repeat;
+    background-size: cover;
+  }
 }
