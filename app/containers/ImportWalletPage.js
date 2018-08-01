@@ -30,9 +30,6 @@ class ImportWalletPage extends Component {
         </Col>
         <Col xs={12} className="divider"></Col>
         <Col xs={12} className="content-inner trans-bg bottom50">
-          <Col xs={12}>
-            {!keyTools.privateKeyPresent && <CreateWalletNav /> }
-          </Col>
         </Col>
       </div>
     );

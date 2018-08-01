@@ -8,13 +8,9 @@ import { Nav, NavItem, Col } from 'react-bootstrap';
 
 class ImportForm extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { format: "private_key" };
-  }
-
   changeFormat = (format) => {
-    this.setState({ format: format });
+    this.props.change('import_format', format);
+    
   }
 
   render() {
@@ -22,29 +18,29 @@ class ImportForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <Col md={3} sm={4} xs={5}>
-          <Nav bsStyle="pills import-nav" stacked activeKey={this.state.format} onSelect={this.changeFormat}>
+          <Nav bsStyle="pills import-nav" stacked activeKey={importFormat} onSelect={this.changeFormat}>
             <NavItem eventKey={"private_key"} title="Private Key">Private Key</NavItem>
             <NavItem eventKey={"mnemonic"} title="Backup Passphrase">Backup Passphrase</NavItem>
             <NavItem eventKey={"json"} title="JSON file">JSON file</NavItem>
           </Nav>
         </Col>
         <Col md={6} sm={8} xs={7}>
-          {(this.state.format=="private_key") && <Field name="private_key" type="text" component={inputField} label="Private Key*" placeholder="" validate={[
+          {(importFormat=="private_key") && <Field name="private_key" type="text" component={inputField} label="Private Key*" placeholder="" validate={[
             required()
             ]}/>
           }
 
-          {(this.state.format=="mnemonic") && <Field name="mnemonic" type="text" component={inputField} label="Backup Passphrase*" placeholder="" validate={[
+          {(importFormat=="mnemonic") && <Field name="mnemonic" type="text" component={inputField} label="Backup Passphrase*" placeholder="" validate={[
             required()
             ]}/>
           }
 
-          {(this.state.format=="json") && <Field name="json" type="file" component={fileField} label="Choose File" placeholder="Upload JSON file" validate={[
+          {(importFormat=="json") && <Field name="json" type="file" component={fileField} label="Choose File" placeholder="Upload JSON file" validate={[
             required()
             ]}/>
           }
 
-          {(this.state.format) && (<div>
+          {(importFormat) && (<div>
           <Field name="password" type="password" component={inputField} label="Password*" placeholder="Password*" validate={[
             required(),
             length({min: 8})
@@ -75,7 +71,10 @@ const selector = formValueSelector('import') // <-- same as form name
 ImportForm = connect(
   state => {
     const importFormat = selector(state, 'import_format')
-    return { importFormat };
+    return { 
+      importFormat,
+      initialValues: { import_format: "private_key"}
+    };
   }
 )(ImportForm);
 
