@@ -7,12 +7,12 @@ class CreateWalletForm extends Component {
   render() {
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (<form onSubmit={handleSubmit}>
-      <Field name="password" type="password" component={inputField} placeholder="Password*" validate={[
+      <Field name="password" type="password" component={inputField} placeholder="Password*" label="PASSWORD*" validate={[
         required(),
         length({min: 8})
         ]}/>
 
-      <Field name="password_confirmation" type="password" component={inputField} placeholder="Confirm Password*" validate={[
+      <Field name="password_confirmation" type="password" component={inputField} placeholder="Confirm Password*" label="CONFIRM PASSWORD*" validate={[
         required(),
         length({min: 8}),
         confirmation({field:'password', fieldLabel: 'Password'})

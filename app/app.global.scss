@@ -188,6 +188,7 @@ input:focus, select:focus, textarea:focus, button:focus {
     }
     .form-group {
       margin-bottom: 5px;
+      min-height: 48px;
     }
     label.control-label {
       font-weight: 400;
@@ -199,24 +200,57 @@ input:focus, select:focus, textarea:focus, button:focus {
     input.form-control {
       border: 2px solid $gray-input;
       box-shadow: inset 0 0 5px $gray-input;
-      height: 47px;
+      height: 48px;
       color: $state;
       line-height: 23px;
       font-size: 1em;
       border-radius: 6px;
-      &::placeholder {
-        color: $placeholder;
+      font-weight: 500;
+      &:not(:placeholder-shown) {
+        padding-top: 13px;
+        &+label.control-label {
+          display: block;
+          color: $placeholder;
+          font-size: 0.625em;
+          padding: 0 0 0 15px;
+          letter-spacing: 0.1em;
+          margin-top: -42px;
+          text-transform: uppercase;
+        }
       }
+
+      &:placeholder-shown {
+        color: $placeholder;
+        padding-top: 0;
+        font-weight: 300;
+      }
+
       &.error {
         color: $error;
         border-color: $error-border;
         background-color: $error-bg;
         box-shadow: inset 0 0 5px $error-gray-input;
-        &::placeholder {
+        &:placeholder-shown {
           color: $error-placeholder;
+        }
+
+        &:not(:placeholder-shown) {
+          &+.validation-error {
+            &+label.control-label {
+              display: block;
+              color: $error-placeholder;
+              font-size: 0.625em;
+              padding: 0 0 0 15px;
+              letter-spacing: 0.1em;
+              margin-top: -63px;
+              margin-bottom: 25px;
+              text-transform: uppercase;
+            }
+          }
         }
       }
     }
+
 
     .validation-error {
       font-size: 0.875em;
@@ -297,12 +331,12 @@ input:focus, select:focus, textarea:focus, button:focus {
         }
         &:checked {
           &+label:before {
-            background: white url('img/check.png') no-repeat 1px 2px;
+            background: $check-green url('img/check.png') no-repeat -11px 2px;
             border: 2px solid $check-green;
           }
           &:hover {
             &+label:before {
-              background: $check-green url('img/check.png') no-repeat -11px 2px;
+              background: white url('img/check.png') no-repeat 1px 2px;
             }
           }
         }

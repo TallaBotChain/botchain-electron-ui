@@ -3,11 +3,11 @@ import { FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap';
 
 export const inputField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => (
   <FormGroup controlId={input.name}>
+    <FormControl {...input} placeholder={placeholder || label} type={type} readOnly={readOnly} className={touched && error && 'error'} />
+      {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
+      {asyncValidating && (<span>validating...</span>)}
+      {appendComponent}
     <ControlLabel>{label}</ControlLabel>
-  <FormControl {...input} placeholder={placeholder || label} type={type} readOnly={readOnly} className={touched && error && 'error'} />
-    {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
-    {asyncValidating && (<span>validating...</span>)}
-    {appendComponent}
   </FormGroup>
 )
 
