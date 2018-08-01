@@ -1,5 +1,6 @@
 @import 'buttons';
 $botchain-green: #00BC90;
+$check-green: #00A37D;
 $state: #32373E;
 $light-green: #BFEEE3;
 $gray: #A0A4AA;
@@ -234,23 +235,75 @@ input:focus, select:focus, textarea:focus, button:focus {
       display: none;
     }
 
-    .radio {
-      label {
-        padding-left: 0;
-      }
-
-      input[type=radio]{
-        display: none;
-        &+span{
-          display: inline-block;
-          font-size: 0.875em;
-          color: $gray-label;
-          padding-left: 10px;
-          min-height: 23px;
-        }
-        &:checked{
-          &+span{
+    .import-nav {
+      margin-top: 15px;
+      li {
+        font-size: 0.875em;
+        &.active {
+          a {
             color: white;
+          }
+        }
+        a {
+          color: $gray-label;
+          background: none;
+          padding: 6px 10px;
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .checkbox {
+      input[type="checkbox"] {
+        height: 16px;
+        width: 16px;
+        border: 1px solid $gray-input;
+        margin: 30px 15px 0 0;
+        vertical-align: top;
+        position: absolute;
+        opacity: 0;
+        border-radius: 4px;
+        &+label {
+          cursor: pointer;
+        }
+        &:not(checked){
+          &+label {
+            position: relative;
+            padding: 6px 0 0 25px;
+            font-size: 0.875em;
+            font-weight: 300;
+            color: $gray-link;
+            &:before {
+              content: '';
+              position: absolute;
+              top: 5px;
+              left: 0;
+              width: 16px;
+              height: 16px;
+              border: 1px solid $gray-input;
+              box-shadow: 0 0 5px $error-gray-input;
+              background: white;
+              border-radius: 4px;
+            }
+          }
+          &:hover {
+            &+label:before {
+              background: $check-green;
+              border: 2px solid $check-green;
+            }
+          }
+        }
+        &:checked {
+          &+label:before {
+            background: white url('img/check.png') no-repeat 1px 2px;
+            border: 2px solid $check-green;
+          }
+          &:hover {
+            &+label:before {
+              background: $check-green url('img/check.png') no-repeat -11px 2px;
+            }
           }
         }
       }
@@ -288,6 +341,14 @@ input:focus, select:focus, textarea:focus, button:focus {
       border: none;
       margin-bottom: 5px;
     }
+
+    .registration-form {
+      margin-bottom: 30px;
+    }
+
+    .import-wallet-nav {
+      margin-top: 30px;
+    }
   }
   &.top50 {
     border-radius: 13px 13px 0 0;
@@ -313,6 +374,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 
 .divider {
   height: 2px;
+  background: $state;
 }
 
 .list-group.nav-list {

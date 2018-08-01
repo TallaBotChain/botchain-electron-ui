@@ -22,7 +22,7 @@ class ImportForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <Col md={3} sm={4} xs={5}>
-          <Nav bsStyle="pills" stacked activeKey={this.state.format} onSelect={this.changeFormat}>
+          <Nav bsStyle="pills import-nav" stacked activeKey={this.state.format} onSelect={this.changeFormat}>
             <NavItem eventKey={"private_key"} title="Private Key">Private Key</NavItem>
             <NavItem eventKey={"mnemonic"} title="Backup Passphrase">Backup Passphrase</NavItem>
             <NavItem eventKey={"json"} title="JSON file">JSON file</NavItem>

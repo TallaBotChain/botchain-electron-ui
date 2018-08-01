@@ -17,7 +17,6 @@ export const radioField = ({ input, label, type }) => (
       <input {...input} type={type} />
       <span>{label}</span>
     </label>
-
   </div>
 )
 
@@ -30,7 +29,7 @@ export const fileField = ({ input, label, type, meta: { asyncValidating, touched
       {asyncValidating && (<span>validating...</span>)}
       {appendComponent}
       <ControlLabel className="btn small-button default-button">{label}</ControlLabel>
-    <small className="gray-label">{placeholder}</small>
+      <small className="gray-label">{placeholder}</small>
     </FormGroup>
   );
 }

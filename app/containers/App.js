@@ -4,6 +4,8 @@ import AppNav from '../components/shared/AppNav';
 import Footer from '../components/shared/Footer';
 import {Grid, Row, Col } from 'react-bootstrap'
 
+// localStorage.removeItem('botcoin');
+
 type Props = {
   children: React.Node
 };
