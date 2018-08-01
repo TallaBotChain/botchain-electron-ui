@@ -235,22 +235,20 @@ input:focus, select:focus, textarea:focus, button:focus {
       display: none;
     }
 
-    .radio {
-      label {
-        padding-left: 0;
-      }
-
-      input[type=radio]{
-        display: none;
-        &+span{
-          display: inline-block;
-          font-size: 0.875em;
-          color: $gray-label;
-          padding-left: 10px;
-          min-height: 23px;
+    .import-nav {
+      margin-top: 15px;
+      li {
+        font-size: 0.875em;
+        &.active {
+          a {
+            color: white;
+          }
         }
-        &:checked{
-          &+span{
+        a {
+          color: $gray-label;
+          background: none;
+          padding: 6px 10px;
+          &:hover {
             color: white;
           }
         }
