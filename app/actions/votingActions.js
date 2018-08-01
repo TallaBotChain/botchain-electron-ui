@@ -49,6 +49,7 @@ const getLastBlock = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let lastBlock = await curationCouncil.getLastBlock();
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlock', value: lastBlock.number });
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlockTimestamp', value: lastBlock.timestamp });
 }
 
 export const getVotes = () => async (dispatch, getStore) => {
@@ -72,6 +73,7 @@ export const getVotes = () => async (dispatch, getStore) => {
     console.log("votedOnStatus for "+idx+" is ", votedOnStatus);
     let address = await curationCouncil.ownerOf(idx);
     dispatch(DeveloperActions.getDeveloperInfo(address));
+    if( expired && (! votedOnStatus) ) continue; // skip expired and not voted
     votes.push( { key: idx,
       name: `Vote ${idx}`,
       reward: curatorRewardRate,

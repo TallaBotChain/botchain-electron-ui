@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
-import VoteModal from './VoteModal'
+import VoteModal from './VoteModal';
+import VoteListItem from './VoteListItem';
 
 export default class VoteList extends Component {
 
@@ -29,25 +30,9 @@ export default class VoteList extends Component {
     this.props.castVote(this.props.voting.voteToShow.key, false);
   }
 
-  voteDomain = (vote) => {
-    let url = this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.url : false;
-    try {
-      return url ? (new URL(url)).hostname : "--";
-    }catch(ex) {
-      console.log(ex);
-      return "--";
-    }
-  }
-
-
   render() {
     const votes = this.props.votes.map((vote) =>
-      <ListGroupItem key={vote.key} title={vote.address} className='clearfix' onClick={this.voteClick(vote)}>
-        <Col xs={6} md={3}>{vote.name}</Col>
-        <Col xs={6} md={3}>{this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.name : "Loading..."  }</Col>
-        <Col xs={6} md={3}>{this.voteDomain(vote)}</Col>
-        <Col xs={6} md={3}>{vote.reward} <abbr className='currency'>BOTC</abbr></Col>
-      </ListGroupItem>
+        <VoteListItem key={vote.key} vote={vote} voteClick={this.voteClick} {...this.props} />
       );
     return (
       <div className='vote-list-container'>
