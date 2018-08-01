@@ -10,7 +10,7 @@ export default class WalletEthereum extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       show_send_modal: false,
       show_receive_modal: false
     };
@@ -27,36 +27,37 @@ export default class WalletEthereum extends Component {
 
   render() {
     return (
-      <Row className="show-grid">
-        <Col xs={4} md={3} className="sub-navigation">
+      <div>
+        <Col xs={3} sm={2} className="content-inner gray-bg left-inner">
           <WalletNav />
         </Col>
-        <Col xs={8} md={9}>
-          <h1>Ethereum Wallet</h1>
-          <Well>
-            <div className="text-center">
-              <h4>Balance</h4>
-              {this.props.walletData.balance} ETH
+        <Col xs={9} sm={10} className="content-inner white-bg right-inner">
+
+          <Col xs={12} className="text-center">
+            <h2>Ethereum Balance</h2>
+            <h1 className="ethereum">
+              {this.props.walletData.balance} <span>ETH</span>
+            </h1>
+            <strong className="dollar-balance gray">
+              <span>$</span>588.14
+            </strong>
+            <div className="center-buttons">
+              <Button onClick={this.toggleSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
+              <Button onClick={this.toggleReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
             </div>
-          </Well>
-          <Row className="show-grid">
-            <Col xs={6}>
-              <Button block onClick={this.toggleSendModal}>Send</Button>
+            <Col xs={12}>
+              <h5 className="gray text-left">TRANSACTION HISTORY</h5>
+              <TransactionList {...this.props}/>
             </Col>
-            <Col xs={6}>
-              <Button block onClick={this.toggleReceiveModal}>Receive</Button>
-            </Col>
-          </Row>
-          <h3>History</h3>
-          <TransactionList {...this.props}/>
+          </Col>
+          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} />
+          <SendModal
+            show={this.state.show_send_modal}
+            handleClose={this.toggleSendModal}
+            {...this.props}
+          />
         </Col>
-        <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} />
-        <SendModal 
-          show={this.state.show_send_modal} 
-          handleClose={this.toggleSendModal}
-          {...this.props}
-        />
-      </Row>
+      </div>
     )
   }
 }

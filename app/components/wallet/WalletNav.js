@@ -9,10 +9,10 @@ export default class WalletNav extends Component {
 
   render() {
     return (
-      <ListGroup>
-        <NavLink className="list-group-item" exact to="/wallet/ethereum">Ethereum</NavLink>
-        <NavLink className="list-group-item" exact to="/wallet/botcoin">Botcoin</NavLink>
-      </ListGroup> 
+      <ListGroup className="subnav-list">
+        <NavLink className="list-group-item ethereum-link" exact to="/wallet/ethereum">Ethereum<span></span></NavLink>
+        <NavLink className="list-group-item botcoin-link" exact to="/wallet/botcoin">Botcoin<span></span></NavLink>
+      </ListGroup>
     );
   }
 }

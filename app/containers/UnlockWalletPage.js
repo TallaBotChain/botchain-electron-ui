@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Col, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as WalletActions from '../actions/walletActions';
 import UnlockWalletForm from '../components/wallet/UnlockWalletForm';
@@ -14,12 +14,27 @@ class UnlockWalletPage extends Component {
 
   render() {
     return (
-      <div className='text-center'>
-        <h1>Unlock wallet</h1>
-        {( this.props.error ? <Alert bsStyle="danger">{ this.props.error }</Alert> : "" )}
-        <UnlockWalletForm onSubmit={ this.submit } {...this.props} />
-        <Link to="/wallet/import" className="btn btn-link">Import wallet</Link>
-        <Link to="/wallet/import" className="btn btn-link">Forgot password?</Link>
+      <div>
+        <Col xs={12} className="content-inner trans-bg top50">
+          <Col md={6} sm={8} xs={10}>
+            <h3>Unlock Wallet</h3>
+            <p className="lighter-gray-text">Welcome back! Enter your password to unlock your wallet.</p>
+            {( this.props.error ? <Alert bsStyle="danger">{ this.props.error }</Alert> : "" )}
+            <UnlockWalletForm onSubmit={ this.submit } {...this.props} />
+          </Col>
+        </Col>
+        <Col xs={12} className="divider">
+        </Col>
+        <Col xs={12} className="content-inner trans-bg bottom50">
+          <Col xs={12}>
+            <Link to="/wallet/import" className="btn default-button small-button">Import Wallet</Link>
+            <p className="lighter-gray-text">
+              You can import an existing wallet to use with the Curation Council App.
+              <br/>
+              However, the wallet will only hold Botcoin and Ethereum.
+            </p>
+          </Col>
+        </Col>
       </div>
     );
   }

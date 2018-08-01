@@ -9,7 +9,6 @@ class WalletBotcoinPage extends Component {
 
   componentDidMount () {
     this.props.getBalance()
-    this.props.getStakedBalance()
     this.props.getTransactionList()
   }
 
@@ -37,15 +36,6 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(BotcoinActions.getTransactionList());
-    },
-    stake: (amount) => {
-      dispatch(CurationCouncilActions.approveJoinPayment(amount));
-    },
-    unstake: () => {
-      dispatch(CurationCouncilActions.leaveCouncil());
-    },
-    getStakedBalance: () => {
-      dispatch(CurationCouncilActions.getStakedBalance());
     }
   }
 }

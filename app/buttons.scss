@@ -1,0 +1,88 @@
+$orange: #FF6F59;
+$gray-text: #757B83;
+$gray-border: rgba(29,32,36,.22);
+$gray-text-hover: #60676F;
+$gray-border-hover: rgba(29,32,36,0.69);
+$lighter-gray: #E1E2E4;
+$placeholder: #8B9096;
+$gray-gradient1: #F6F7F7;
+$gray-gradient2: #E1E2E4;
+$gray-gradient3: #CBCED0;
+$botchain-green: #00BC90;
+$active-green: #3ABCA5;
+
+@mixin form-button ($color, $font-color: white) {
+  border-color: $color;
+  background: $color;
+  color: $font-color;
+  font-weight: 400;
+  font-size: 0.875em;
+  &:hover, &:active, &:focus, &:active:focus, &:active:hover {
+    color: $font-color;
+    border: 1px solid $color;
+    background: $color;
+    outline: none;
+    text-decoration: none;
+  }
+}
+
+.orange-button{
+  @include form-button($orange);
+  &:hover, &:focus{
+    border-color: $botchain-green;
+    background: $botchain-green;
+  }
+  &:active, &:active:focus, &:active:hover {
+    background: $active-green;
+    border-color: $active-green;
+  }
+}
+
+.default-button{
+  @include form-button($gray-border, $gray-text);
+  background: linear-gradient($gray-gradient1, $gray-gradient2);
+  &:hover, &:focus{
+    color: $gray-text-hover;
+    border-color: $gray-border-hover;
+    background: linear-gradient($gray-gradient1, $gray-gradient3);
+  }
+  &:active, &:active:focus, &:active:hover {
+    color: $gray-text-hover;
+    background: $gray-gradient1;
+    border-color: $gray-gradient1;
+  }
+}
+
+.gray-button{
+  @include form-button($gray-text-hover, $lighter-gray);
+  &:hover, &:focus{
+    color: white;
+    border-color: $gray-text;
+    background: $gray-text;
+  }
+  &:active, &:active:focus, &:active:hover {
+    color: white;
+    background: $placeholder;
+    border-color: $placeholder;
+  }
+}
+
+.cta-button{
+  height: 40px;
+  min-width: 110px;
+  letter-spacing: 0.08em;
+  margin-top: 5px;
+}
+
+.small-button {
+  height: 32px;
+  min-width: 114px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.width-100 {
+  min-width: 100px;
+}

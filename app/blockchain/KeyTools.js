@@ -21,6 +21,10 @@ class KeyTools {
     return this.privateKeyPresent && this.privateKeyUnlocked;
   }
 
+  get walletLocked() {
+    return this.privateKeyPresent && !this.privateKeyUnlocked;
+  }
+
   get privateKeyPresent() {
     return ! (localStorage.getItem(this.walletStorageKey) === null);
   }

@@ -2,32 +2,36 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import App from './containers/App';
-import WalletRoute from './components/WalletRoute';
+import UnlockedWalletRoute from './components/hocs/UnlockedWalletRoute';
+import LockedWalletRoute from './components/hocs/LockedWalletRoute';
+import NoWalletRoute from './components/hocs/NoWalletRoute';
 
 import VotingPage from './containers/VotingPage';
+import StakePage from './containers/StakePage';
 import SettingsPage from './containers/SettingsPage';
 import WalletEthereumPage from './containers/WalletEthereumPage';
 import WalletBotcoinPage from './containers/WalletBotcoinPage';
-import NoWalletPage from './containers/NoWalletPage';
 import CreateWalletPage from './containers/CreateWalletPage';
 import ImportWalletPage from './containers/ImportWalletPage';
 import UnlockWalletPage from './containers/UnlockWalletPage';
+import RegistrationPage from './containers/RegistrationPage';
 
 
 export default () => (
   <App>
     <Switch>
-      <WalletRoute exact path="/" component={VotingPage} />
-      <Route exact path="/wallet/missing" component={NoWalletPage} />
-      <Route exact path="/wallet/new" component={CreateWalletPage} />
+      <UnlockedWalletRoute exact path="/" component={VotingPage} />
+      <UnlockedWalletRoute exact path="/stake" component={StakePage} />
+      <NoWalletRoute exact path="/wallet/new" component={CreateWalletPage} />
       <Route exact path="/wallet/import" component={ImportWalletPage} />
-      <Route exact path="/wallet/unlock" component={UnlockWalletPage} />
-      <WalletRoute path="/settings" component={SettingsPage} />
+      <LockedWalletRoute exact path="/wallet/unlock" component={UnlockWalletPage} />
+      <UnlockedWalletRoute path="/settings" component={SettingsPage} />
       <Route exact path='/wallet' render={() => (
         <Redirect to="/wallet/ethereum" />
       )} />
-      <WalletRoute path="/wallet/ethereum" component={WalletEthereumPage} />
-      <WalletRoute path="/wallet/botcoin" component={WalletBotcoinPage} />
+      <UnlockedWalletRoute path="/wallet/ethereum" component={WalletEthereumPage} />
+      <UnlockedWalletRoute path="/wallet/botcoin" component={WalletBotcoinPage} />
+      <NoWalletRoute exact path="/registration" component={RegistrationPage} />
     </Switch>
   </App>
 );
