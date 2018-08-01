@@ -8,7 +8,7 @@ class UnlockWalletForm extends Component {
   render() {
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (<form onSubmit={handleSubmit}>
-      <Field name="password" type="password" component={inputField} placeholder="Wallet Password" validate={[
+      <Field name="password" type="password" component={inputField} placeholder="Wallet Password" label="WALLET PASSWORD" validate={[
         required(),
         length({min: 8})
         ]}/>
