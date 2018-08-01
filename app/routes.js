@@ -7,6 +7,7 @@ import LockedWalletRoute from './components/hocs/LockedWalletRoute';
 import NoWalletRoute from './components/hocs/NoWalletRoute';
 
 import VotingPage from './containers/VotingPage';
+import StakePage from './containers/StakePage';
 import SettingsPage from './containers/SettingsPage';
 import WalletEthereumPage from './containers/WalletEthereumPage';
 import WalletBotcoinPage from './containers/WalletBotcoinPage';
@@ -20,6 +21,7 @@ export default () => (
   <App>
     <Switch>
       <UnlockedWalletRoute exact path="/" component={VotingPage} />
+      <UnlockedWalletRoute exact path="/stake" component={StakePage} />
       <NoWalletRoute exact path="/wallet/new" component={CreateWalletPage} />
       <Route exact path="/wallet/import" component={ImportWalletPage} />
       <LockedWalletRoute exact path="/wallet/unlock" component={UnlockWalletPage} />
