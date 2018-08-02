@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
-import VoteModal from './VoteModal'
+import VoteModal from './VoteModal';
+import VoteListItem from './VoteListItem';
 
 export default class VoteList extends Component {
 
@@ -31,10 +32,7 @@ export default class VoteList extends Component {
 
   render() {
     const votes = this.props.votes.map((vote) =>
-      <ListGroupItem key={vote.key} title={vote.address} className='clearfix' onClick={this.voteClick(vote)}>
-        <Col xs={6} md={9}>{vote.name}</Col>
-        <Col xs={6} md={3}>Reward {vote.reward}</Col>
-      </ListGroupItem>
+        <VoteListItem key={vote.key} vote={vote} voteClick={this.voteClick} {...this.props} />
       );
     return (
       <div className='vote-list-container'>

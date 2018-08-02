@@ -2,6 +2,11 @@ import CurationCouncil from '../blockchain/CurationCouncil';
 import TokenVault from '../blockchain/TokenVault';
 import { start as startTxObserver } from './txObserverActions';
 import TxStatus from '../utils/TxStatus'
+import {BigNumber} from 'bignumber.js';
+import * as DeveloperActions from '../actions/developerActions'
+import keyTools from '../blockchain/KeyTools';
+import axios from 'axios'
+import {remote} from 'electron';
 
 export const VotingActions = {
   SET_VOTING_ATTRIBUTE: 'SET_VOTING_ATTRIBUTE',
@@ -44,6 +49,7 @@ const getLastBlock = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let lastBlock = await curationCouncil.getLastBlock();
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlock', value: lastBlock.number });
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlockTimestamp', value: lastBlock.timestamp });
 }
 
 export const getVotes = () => async (dispatch, getStore) => {
@@ -52,27 +58,33 @@ export const getVotes = () => async (dispatch, getStore) => {
   await dispatch(getTotalSupply());
   await dispatch(getRewardRate());
   await dispatch(getLastBlock());
+  await dispatch(getPastTransactions());
   let { totalSupply, curatorRewardRate, lastBlock }  = getStore().voting;
   console.log("rewardRate: ",  curatorRewardRate );
   console.log("totalSupply: ", totalSupply);
   console.log("lastBlock: ", lastBlock);
   let votes = [];
-  let availableReward = 0;
+  let availableReward = new BigNumber(0);
   for(let idx=totalSupply;idx>0;idx--) {
     let finalBlock = await curationCouncil.getVoteFinalBlock(idx);
     console.log("finalBlock: ", finalBlock);
-    if( finalBlock < lastBlock ) break;
+    let expired = ( finalBlock < lastBlock );
     let votedOnStatus = await curationCouncil.getVotedOnStatus(idx);
     console.log("votedOnStatus for "+idx+" is ", votedOnStatus);
-    if( votedOnStatus ) continue; // skip already voted
     let address = await curationCouncil.ownerOf(idx);
+    dispatch(DeveloperActions.getDeveloperInfo(address));
+    if( expired && (! votedOnStatus) ) continue; // skip expired and not voted
     votes.push( { key: idx,
       name: `Vote ${idx}`,
       reward: curatorRewardRate,
-      address: address } );
-    availableReward += curatorRewardRate;
+      address: address,
+      votedOnStatus: votedOnStatus,
+      expired: expired,
+      finalBlock: finalBlock } );
+    console.log(typeof curatorRewardRate);
+    availableReward = availableReward.plus( BigNumber(curationCouncil.web3.utils.toWei(curatorRewardRate,'ether') ) );
   }
-  dispatch( setAvailableReward(availableReward) );
+  dispatch( setAvailableReward(curationCouncil.web3.utils.fromWei(availableReward.toString(), 'ether') ) );
   dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
   dispatch(setInProgress(false));
 }
@@ -170,3 +182,42 @@ const setPayoutTxId = (txId) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxId', value: txId }
 }
 
+export const getPastTransactions = () => (dispatch) => {
+  return axios.get(remote.getGlobal('config').etherscan_api_url, {
+    params: {
+      module: "account",
+      action: "txlist",
+      address: keyTools.address,
+      sort: "desc",
+      apikey: remote.getGlobal('config').etherscan_api_key
+    }
+  })
+  .then(function (response) {
+    dispatch(setPastVotes(response.data.result));
+    return Promise.resolve();
+  })
+  .catch(function (error) {
+    dispatch( setError("Failed to retreive transaction history." ));
+    return Promise.resolve();
+  })
+}
+
+const arrayToObject = (arr, keyField) =>
+  Object.assign({}, ...arr.map(item => ({[item[keyField]]: item})))
+
+const setPastVotes = (transactions) => {
+  console.log("all transactions:", transactions);
+  const contractAddress = remote.getGlobal('config').couration_council_contract;
+  const castVoteMethod = "0x7e6a7282";
+  let coucilTransactions = transactions.filter( tx => ( (tx.to == contractAddress) && (tx.isError == "0") && (tx.input.startsWith(castVoteMethod)) ) );
+  console.log("council transactions:", coucilTransactions );
+  let voteObjects = coucilTransactions.map( (tx) => {
+    let voteId = parseInt(tx.input.substr(10,64));
+    let voted = parseInt(tx.input.substring(75));
+    return { voteId, voted };
+  });
+  console.log("past vote objects: ", voteObjects);
+  let pastVotes = arrayToObject(voteObjects, "voteId");
+  console.log("past votes: ", pastVotes);
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
+}
