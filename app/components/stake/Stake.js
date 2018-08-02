@@ -27,30 +27,33 @@ export default class Stake extends Component {
   render() {
     return (
       <Col xs={12} className="content-inner white-bg">
-
         <Col xs={12} className="text-center">
           <h2>Staked Balance</h2>
-          <h1 className="ethereum">
-            {this.props.curationCouncil.stakedBalance} <span>BOTC</span>
+        <h1 className={this.props.curationCouncil.stakedBalance > 0 ? "state-text" : "gray"}>
+            {this.props.curationCouncil.stakedBalance}<span className="botcoin">BOTC</span>
           </h1>
           <strong className="dollar-balance gray">
             <span>$</span>588.14
           </strong>
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>
-              <div className="center-buttons">
-              <Button onClick={this.toggleUnstakeModal}>Unstake</Button>
+              <div className="center-button">
+              <Button className="btn orange-button small-button" onClick={this.toggleUnstakeModal}>UNSTAKE</Button>
               </div>
             </div>
           ) : (
-              <div>
-                <div className="center-buttons">
-                <Button onClick={this.toggleStakeModal}>Stake</Button>
-                </div>
-                <h4>In order to participate in Curation Council voting you must first stake a fixed amount of Botcoin.</h4>
-                <p>Your stake can be any amount greater than zero. However, the greater the stake the more you'll be able to vote. To read more about staking and voting, please refer to <a href="#">this article</a></p>
+            <div>
+              <div className="center-button">
+                <Button className="btn orange-button small-button" onClick={this.toggleStakeModal}>STAKE</Button>
               </div>
-            )}
+              <Col md={6} sm={8} xs={12} componentClass="h3" className="text-left">
+                In order to participate in Curation Council voting you must first stake a fixed amount of Botcoin.
+              </Col>
+              <Col md={8} sm={10} xs={12} componentClass="p" className="gray-p text-left">
+                Your stake can be any amount greater than zero. However, the greater the stake the more you'll be able to vote. To read more about staking and voting, please refer to <a href="#">this article</a>.
+              </Col>
+          </div>
+          )}
           <Col xs={12}>
             <h5 className="gray text-left">TRANSACTION HISTORY</h5>
             <TransactionList {...this.props} />

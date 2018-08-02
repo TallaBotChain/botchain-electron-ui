@@ -17,8 +17,8 @@ export default class TransactionList extends Component {
                   <span className="state-text">{keyTools.address.toUpperCase() === tx.from.toUpperCase() ? "SENT" : "RECEIVED"} {keyTools.web3.utils.fromWei(tx.value)} {this.props.walletData.currency}</span> on {moment(tx.timeStamp * 1000).format("MMM Do YYYY")}<br />
                   <span className="gray"><a href={`${"https://kovan.etherscan.io"}/tx/${tx.hash}`} target='_blank'>{tx.hash.substring(0, 40)}</a></span>
                 </td>
-                <td>
-                  <span className="state-text">({keyTools.web3.utils.fromWei(tx.value)} <span className="ethereum">{this.props.walletData.currency}</span>)</span><br />
+                <td className="text-right">
+                  <span className="state-text">({keyTools.web3.utils.fromWei(tx.value)} <span className={this.props.walletData.currency === "ETH" ? "ethereum" : "botcoin"}>{this.props.walletData.currency}</span>)</span><br />
                   <span className="dollar-text">${keyTools.web3.utils.fromWei(tx.value) * this.props.walletData.usdExchangeRate}</span>
                 </td>
               </tr>

@@ -36,7 +36,7 @@ class CreateWalletPage extends Component {
             <h3>Step 2 of 2: Secret Backup Phrase</h3>
             <p>
               Please save or remember this backup phrase. It is very important.<br/>
-               You will have no way to recover your wallet contents if you forget it.
+              You will have no way to recover your wallet contents if you forget it.
             </p>
             <Well>
               { this.props.mnemonic }

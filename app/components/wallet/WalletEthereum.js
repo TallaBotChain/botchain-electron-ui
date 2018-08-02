@@ -36,7 +36,7 @@ export default class WalletEthereum extends Component {
           <Col xs={12} className="text-center">
             <h2>Ethereum Balance</h2>
             <h1 className="ethereum">
-              {this.props.walletData.balance} <span>ETH</span>
+              {this.props.walletData.balance}<span>ETH</span>
             </h1>
             <strong className="dollar-balance gray">
               <span>$</span>{this.props.walletData.balance * this.props.walletData.usdExchangeRate}
