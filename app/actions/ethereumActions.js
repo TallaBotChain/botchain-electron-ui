@@ -106,7 +106,6 @@ export const getTransactionList = () => (dispatch) => {
 export const getExchangeRate = () => (dispatch) => {
   axios.get(remote.getGlobal('config').coinbase_price_api_url)
     .then(function (response) {
-      console.log(response)
       dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'usdExchangeRate', value: response.data.data.amount });
     })
     .catch(function (error) {
