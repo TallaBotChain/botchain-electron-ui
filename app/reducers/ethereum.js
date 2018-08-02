@@ -9,7 +9,8 @@ const initialState = {
   transferTxMined: false,
   transferSuccess: false,
   transactions: [],
-  currency: "ETH"
+  currency: "ETH",
+  usdExchangeRate: 0
 }
 
 const ethereum = (state = initialState, action) => {

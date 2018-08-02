@@ -8,5 +8,6 @@ export const config = {
   etherscan_url: "https://kovan.etherscan.io",
   etherscan_api_url: "http://api-kovan.etherscan.io/api",
   etherscan_api_key: "UI5FHY91GIQ94U6IUDKRGDYS4JWSGGXD24",
-  geth_rpc_url: "https://kovan.infura.io/quylRadtDHfbMF9rF15R"
+  geth_rpc_url: "https://kovan.infura.io/quylRadtDHfbMF9rF15R",
+  coinbase_price_api_url: "https://api.coinbase.com/v2/prices/ETH-USD/spot"
 }

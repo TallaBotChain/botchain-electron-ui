@@ -45,6 +45,7 @@ export const getBalance = () => (dispatch) => {
   // ethers
   botCoin.getBalance().then((balance) => {
     dispatch(setBallance(botCoin.web3.utils.fromWei(balance, 'ether')))
+    dispatch(getExchangeRate())
     dispatch(setInProgress(false))
   }, (error) => {
     console.log(error)
@@ -100,4 +101,16 @@ export const getTransactionList = () => (dispatch) => {
   .catch(function (error) {
     dispatch( setError("Failed to retreive transaction history." ));
   })
+}
+
+export const getExchangeRate = () => (dispatch) => {
+  axios.get(remote.getGlobal('config').coinbase_price_api_url)
+    .then(function (response) {
+      console.log(response)
+      dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'usdExchangeRate', value: response.data.data.amount });
+    })
+    .catch(function (error) {
+      dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'usdExchangeRate', value: 0 });
+      console.log("Failed to retreive ETH - USD exchange rate." + error)
+    })
 }

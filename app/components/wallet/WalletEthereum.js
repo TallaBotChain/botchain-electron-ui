@@ -39,7 +39,7 @@ export default class WalletEthereum extends Component {
               {this.props.walletData.balance} <span>ETH</span>
             </h1>
             <strong className="dollar-balance gray">
-              <span>$</span>588.14
+              <span>$</span>{this.props.walletData.balance * this.props.walletData.usdExchangeRate}
             </strong>
             <div className="center-buttons">
               <Button onClick={this.toggleSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
