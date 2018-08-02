@@ -33,7 +33,7 @@ export default class Stake extends Component {
             {this.props.curationCouncil.stakedBalance}<span className="botcoin">BOTC</span>
           </h1>
           <strong className="dollar-balance gray">
-            <span>$</span>588.14
+            <span>$</span>{this.props.curationCouncil.stakedBalance * this.props.walletData.usdExchangeRate}
           </strong>
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>
