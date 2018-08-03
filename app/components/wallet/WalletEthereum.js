@@ -50,7 +50,7 @@ export default class WalletEthereum extends Component {
               <TransactionList {...this.props}/>
             </Col>
           </Col>
-          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} />
+          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} currency="ethereum" />
           <SendModal
             show={this.state.show_send_modal}
             handleClose={this.toggleSendModal}

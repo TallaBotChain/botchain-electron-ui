@@ -16,7 +16,7 @@ export default class StakeModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose} >
+      <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName="app-modal stake-modal">
         <Modal.Header closeButton>
           <Modal.Title>Submit Stake</Modal.Title>
         </Modal.Header>

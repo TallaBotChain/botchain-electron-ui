@@ -11,10 +11,13 @@ $dollar-green: #58C870;
 $ethereum-text: #5364B4;
 $botcoin-gold: #C2A900;
 $botcoin-text: #BCA400;
+$botcoin: #BEA107;
+$botcoin-title: #D0AF00;
 $trans-gray: rgba(255,255,255,.1);
 $gray-text: #757B83;
 $gray-text-hover: #60676F;
 $gray-input: rgba(29,32,36,.13);
+$gray-border: rgba(29,32,36,.22);
 $placeholder: #8B9096;
 $error: #DF3C3C;
 $error-placeholder: #E98176;
@@ -643,5 +646,110 @@ input:focus, select:focus, textarea:focus, button:focus {
   background-color: $black;
   &.in {
     opacity: 0.86;
+  }
+}
+
+.modal-dialog.app-modal {
+  margin-top: 180px;
+  .modal-content {
+    min-height: 370px;
+    box-shadow: 0 0 8px $gray-border;
+  }
+  .modal-header {
+    border-bottom: 0;
+
+    h4{
+      font-size: 1.25em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      margin-top: 17px;
+      text-transform: uppercase;
+    }
+    .close {
+      font-size: 2.375em;
+      color: rgba(29,32,36,0.32);
+      opacity: 1;
+      font-weight: 500;
+      &:hover {
+        color: $gray-text-hover;
+      }
+    }
+  }
+
+  .modal-body {
+    padding-bottom: 0;
+  }
+  .modal-footer {
+    border-top: 0;
+    text-align: center;
+    padding-top: 0;
+    small {
+      font-weight: 500;
+    }
+  }
+
+  &.receive-modal {
+    .modal-content {
+
+      .qr {
+        width: 148px;
+        height: 148px;
+        padding: 8px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 1px 0 3px $gray-border;
+        margin-bottom: 20px;
+      };
+
+      h3.gray-text {
+        font-weight: 400;
+        text-transform: capitalize;
+      }
+      h3.ethereum, h3.botcoin {
+        text-shadow: 0 2px 2px white;
+      }
+      h3.botcoin {
+        color: $botcoin;
+      }
+    }
+  }
+  &.ethereum-modal, &.eth-modal {
+    .modal-content {
+      background: white url('img/eth_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $ethereum;
+    }
+  }
+  &.botcoin-modal, &.botc-modal {
+    .modal-content {
+      background: white url('img/botc_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $botcoin-title;
+    }
+  }
+  &.stake-modal {
+    .modal-content {
+      background: white url('img/stake_bg.png') no-repeat bottom right / cover;
+    }
+  }
+  &.reject-modal {
+    .modal-content {
+      background: white url('img/reject_bg.png') no-repeat top right / cover;
+    }
+
+    .modal-content {
+      min-height: 320px;
+    }
+  }
+  &.approve-modal {
+    .modal-content {
+      background: white url('img/approve_bg.png') no-repeat top right / cover;
+    }
+
+    .modal-content {
+      min-height: 320px;
+    }
   }
 }
