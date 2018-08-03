@@ -23,6 +23,12 @@ export default class Stake extends Component {
     this.setState({ show_unstake_modal: !this.state.show_unstake_modal });
   }
 
+  transactionList = () => {
+    let stakeMethod = "0xc9d65537"
+    let unstakeMethod = "0xed64bf29"
+    return this.props.walletData.transactions.filter(record => (record.input.startsWith(stakeMethod) || record.input.startsWith(unstakeMethod)))
+  }
+
 
   render() {
     return (
@@ -32,9 +38,6 @@ export default class Stake extends Component {
         <h1 className={this.props.curationCouncil.stakedBalance > 0 ? "state-text" : "gray"}>
             {this.props.curationCouncil.stakedBalance}<span className="botcoin">BOTC</span>
           </h1>
-          <strong className="dollar-balance gray">
-            <span>$</span>{this.props.curationCouncil.stakedBalance * this.props.walletData.usdExchangeRate}
-          </strong>
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>
               <div className="center-button">
@@ -56,7 +59,11 @@ export default class Stake extends Component {
           )}
           <Col xs={12}>
             <h5 className="gray text-left">TRANSACTION HISTORY</h5>
-            <TransactionList {...this.props} />
+            <TransactionList transactions={this.transactionList()}
+              currency={this.props.walletData.currency}
+              usdExchangeRate={this.props.usdExchangeRate} 
+              isStakeList={true}
+            />
           </Col>
         </Col>
         <StakeModal show={this.state.show_stake_modal} handleClose={this.toggleStakeModal} {...this.props} />

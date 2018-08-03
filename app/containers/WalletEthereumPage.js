@@ -20,6 +20,7 @@ class WalletEthereumPage extends Component {
 
 function mapStateToProps(state) {
     return {
+      usdExchangeRate: state.ethereum.usdExchangeRate,
       walletData: state.ethereum,
     };
 }
