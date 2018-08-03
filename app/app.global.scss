@@ -26,6 +26,18 @@ $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
 
+@mixin arrow ($top, $left, $color: white) {
+  content: '';
+  position: fixed;
+  top: $top;
+  left: $left;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 8px solid $color;
+}
+
 .gray-text {
   color: $gray-text;
 }
@@ -166,6 +178,10 @@ input:focus, select:focus, textarea:focus, button:focus {
     border-color: $gray-bg;
     box-shadow: inset -1px -1px 1px rgba(29,32,36,.21);
     padding-top: 20px;
+    &:before {
+      @include arrow(264px, 87px, $gray-bg);
+      z-index: 100;
+    }
   }
   &.white-bg {
     background-color: white;
@@ -247,19 +263,10 @@ input:focus, select:focus, textarea:focus, button:focus {
         letter-spacing: 0.06em;
       }
       &:before {
-        content: '';
-        position: fixed;
-        top: 76px;
-        left: 87px;
-        width: 0;
-        height: 0;
-        border-top: 9px solid transparent;
-        border-bottom: 9px solid transparent;
-        border-right: 8px solid $gray-gradient1;
-        display: block;
+        @include arrow(76px, 87px, $gray-gradient1);
+        z-index: 100;
       }
     }
-
   }
   &.trans-bg {
     background-color: $trans-gray;
@@ -518,6 +525,9 @@ input:focus, select:focus, textarea:focus, button:focus {
           background-position: -110px 0;
         }
       }
+      &.active:before {
+        @include arrow(76px, 87px);
+      }
     }
     &.wallet {
       span {
@@ -528,6 +538,9 @@ input:focus, select:focus, textarea:focus, button:focus {
           background-position: -167px -1px;
         }
       }
+      &.active:before {
+        @include arrow(264px, 87px);
+      }
     }
     &.stake {
       span {
@@ -537,6 +550,9 @@ input:focus, select:focus, textarea:focus, button:focus {
         span {
           background-position: -140px -1px;
         }
+      }
+      &.active:before {
+        @include arrow(171px, 87px);
       }
     }
     &.settings {
