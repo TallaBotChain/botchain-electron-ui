@@ -1,5 +1,4 @@
 @import 'buttons';
-$botchain-green: #00BC90;
 $check-green: #00A37D;
 $state: #32373E;
 $light-green: #BFEEE3;
@@ -14,11 +13,7 @@ $botcoin-text: #BCA400;
 $botcoin: #BEA107;
 $botcoin-title: #D0AF00;
 $trans-gray: rgba(255,255,255,.1);
-$gray-text: #757B83;
-$gray-text-hover: #60676F;
 $gray-input: rgba(29,32,36,.13);
-$gray-border: rgba(29,32,36,.22);
-$placeholder: #8B9096;
 $error: #DF3C3C;
 $error-placeholder: #E98176;
 $error-bg: #FFF1EE;
@@ -163,7 +158,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 .content-inner {
   height: calc(100vh - 30px);
   border-radius: 13px;
-  padding-bottom: 60px;
+  padding-bottom: 55px;
   padding-top: 30px;
   overflow-y: auto;
   &.gray-bg {
@@ -214,6 +209,54 @@ input:focus, select:focus, textarea:focus, button:focus {
       .small-button {
         margin-left: 7px;
         margin-right: 7px;
+      }
+    }
+
+    .white-header {
+      background-color: white;
+      height: 45px;
+      margin-top: -30px;
+      padding-top: 8px;
+      p {
+        font-weight: 600;
+      }
+      small {
+        color: $placeholder;
+        font-weight: 400;
+      }
+      span{
+        font-size: 0.75em;
+      }
+    }
+
+    .gray-body {
+      background: $gray-gradient1;
+      min-height: calc(100vh - 130px);
+      padding-top: 25px;
+
+      h3 {
+        letter-spacing: 0.05em;
+      }
+
+      p {
+        padding-bottom: 0;
+      }
+
+      .small-button {
+        font-weight: 500;
+        letter-spacing: 0.06em;
+      }
+      &:before {
+        content: '';
+        position: fixed;
+        top: 76px;
+        left: 87px;
+        width: 0;
+        height: 0;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-right: 8px solid $gray-gradient1;
+        display: block;
       }
     }
 
