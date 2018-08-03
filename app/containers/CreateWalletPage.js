@@ -41,7 +41,7 @@ class CreateWalletPage extends Component {
             <Well>
               { this.props.mnemonic }
             </Well>
-            <Link to="/wallet" className="btn orange-button cta-button">I HAVE COPIED IT SOMEWHERE SAFE</Link>
+            <Link to="/" className="btn orange-button cta-button">I HAVE COPIED IT SOMEWHERE SAFE</Link>
           </Col>
         ) : (
           <Col md={6} sm={8} xs={7}>
