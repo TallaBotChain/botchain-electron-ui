@@ -8,6 +8,7 @@ const initialState = {
   rewardBalance: null,
   availableReward: null,
   votes: [],
+  pastVotes: {},
   totalSupply: null,
   curatorRewardRate: null,
   lastBlock: null,

@@ -214,7 +214,8 @@ export const getPastTransactions = () => (dispatch) => {
 const arrayToObject = (arr, keyField) =>
   Object.assign({}, ...arr.map(item => ({[item[keyField]]: item})))
 
-const setPastVotes = (transactions) => {
+const setPastVotes = (transactions) => (dispatch, getState) => {
+  let prevPastVotes = getState().voting.pastVotes;
   let curationCouncil = new CurationCouncil();
   console.log("all transactions:", transactions);
   const contractAddress = remote.getGlobal('config').couration_council_contract;
@@ -231,7 +232,8 @@ const setPastVotes = (transactions) => {
     return { voteId, voted, txId, mined, timestamp };
   });
   console.log("past vote objects: ", voteObjects);
-  let pastVotes = arrayToObject(voteObjects, "voteId");
+  let nextPastVotes = arrayToObject(voteObjects, "voteId");
+  let pastVotes = Object.assign(prevPastVotes, nextPastVotes);
   console.log("past votes: ", pastVotes);
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }
