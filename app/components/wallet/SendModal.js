@@ -11,9 +11,9 @@ export default class SendModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose} >
+      <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName={`app-modal send-modal ${this.props.walletData.currency.toLowerCase()}-modal`}>
         <Modal.Header closeButton>
-          <Modal.Title>Send</Modal.Title>
+          <Modal.Title className="text-center">Send {this.props.walletData.currency==="ETH" ? "ETHEREUM" : "BOTCOIN"}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
           {this.props.walletData.transferTxId && !this.props.walletData.transferTxMined ? (

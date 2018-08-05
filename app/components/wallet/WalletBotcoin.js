@@ -31,15 +31,14 @@ export default class WalletBotcoin extends Component {
           <WalletNav />
         </Col>
         <Col xs={9} sm={10} className="content-inner white-bg right-inner">
-
           <Col xs={12} className="text-center">
             <h2>Botcoin Balance</h2>
-          <h1 className="botcoin">
-            {this.props.walletData.balance}<span>BOTC</span>
-          </h1>
-          <strong className="dollar-balance gray">
+            <h1 className="botcoin">
+              {this.props.walletData.balance}<span>BOTC</span>
+            </h1>
+            <strong className="dollar-balance gray">
               <span>$</span>{this.props.walletData.balance * this.props.walletData.usdExchangeRate}
-          </strong>
+            </strong>
             <div className="center-buttons">
               <Button onClick={this.toggleSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
               <Button onClick={this.toggleReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
@@ -49,7 +48,7 @@ export default class WalletBotcoin extends Component {
               <TransactionList {...this.props} />
             </Col>
           </Col>
-          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} />
+          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} currency="botcoin" />
           <SendModal show={this.state.show_send_modal} handleClose={this.toggleSendModal} {...this.props} />
         </Col>
       </div>

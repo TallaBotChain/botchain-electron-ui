@@ -1,5 +1,4 @@
 @import 'buttons';
-$botchain-green: #00BC90;
 $check-green: #00A37D;
 $state: #32373E;
 $light-green: #BFEEE3;
@@ -11,11 +10,10 @@ $dollar-green: #58C870;
 $ethereum-text: #5364B4;
 $botcoin-gold: #C2A900;
 $botcoin-text: #BCA400;
+$botcoin: #BEA107;
+$botcoin-title: #D0AF00;
 $trans-gray: rgba(255,255,255,.1);
-$gray-text: #757B83;
-$gray-text-hover: #60676F;
 $gray-input: rgba(29,32,36,.13);
-$placeholder: #8B9096;
 $error: #DF3C3C;
 $error-placeholder: #E98176;
 $error-bg: #FFF1EE;
@@ -27,6 +25,18 @@ $green-text: #008A6A;
 $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
+
+@mixin arrow ($top, $left, $color: white) {
+  content: '';
+  position: fixed;
+  top: $top;
+  left: $left;
+  width: 0;
+  height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-right: 8px solid $color;
+}
 
 .gray-text {
   color: $gray-text;
@@ -160,7 +170,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 .content-inner {
   height: calc(100vh - 30px);
   border-radius: 13px;
-  padding-bottom: 60px;
+  padding-bottom: 55px;
   padding-top: 30px;
   overflow-y: auto;
   &.gray-bg {
@@ -168,6 +178,10 @@ input:focus, select:focus, textarea:focus, button:focus {
     border-color: $gray-bg;
     box-shadow: inset -1px -1px 1px rgba(29,32,36,.21);
     padding-top: 20px;
+    &:before {
+      @include arrow(264px, 87px, $gray-bg);
+      z-index: 100;
+    }
   }
   &.white-bg {
     background-color: white;
@@ -214,6 +228,45 @@ input:focus, select:focus, textarea:focus, button:focus {
       }
     }
 
+    .white-header {
+      background-color: white;
+      height: 45px;
+      margin-top: -30px;
+      padding-top: 8px;
+      p {
+        font-weight: 600;
+      }
+      small {
+        color: $placeholder;
+        font-weight: 400;
+      }
+      span{
+        font-size: 0.75em;
+      }
+    }
+
+    .gray-body {
+      background: $gray-gradient1;
+      min-height: calc(100vh - 130px);
+      padding-top: 25px;
+
+      h3 {
+        letter-spacing: 0.05em;
+      }
+
+      p {
+        padding-bottom: 0;
+      }
+
+      .small-button {
+        font-weight: 500;
+        letter-spacing: 0.06em;
+      }
+      &:before {
+        @include arrow(76px, 87px, $gray-gradient1);
+        z-index: 100;
+      }
+    }
   }
   &.trans-bg {
     background-color: $trans-gray;
@@ -472,6 +525,9 @@ input:focus, select:focus, textarea:focus, button:focus {
           background-position: -110px 0;
         }
       }
+      &.active:before {
+        @include arrow(76px, 87px);
+      }
     }
     &.wallet {
       span {
@@ -482,6 +538,9 @@ input:focus, select:focus, textarea:focus, button:focus {
           background-position: -167px -1px;
         }
       }
+      &.active:before {
+        @include arrow(264px, 87px);
+      }
     }
     &.stake {
       span {
@@ -491,6 +550,9 @@ input:focus, select:focus, textarea:focus, button:focus {
         span {
           background-position: -140px -1px;
         }
+      }
+      &.active:before {
+        @include arrow(171px, 87px);
       }
     }
     &.settings {
@@ -643,6 +705,111 @@ input:focus, select:focus, textarea:focus, button:focus {
   background-color: $black;
   &.in {
     opacity: 0.86;
+  }
+}
+
+.modal-dialog.app-modal {
+  margin-top: 180px;
+  .modal-content {
+    min-height: 370px;
+    box-shadow: 0 0 8px $gray-border;
+  }
+  .modal-header {
+    border-bottom: 0;
+
+    h4{
+      font-size: 1.25em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      margin-top: 17px;
+      text-transform: uppercase;
+    }
+    .close {
+      font-size: 2.375em;
+      color: rgba(29,32,36,0.32);
+      opacity: 1;
+      font-weight: 500;
+      &:hover {
+        color: $gray-text-hover;
+      }
+    }
+  }
+
+  .modal-body {
+    padding-bottom: 0;
+  }
+  .modal-footer {
+    border-top: 0;
+    text-align: center;
+    padding-top: 0;
+    small {
+      font-weight: 500;
+    }
+  }
+
+  &.receive-modal {
+    .modal-content {
+
+      .qr {
+        width: 148px;
+        height: 148px;
+        padding: 8px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 1px 0 3px $gray-border;
+        margin-bottom: 20px;
+      };
+
+      h3.gray-text {
+        font-weight: 400;
+        text-transform: capitalize;
+      }
+      h3.ethereum, h3.botcoin {
+        text-shadow: 0 2px 2px white;
+      }
+      h3.botcoin {
+        color: $botcoin;
+      }
+    }
+  }
+  &.ethereum-modal, &.eth-modal {
+    .modal-content {
+      background: white url('img/eth_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $ethereum;
+    }
+  }
+  &.botcoin-modal, &.botc-modal {
+    .modal-content {
+      background: white url('img/botc_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $botcoin-title;
+    }
+  }
+  &.stake-modal {
+    .modal-content {
+      background: white url('img/stake_bg.png') no-repeat bottom right / cover;
+    }
+  }
+  &.reject-modal {
+    .modal-content {
+      background: white url('img/reject_bg.png') no-repeat top right / cover;
+    }
+
+    .modal-content {
+      min-height: 320px;
+    }
+  }
+  &.approve-modal {
+    .modal-content {
+      background: white url('img/approve_bg.png') no-repeat top right / cover;
+    }
+
+    .modal-content {
+      min-height: 320px;
+    }
   }
 }
 

@@ -6,17 +6,19 @@ export default class ReceiveModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose} >
+      <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName={`app-modal receive-modal ${this.props.currency}-modal`}>
         <Modal.Header closeButton>
-          <Modal.Title>Receive</Modal.Title>
+          <Modal.Title className="text-center">RECEIVE {this.props.currency}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-         <QRCode value={this.props.address} renderAs="svg" size={256} />
-         <h3>Address</h3>
-         <Well>{this.props.address}</Well>
+          <div className="qr center-block">
+            <QRCode value={this.props.address} renderAs="svg" size={132} />
+          </div>
+          <h3 className="gray-text">Your {this.props.currency} Address</h3>
+          <h3 className={`${this.props.currency}`}>{this.props.address}</h3>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.handleClose}>Close</Button>
+        <Modal.Footer className="text-center">
+          <small className="state-text">Copy address</small>
         </Modal.Footer>
       </Modal>
     );
