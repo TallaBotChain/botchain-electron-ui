@@ -227,7 +227,7 @@ const setPastVotes = (transactions) => {
     let txId = tx.hash;
     let mined = true;
     let timestamp = tx.timeStamp;
-    if( voteId == 4) voted = 0;
+    // if( voteId == 4) voted = 0;
     return { voteId, voted, txId, mined, timestamp };
   });
   console.log("past vote objects: ", voteObjects);
