@@ -68,6 +68,10 @@ export default class CurationCouncil extends BaseConnector {
     return this.contract.methods.getVoteFinalBlock(idx).call({from: this.account});
   }
 
+  getVoteInitialBlock(idx) {
+    return this.contract.methods.getVoteInitialBlock(idx).call({from: this.account});
+  }
+
   getVotedOnStatus(idx) {
     return this.contract.methods.getVotedOnStatus(idx, this.account).call({from: this.account});
   }

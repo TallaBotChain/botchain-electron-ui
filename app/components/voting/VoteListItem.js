@@ -24,12 +24,12 @@ export default class VoteListItem extends Component {
   voteStatus = (vote) => {
     let result = "N/A";
     let className = "status-expired";
-    if( vote.expired ) {
-      result = ( this.props.voting.pastVotes[vote.key] ) ? "Approved" : "Rejected";
+    if( vote.expired || this.props.voting.pastVotes[vote.key] ) {
+      result = ( this.props.voting.pastVotes[vote.key].voted ) ? "Approved" : "Rejected";
       className += " " + result.toLowerCase();
     } else {
-      const ethereumBlocktime = 15; // 15 seconds on average
       className = "status-future";
+      const ethereumBlocktime = this.props.voting.ethereumBlocktime;
       let duration = ethereumBlocktime*(vote.finalBlock - this.props.voting.lastBlock) ;
       if( duration > 5*86400 ) {
         className += " grey";
@@ -43,18 +43,43 @@ export default class VoteListItem extends Component {
     return <span className={className}>{result}</span>;
   }
 
+  voteStatusBrief = (vote) => {
+    let result = "";
+    if( this.props.voting.pastVotes[vote.key]  ) {
+      result = <span className={this.props.voting.pastVotes[vote.key].voted ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-remove"}></span>
+    }
+    return result;
+  }
+
   statusTemplate() {
     return this.duration.asSeconds() >= 86400 ? "d [D]" : "h [H]";
+  }
+
+  renderFullRow(vote) {
+    return (
+      <div>
+        <Col xs={6} md={3}>{this.voteStatus(vote)}</Col>
+        <Col xs={6} md={3}>{this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.name : "Loading..."  }</Col>
+        <Col xs={6} md={3}>{this.voteDomain(vote)}</Col>
+        <Col xs={6} md={3}>{vote.reward} <abbr className='currency'>BOTC</abbr></Col>
+      </div>
+    );
+  }
+
+  renderBriefRow(vote) {
+    return (
+      <div>
+        <Col xs={6} md={6}>{this.voteStatusBrief(vote)} {this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.name : "Loading..."  }</Col>
+        <Col xs={6} md={6}>{this.voteDomain(vote)}</Col>
+      </div>
+    );
   }
 
   render() {
     let vote = this.props.vote;
     return (
       <ListGroupItem title={vote.address} className='clearfix' onClick={this.props.voteClick(vote)}>
-        <Col xs={6} md={3}>{this.voteStatus(vote)}</Col>
-        <Col xs={6} md={3}>{this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.name : "Loading..."  }</Col>
-        <Col xs={6} md={3}>{this.voteDomain(vote)}</Col>
-        <Col xs={6} md={3}>{vote.reward} <abbr className='currency'>BOTC</abbr></Col>
+        {this.props.voting.voteToShow ? this.renderBriefRow(vote) : this.renderFullRow(vote) }
       </ListGroupItem>);
   }
 

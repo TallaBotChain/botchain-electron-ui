@@ -17,7 +17,8 @@ const initialState = {
   voteSuccess: false,
   payoutTxId: null,
   payoutTxMined: false,
-  payoutSuccess: false
+  payoutSuccess: false,
+  ethereumBlocktime: 15 // average
 }
 
 const voting = (state = initialState, action) => {

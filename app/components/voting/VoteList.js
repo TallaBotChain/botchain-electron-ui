@@ -39,11 +39,6 @@ export default class VoteList extends Component {
         <ListGroup>
           {votes}
         </ListGroup>
-        <VoteModal address={this.props.voting.voteToShow ? this.props.voting.voteToShow.address : null}
-          handleClose={this.hideVote}
-          onApprove={this.approveVote}
-          onReject={this.rejectVote}
-          {...this.props}/>
       </div>
     )
   }
