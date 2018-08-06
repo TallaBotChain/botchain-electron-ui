@@ -4,6 +4,7 @@ import StakeModal from '../stake/StakeModal';
 import UnstakeModal from './UnstakeModal';
 import TransactionList from '../wallet/TransactionList'
 import KeyTools from '../../blockchain/KeyTools'
+import CurationCouncil from '../../blockchain/CurationCouncil';
 
 export default class Stake extends Component {
 
@@ -24,8 +25,9 @@ export default class Stake extends Component {
   }
 
   transactionList = () => {
-    let stakeMethod = "0xc9d65537"
-    let unstakeMethod = "0xed64bf29"
+    let curationCouncil = new CurationCouncil();
+    const stakeMethod = curationCouncil.getMethodSignature("joinCouncil");
+    const unstakeMethod = curationCouncil.getMethodSignature("leaveCouncil");
     return this.props.walletData.transactions.filter(record => (record.input.startsWith(stakeMethod) || record.input.startsWith(unstakeMethod)))
   }
 
