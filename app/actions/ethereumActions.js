@@ -96,7 +96,11 @@ export const getTransactionList = () => (dispatch) => {
     }
   })
   .then(function (response) {
-    dispatch(setTransactions(response.data.result))
+    //filter list by eth amount.
+    if (response.data.result){
+      let records = response.data.result.filter(record => record.value > 0);
+      dispatch(setTransactions(records))
+    }
   })
   .catch(function (error) {
     dispatch( setError("Failed to retreive transaction history." ));

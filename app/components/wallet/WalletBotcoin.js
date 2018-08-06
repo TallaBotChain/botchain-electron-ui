@@ -36,16 +36,16 @@ export default class WalletBotcoin extends Component {
             <h1 className="botcoin">
               {this.props.walletData.balance}<span>BOTC</span>
             </h1>
-            <strong className="dollar-balance gray">
-              <span>$</span>{this.props.walletData.balance * this.props.walletData.usdExchangeRate}
-            </strong>
             <div className="center-buttons">
               <Button onClick={this.toggleSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
               <Button onClick={this.toggleReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
             </div>
             <Col xs={12}>
               <h5 className="gray text-left">TRANSACTION HISTORY</h5>
-              <TransactionList {...this.props} />
+              <TransactionList transactions={this.props.walletData.transactions} 
+              currency={this.props.walletData.currency}
+              usdExchangeRate={this.props.usdExchangeRate} 
+              />
             </Col>
           </Col>
           <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} currency="botcoin" />
