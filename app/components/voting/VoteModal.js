@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Row, Col, Well, Alert } from 'react-bootstrap';
-import JsonTable from './JsonTable';
+import JsonTable from './JsonList';
 
 export default class VoteModal extends Component {
 
