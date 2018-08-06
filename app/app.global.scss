@@ -473,6 +473,19 @@ input:focus, select:focus, textarea:focus, button:focus {
   &.trans-bg {
     background-color: $trans-gray;
     color: white;
+    &:before {
+      z-index: 100;
+      content: '';
+      position: fixed;
+      top: 262px;
+      left: 85px;
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-right: 10px solid $state;
+    }
+
     p {
       padding-bottom: 4px;
       line-height: 1.8em;
@@ -594,6 +607,8 @@ input:focus, select:focus, textarea:focus, button:focus {
 }
 
 .list-group.nav-list {
+  box-shadow: none;
+
   .list-group-item {
     background: none;
     color: $gray;
