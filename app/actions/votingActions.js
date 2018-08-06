@@ -118,11 +118,11 @@ export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {
     var txId = await curationCouncil.castRegistrationVote(idx, vote);
-    //var txId = "0x000000000000000000000000000";
+    //var txId = "0xbe641855458ec0cc83fea52bbb935d34a7b69d1100ca36446c00711979c1a6da";
     console.log("Casted vote, tx_id: ", txId);
     dispatch(addPastVote(idx, vote, txId));
     dispatch(setVoteTxId(txId));
-    dispatch(startTxObserver(txId, castVoteTxMined));
+    dispatch(startTxObserver(txId, castVoteTxMined(idx) ));
   } catch( ex ) {
     console.log("Cast vote error: ", ex);
     dispatch(setError(ex.message));
@@ -135,11 +135,18 @@ const addPastVote = (idx, vote, txId) => (dispatch, getState) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }
 
-const castVoteTxMined = (status) => (dispatch) => {
+const alterPastVote = (idx, mined) => (dispatch, getState) => {
+  let pastVotes = getState().voting.pastVotes;
+  pastVotes[idx].mined = mined;
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
+}
+
+const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
+  console.log("castVoteTxrMined: ", idx);
   dispatch(resetVoteState());
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: true });
-  dispatch(getVotes());
   if(status == TxStatus.SUCCEED){
+    dispatch( alterPastVote(idx, true) );
     dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: true });
   } else {
     dispatch( setError("Vote transaction failed." ));
