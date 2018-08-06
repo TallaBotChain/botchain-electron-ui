@@ -812,3 +812,38 @@ input:focus, select:focus, textarea:focus, button:focus {
     }
   }
 }
+
+// voting
+
+.voting-return-button {
+  display:none;
+}
+
+.vote-list-details-wrap {
+  margin-top: 16px;
+  .vote-list-container {
+    width: 100%;
+  }
+  .vote-details {
+    display: none;
+  }
+}
+
+.voting-with-details {
+  .voting-return-button {
+    display:block;
+    margin-top: 16px;
+  }
+  .vote-list-details-wrap {
+    .vote-list-container {
+      width: 50%;
+      float: left;
+    }
+    .vote-details {
+      width: 50%;
+      float: left;
+      display: block;
+      padding-left: 15px;
+    }
+  }
+}

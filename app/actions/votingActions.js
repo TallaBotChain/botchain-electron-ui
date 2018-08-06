@@ -66,6 +66,9 @@ export const getVotes = () => async (dispatch, getStore) => {
   let votes = [];
   let availableReward = new BigNumber(0);
   for(let idx=totalSupply;idx>0;idx--) {
+    let initialBlock = await curationCouncil.getVoteInitialBlock(idx);
+    console.log("initialBlock: ", initialBlock);
+    let initialBlockInfo = await keyTools.web3.eth.getBlock(initialBlock);
     let finalBlock = await curationCouncil.getVoteFinalBlock(idx);
     console.log("finalBlock: ", finalBlock);
     let expired = ( finalBlock < lastBlock );
@@ -80,6 +83,8 @@ export const getVotes = () => async (dispatch, getStore) => {
       address: address,
       votedOnStatus: votedOnStatus,
       expired: expired,
+      initialBlock: initialBlock,
+      initialTs: initialBlockInfo.timestamp,
       finalBlock: finalBlock } );
     console.log(typeof curatorRewardRate);
     availableReward = availableReward.plus( BigNumber(curationCouncil.web3.utils.toWei(curatorRewardRate,'ether') ) );
@@ -111,22 +116,27 @@ export const hideVote = () => {
 
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
-  dispatch(setInProgress(true));
   try {
     var txId = await curationCouncil.castRegistrationVote(idx, vote);
+    //var txId = "0x000000000000000000000000000";
     console.log("Casted vote, tx_id: ", txId);
+    dispatch(addPastVote(idx, vote, txId));
     dispatch(setVoteTxId(txId));
     dispatch(startTxObserver(txId, castVoteTxMined));
   } catch( ex ) {
     console.log("Cast vote error: ", ex);
     dispatch(setError(ex.message));
-    dispatch(setInProgress(false));
   }
+}
+
+const addPastVote = (idx, vote, txId) => (dispatch, getState) => {
+  let pastVotes = getState().voting.pastVotes;
+  pastVotes[idx] = { voteId: idx, voted: vote, txId: txId, mined: false, timestamp: (Date.now() / 1000) };
+  return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }
 
 const castVoteTxMined = (status) => (dispatch) => {
   dispatch(resetVoteState());
-  dispatch(setInProgress(false))
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: true });
   dispatch(getVotes());
   if(status == TxStatus.SUCCEED){
@@ -141,7 +151,6 @@ export const resetVoteState = () => (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxId', value: null });
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: false });
   dispatch(setError(null));
-  dispatch(hideVote());
 }
 
 export const payoutReward = () => async (dispatch) => {
@@ -205,19 +214,26 @@ export const getPastTransactions = () => (dispatch) => {
 const arrayToObject = (arr, keyField) =>
   Object.assign({}, ...arr.map(item => ({[item[keyField]]: item})))
 
-const setPastVotes = (transactions) => {
+const setPastVotes = (transactions) => (dispatch, getState) => {
+  let prevPastVotes = getState().voting.pastVotes;
+  let curationCouncil = new CurationCouncil();
   console.log("all transactions:", transactions);
   const contractAddress = remote.getGlobal('config').couration_council_contract;
-  const castVoteMethod = "0x7e6a7282";
+  const castVoteMethod = curationCouncil.getMethodSignature("castRegistrationVote");
   let coucilTransactions = transactions.filter( tx => ( (tx.to == contractAddress) && (tx.isError == "0") && (tx.input.startsWith(castVoteMethod)) ) );
   console.log("council transactions:", coucilTransactions );
   let voteObjects = coucilTransactions.map( (tx) => {
     let voteId = parseInt(tx.input.substr(10,64));
     let voted = parseInt(tx.input.substring(75));
-    return { voteId, voted };
+    let txId = tx.hash;
+    let mined = true;
+    let timestamp = tx.timeStamp;
+    // if( voteId == 4) voted = 0;
+    return { voteId, voted, txId, mined, timestamp };
   });
   console.log("past vote objects: ", voteObjects);
-  let pastVotes = arrayToObject(voteObjects, "voteId");
+  let nextPastVotes = arrayToObject(voteObjects, "voteId");
+  let pastVotes = Object.assign(prevPastVotes, nextPastVotes);
   console.log("past votes: ", pastVotes);
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }

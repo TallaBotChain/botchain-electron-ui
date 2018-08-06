@@ -10,16 +10,16 @@ class NoStake extends Component {
     return (
       <div>
         <Row>
-          <Col xs="12" className="white-header text-center">
+          <Col xs={12} className="white-header text-center">
             <p className="gray-text">
               <small>Staked Balance:</small> 0.000 <span>BOTC</span>
             </p>
           </Col>
         </Row>
         <Row>
-          <Col xs="12" className="gray-body">
-            <Col xs="12">
-              <Col md="9" sm="10" xs="12">
+          <Col xs={12} className="gray-body">
+            <Col xs={12}>
+              <Col md={9} sm={10} xs={12}>
                 <h3 className="state-text">Participating in Curation Council voting requires a stake.</h3>
                 <p className="gray-p">Your stake can be any amount greater than zero.
                   However, the greater the stake the more you'll be able to vote.

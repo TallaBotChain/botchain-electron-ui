@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap'
-import Balances from '../components/voting/Balances';
 import NoStake from '../components/voting/NoStake';
-import VoteList from '../components/voting/VoteList';
+import Voting from '../components/voting/Voting';
 import * as VotingActions from '../actions/votingActions';
 import * as DeveloperActions from '../actions/developerActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
@@ -26,12 +25,7 @@ class VotingPage extends Component {
   }
 
   renderVoting = () => {
-    return (
-      <div>
-      <Balances {...this.props.voting} payout={this.props.payout} />
-      <VoteList votes={this.props.voting.votes} {...this.props} />
-      </div>
-    )
+    return (<Voting {...this.props} />);
   }
 
   render() {

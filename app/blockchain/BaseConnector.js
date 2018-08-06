@@ -10,4 +10,8 @@ export default class BaseConnector {
   get account() {
     return this.web3.eth.accounts.wallet[0].address;
   }
+
+  getMethodSignature(name) {
+    return this.contract._jsonInterface.find((f) => (f.name  == name ) ).signature;
+  }
 }
