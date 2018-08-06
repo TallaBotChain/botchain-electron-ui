@@ -473,17 +473,18 @@ input:focus, select:focus, textarea:focus, button:focus {
   &.trans-bg {
     background-color: $trans-gray;
     color: white;
-    &:before {
-      z-index: 100;
-      content: '';
-      position: fixed;
-      top: 262px;
-      left: 85px;
-      width: 0;
-      height: 0;
-      border-top: 11px solid transparent;
-      border-bottom: 11px solid transparent;
-      border-right: 10px solid $state;
+    z-index: 102;
+      &:not(.bottom50) {
+        &:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 95px;
+        height: 100%;
+        background-color: rgba(50,55,62,.65);
+        z-index: 101;
+      }
     }
 
     p {

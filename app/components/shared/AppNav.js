@@ -18,7 +18,7 @@ export default class AppNav extends Component {
           <span className="center-block"></span>
           Stake
         </NavLink>
-        <NavLink className="list-group-item wallet text-center" to="/wallet">
+        <NavLink className="list-group-item wallet text-center" to="/wallet" isActive={checkActive}>
           <span className="center-block"></span>
           Wallet
         </NavLink>
@@ -28,5 +28,11 @@ export default class AppNav extends Component {
         </NavLink>
       </ListGroup>
     );
+  }
+}
+
+const checkActive = (match, location) => {
+  if (location.pathname==="/wallet/botcoin" || location.pathname==="/wallet/ethereum") {
+    return true
   }
 }
