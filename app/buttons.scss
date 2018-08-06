@@ -36,10 +36,6 @@ $active-green: #3ABCA5;
     background: $active-green;
     border-color: $active-green;
   }
-
-  &.cta-button {
-    padding: 0 27px;
-  }
 }
 
 .default-button{
@@ -57,10 +53,11 @@ $active-green: #3ABCA5;
   }
   &.cta-button {
     font-weight: 600;
+    padding: 0 12px;
   }
 }
 
-.gray-button{
+.gray-button {
   @include form-button($gray-text-hover, $lighter-gray);
   &:hover, &:focus{
     color: white;
@@ -74,23 +71,24 @@ $active-green: #3ABCA5;
   }
 }
 
-.cta-button{
+.cta-button {
   height: 40px;
   min-width: 110px;
   letter-spacing: 0.08em;
   margin-top: 5px;
   line-height: 40px;
+  padding: 0 27px;
 }
 
 .small-button {
   height: 32px;
+  line-height: 32px;
   min-width: 114px;
   font-weight: 600;
   letter-spacing: 0.02em;
   border-radius: 4px;
   margin-bottom: 8px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 15px;
 }
 
 .width-100 {
