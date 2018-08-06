@@ -36,6 +36,10 @@ $active-green: #3ABCA5;
     background: $active-green;
     border-color: $active-green;
   }
+
+  &.cta-button {
+    padding: 0 27px;
+  }
 }
 
 .default-button{
@@ -50,6 +54,9 @@ $active-green: #3ABCA5;
     color: $gray-text-hover;
     background: $gray-gradient1;
     border-color: $gray-gradient1;
+  }
+  &.cta-button {
+    font-weight: 600;
   }
 }
 

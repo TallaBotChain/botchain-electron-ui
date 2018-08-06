@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PasswordForm from '../components/settings/PasswordForm';
 import ExportForm from '../components/settings/ExportForm';
 import * as WalletActions from '../actions/walletActions';
-import { Col, Alert, Clearfix } from 'react-bootstrap';
+import { Row, Col, Alert, Clearfix } from 'react-bootstrap';
 
 class SettingsPage extends Component {
 
@@ -30,29 +30,31 @@ class SettingsPage extends Component {
   componentDidMount () {
     this.props.cleanError();
   }
- 
-
 
   render() {
     return (
       <div>
-        <Col xs={12} className="content-inner trans-bg top50">
-          <Col md={6} sm={8} xs={7}>
-            <h3>Change Password</h3>
-            {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
-          </Col>
-          <Clearfix />
-          <PasswordForm onSubmit={this.updatePassword} {...this.props} />
-        </Col>
-        <Col xs={12} className="divider"></Col>
-        <Col xs={12} className="content-inner trans-bg bottom50">
-          <Col md={6} sm={8} xs={7}>
-            <h3>Export Wallet</h3>
-            <p>Backup your wallet using one of the options below.</p>
-            {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
-          </Col>
-          <Clearfix />
-          <ExportForm onSubmit={this.exportWallet} {...this.props}  />
+        <Col xs={12} className="content-inner black-bg">
+          <Row>
+            <Col xs={12} className="content-inner lighter-gray-bg top50">
+              <Col md={6} sm={8} xs={7}>
+                <h3>Change Password</h3>
+                {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
+              </Col>
+              <Clearfix />
+              <PasswordForm onSubmit={this.updatePassword} {...this.props} />
+            </Col>
+            <Col xs={12} className="divider"></Col>
+            <Col xs={12} className="content-inner lighter-gray-bg bottom50">
+              <Col md={6} sm={8} xs={7}>
+                <h3>Export Wallet</h3>
+                <p>Backup your wallet using one of the options below.</p>
+                {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
+              </Col>
+              <Clearfix />
+              <ExportForm onSubmit={this.exportWallet} {...this.props}  />
+            </Col>
+          </Row>
         </Col>
       </div>
     )
