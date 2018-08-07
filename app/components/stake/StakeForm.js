@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { required, numericality } from 'redux-form-validators'
-import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { inputField } from '../form/FormFields'
 import { remote } from 'electron';

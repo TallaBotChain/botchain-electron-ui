@@ -35,9 +35,12 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(EthereumActions.getTransactionList());
-    }
+    },
+    transferEstGas: (to, amount) => {
+      dispatch(EthereumActions.transferEstGas(to, amount));
+    },
   }
 }
-  
-  
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(WalletEthereumPage);
