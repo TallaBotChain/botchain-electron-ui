@@ -114,6 +114,18 @@ export const hideVote = () => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: null }
 }
 
+export const castVoteEstGas = (idx, vote) => async (dispatch) => {
+  let curationCouncil = new CurationCouncil();
+  try {
+    var voteGas = await curationCouncil.castRegistrationVoteEstGas(idx, vote);
+    let gasFee = curationCouncil.web3.utils.fromWei((voteGas*curationCouncil.gasPrice).toString())
+    dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxEstGas', value: gasFee });
+
+  } catch( ex ) {
+    console.log("Cast vote estimate gas: ", ex);
+  }
+}
+
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {

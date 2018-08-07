@@ -98,11 +98,11 @@ export default class VoteDetails extends Component {
       </Col>
       <Col xs={3}>
         {this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <abbr className='currency'>BOTC</abbr><br />
-        Gas Fee: [TDB]
+        Gas Fee: {this.props.voting.voteTxEstGas}
       </Col>
       <Col xs={3}>
         $0.00<br />
-        $0.00
+        ${this.props.voting.voteTxEstGas*this.props.usdExchangeRate}
       </Col>
       <Col xs={3}>
         <Button block onClick={this.rejectVote}>Reject</Button>

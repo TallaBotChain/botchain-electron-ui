@@ -80,6 +80,10 @@ export default class CurationCouncil extends BaseConnector {
     return this.contract.methods.getVotedOnStatus(idx, this.account).call({from: this.account});
   }
 
+  castRegistrationVoteEstGas(idx, vote) {
+    return this.contract.methods.castRegistrationVote(idx, vote).estimateGas({from: this.account})
+  }
+
   castRegistrationVote(idx, vote) {
     //return Promise.resolve("0x0d983b3cf4d19dd2c7e1d038f2c4d0cc993435630b27c167a0517ecf0f5fc7be"); // for testing
     return this.contract.methods.castRegistrationVote(idx, vote).estimateGas({from: this.account}).then( (gas) => {

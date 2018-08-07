@@ -13,6 +13,7 @@ const initialState = {
   curatorRewardRate: null,
   lastBlock: null,
   voteToShow: null,
+  voteTxEstGas: 0,
   voteTxId: null,
   voteTxMined: false,
   voteSuccess: false,

@@ -14,6 +14,7 @@ class VotingPage extends Component {
     this.props.getStakedBalance();
     this.props.getBalances();
     this.props.getVotes();
+    this.props.castVoteEstGas(1, true)
   }
 
   renderNoStake() {
@@ -49,7 +50,8 @@ function mapStateToProps(state) {
     return {
       voting: state.voting,
       developer: state.developer,
-      curationCouncil: state.curationCouncil
+      curationCouncil: state.curationCouncil,
+      usdExchangeRate: state.ethereum.usdExchangeRate
     };
 }
 
@@ -75,6 +77,9 @@ const mapDispatchToProps = dispatch => {
     },
     hideVote: () => {
       dispatch( VotingActions.hideVote() );
+    },
+    castVoteEstGas: (idx, vote) => {
+      dispatch( VotingActions.castVoteEstGas(idx, vote) );
     },
     castVote: (idx, vote) => {
       dispatch( VotingActions.castVote(idx, vote) );
