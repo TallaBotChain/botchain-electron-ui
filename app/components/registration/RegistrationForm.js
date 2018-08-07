@@ -14,7 +14,7 @@ class RegistrationForm extends Component {
           required()
         ]} />
 
-      <Field name="email" type="email" component={inputField} placeholder="Email*" label="EMAIL*" validate={[
+        <Field name="email" type="email" component={inputField} placeholder="Email*" label="EMAIL*" validate={[
           required()
         ]} />
 
@@ -23,7 +23,7 @@ class RegistrationForm extends Component {
           confirmation({ field: 'email', fieldLabel: 'Email' })
         ]} />
 
-      <Field name="organization" type="text" component={inputField} placeholder="Organization" label="ORGANIZATION"/>
+        <Field name="organization" type="text" component={inputField} placeholder="Organization" label="ORGANIZATION"/>
         <Field name="tos" type="checkbox" component={checkboxField} label="I agree to the Terms and Conditions" validate={acceptance({ message: "Must accept Terms and Conditions" })} />
 
         <button className='btn orange-button cta-button' type="submit">Create Wallet</button>
