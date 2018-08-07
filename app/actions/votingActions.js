@@ -218,7 +218,7 @@ const setPastVotes = (transactions) => (dispatch, getState) => {
   let prevPastVotes = getState().voting.pastVotes;
   let curationCouncil = new CurationCouncil();
   console.log("all transactions:", transactions);
-  const contractAddress = remote.getGlobal('config').couration_council_contract;
+  const contractAddress = remote.getGlobal('config').curation_council_contract;
   const castVoteMethod = curationCouncil.getMethodSignature("castRegistrationVote");
   let coucilTransactions = transactions.filter( tx => ( (tx.to == contractAddress) && (tx.isError == "0") && (tx.input.startsWith(castVoteMethod)) ) );
   console.log("council transactions:", coucilTransactions );

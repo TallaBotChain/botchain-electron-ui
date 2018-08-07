@@ -29,6 +29,7 @@ export default class UnstakeModal extends Component {
                 )}
                 <h4>Staked Balance: {this.props.curationCouncil.stakedBalance} BOTC</h4>
                 <Button onClick={this.props.unstake}>Unstake</Button>
+                <div><small>Gas Fee: {this.props.curationCouncil.leaveTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>

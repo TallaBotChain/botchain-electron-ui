@@ -15,11 +15,15 @@ class BotCoin extends BaseConnector{
     return bigNumber / (10**this.decimals);
   }
 
+  approveEstGas(amount, to) {
+    return this.contract.methods.approve(to,amount*10**this.decimals).estimateGas({from: this.account})
+  }
+
   approve(amount,to) {
-    // TODO: estimate gas
-    return new Promise((resolve,reject) => {
-      this.contract.methods.approve(to,amount*10**this.decimals)
-        .send({from: this.account,gas: 100000,gasPrice: this.gasPrice},
+    return this.contract.methods.approve(to, amount*10**this.decimals).estimateGas({from: this.account}).then((gas) => {
+      return new Promise((resolve,reject) => {
+        this.contract.methods.approve(to, amount*10**this.decimals)
+        .send({from: this.account, gas: gas, gasPrice: this.gasPrice},
           function(err,tx_id) {
             if( ! err ) {
               console.log("approve tx_id:",tx_id);
@@ -28,6 +32,7 @@ class BotCoin extends BaseConnector{
           }).catch( (err) => {
             reject(err);
           });
+        });
     });
   }
 
@@ -122,7 +127,7 @@ class BotCoin extends BaseConnector{
       });
     })
   }
-  
+
 }
 
 

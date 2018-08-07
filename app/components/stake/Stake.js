@@ -16,12 +16,22 @@ export default class Stake extends Component {
     };
   }
 
-  toggleStakeModal = () => {
-    this.setState({ show_stake_modal: !this.state.show_stake_modal });
+  showStakeModal = () => {
+    this.setState({ show_stake_modal: true });
+    this.props.stakeEstGas(0)
   }
 
-  toggleUnstakeModal = () => {
-    this.setState({ show_unstake_modal: !this.state.show_unstake_modal });
+  hideStakeModal = () => {
+    this.setState({ show_stake_modal: false });
+  }
+
+  showUnstakeModal = () => {
+    this.props.unstakeEstGas()
+    this.setState({ show_unstake_modal: true });
+  }
+
+  hideUnstakeModal = () => {
+    this.setState({ show_unstake_modal: false });
   }
 
   transactionList = () => {
@@ -43,13 +53,13 @@ export default class Stake extends Component {
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>
               <div className="center-button">
-              <Button className="btn orange-button small-button" onClick={this.toggleUnstakeModal}>UNSTAKE</Button>
+              <Button className="btn orange-button small-button" onClick={this.showUnstakeModal}>UNSTAKE</Button>
               </div>
             </div>
           ) : (
             <div>
               <div className="center-button">
-                <Button className="btn orange-button small-button" onClick={this.toggleStakeModal}>STAKE</Button>
+                <Button className="btn orange-button small-button" onClick={this.showStakeModal}>STAKE</Button>
               </div>
               <Col md={6} sm={8} xs={12} componentClass="h3" className="text-left">
                 In order to participate in Curation Council voting you must first stake a fixed amount of Botcoin.
@@ -63,13 +73,13 @@ export default class Stake extends Component {
             <h5 className="gray text-left">TRANSACTION HISTORY</h5>
             <TransactionList transactions={this.transactionList()}
               currency={this.props.walletData.currency}
-              usdExchangeRate={this.props.usdExchangeRate} 
+              usdExchangeRate={this.props.usdExchangeRate}
               isStakeList={true}
             />
           </Col>
         </Col>
-        <StakeModal show={this.state.show_stake_modal} handleClose={this.toggleStakeModal} {...this.props} />
-        <UnstakeModal show={this.state.show_unstake_modal} handleClose={this.toggleUnstakeModal} {...this.props} />
+        <StakeModal show={this.state.show_stake_modal} handleClose={this.hideStakeModal} {...this.props} />
+        <UnstakeModal show={this.state.show_unstake_modal} handleClose={this.hideUnstakeModal} {...this.props} />
       </Col>
     )
   }
