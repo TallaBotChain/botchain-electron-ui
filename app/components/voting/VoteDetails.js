@@ -132,7 +132,7 @@ export default class VoteDetails extends Component {
     return (
       <Row>
         <Col xs={12}>
-          This application is <b>pending</b>. Your vote was case on {this.castedDate()}.
+          This application is <b>pending</b>. Your vote was cast on {this.castedDate()}.
           More details are available on the Etherscan transaction details page:<br/>
           {this.etherscanLink(this.currentPastVote.txId)}
         </Col>
