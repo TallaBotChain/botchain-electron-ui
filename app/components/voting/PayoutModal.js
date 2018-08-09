@@ -25,12 +25,10 @@ export default class PayoutModal extends Component {
                 )}
                 <h4>Reward Balance: {this.props.rewardBalance} BOTC</h4>
                 <Button onClick={this.props.payout}>Collect</Button>
+                <div><small>Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.handleClose}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
   }

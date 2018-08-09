@@ -15,7 +15,7 @@ class VotingPage extends Component {
     this.props.getBalances();
     this.props.castVoteEstGas(1, true)
   }
-  
+
   componentWillReceiveProps(nextProps){
     if(( this.props.curationCouncil.stakedBalance != nextProps.curationCouncil.stakedBalance ) && ( nextProps.curationCouncil.stakedBalance > 0 ) ) {
       this.props.getVotes();
@@ -36,7 +36,7 @@ class VotingPage extends Component {
 
   render() {
     let body = ""
-    if (this.props.voting.inProgress) {
+    if (this.props.curationCouncil.inProgress) {
       body = this.renderInProgress()
     } else if (this.props.curationCouncil.stakedBalance > 0) {
       body = this.renderVoting()
@@ -88,6 +88,9 @@ const mapDispatchToProps = dispatch => {
     },
     castVote: (idx, vote) => {
       dispatch( VotingActions.castVote(idx, vote) );
+    },
+    payoutEstGas: () => {
+      dispatch( VotingActions.payoutRewardEstGas() );
     },
     payout: () => {
       dispatch( VotingActions.payoutReward() );

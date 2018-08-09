@@ -12,10 +12,14 @@ class Voting extends Component {
       <div className={this.props.voting.voteToShow ? "voting-with-details" : ""}>
         <Balances {...this.props} />
         <a href='#' className='voting-return-button' onClick={this.props.hideVote} >Cancel and return to main view</a>
-        <div className='vote-list-details-wrap clearfix'>
-          <VoteList votes={this.props.voting.votes} {...this.props} />
-          <VoteDetails {...this.props} />
-        </div>
+        {this.props.voting.inProgress ? (
+          <div className='text-center'>Loading...</div>
+        ) : (
+          <div className='vote-list-details-wrap clearfix'>
+            <VoteList votes={this.props.voting.votes} {...this.props} />
+            <VoteDetails {...this.props} />
+          </div>
+        )}
       </div>);
   }
 }

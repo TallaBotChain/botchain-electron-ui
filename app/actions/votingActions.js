@@ -172,6 +172,18 @@ export const resetVoteState = () => (dispatch) => {
   dispatch(setError(null));
 }
 
+export const payoutRewardEstGas = () => async (dispatch) => {
+  try {
+    let tokenVault = new TokenVault();
+    var rewardGas = await tokenVault.collectCuratorRewardEstGas();
+    let gasFee = tokenVault.web3.utils.fromWei((rewardGas*tokenVault.gasPrice).toString())
+    dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxEstGas', value: gasFee });
+  } catch(e) {
+    console.log(e)
+    dispatch( setError( "Failed to estimate gas." ));
+  }
+}
+
 export const payoutReward = () => async (dispatch) => {
   let tokenVault = new TokenVault();
   dispatch(setInProgress(true));

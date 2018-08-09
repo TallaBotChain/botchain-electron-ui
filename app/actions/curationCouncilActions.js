@@ -124,11 +124,10 @@ export const leaveCouncilEstGas = () => async (dispatch) => {
     let curationCouncil = new CurationCouncil()
     let leaveGas = await curationCouncil.leaveCouncilEstGas();
     let gasFee = curationCouncil.web3.utils.fromWei((leaveGas*curationCouncil.gasPrice).toString())
-    console.log(leaveGas)
     dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxEstGas', value: gasFee });
   }catch(e) {
     console.log(e);
-    dispatch( setError( "Failed to leave Council." ));
+    dispatch( setError( "Failed to estimate gas." ));
     dispatch(setInProgress(false))
   }
 }

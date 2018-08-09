@@ -17,6 +17,7 @@ const initialState = {
   voteTxId: null,
   voteTxMined: false,
   voteSuccess: false,
+  payoutTxEstGas: 0,
   payoutTxId: null,
   payoutTxMined: false,
   payoutSuccess: false,
