@@ -1,5 +1,4 @@
 @import 'buttons';
-$check-green: #00A37D;
 $state: #32373E;
 $light-green: #BFEEE3;
 $gray: #A0A4AA;
@@ -25,6 +24,7 @@ $green-text: #008A6A;
 $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
+$yellow: #E6C900;
 
 @mixin arrow ($top, $left, $color: white) {
   content: '';
@@ -66,12 +66,36 @@ $blue-link: #3772D0;
   color: $botcoin-gold;
 }
 
+.botcoin-title {
+  color: $botcoin-title;
+}
+
+.botcoin-green {
+  color: $botcoin-green;
+}
+
 .state-text {
   color: $state;
 }
 
-.dollar-text {
+.dollar-text, .status-expired {
   color: $placeholder;
+}
+
+.yellow {
+  color: $yellow;
+}
+
+.orange {
+  color: $orange;
+}
+
+.green {
+  color : $green-text;
+}
+
+.red {
+  color : $error;
 }
 
 ::selection {
@@ -347,13 +371,13 @@ input:focus, select:focus, textarea:focus, button:focus {
         &+span {
           color: white;
           &:before {
-            background: $botchain-green;
+            background: $botcoin-green;
             border: 2px solid white;
           }
         }
         &:hover {
           &+span:before {
-            background: $botchain-green;
+            background: $botcoin-green;
             border: 2px solid white;
           }
         }
@@ -469,6 +493,186 @@ input:focus, select:focus, textarea:focus, button:focus {
         z-index: 100;
       }
     }
+
+    // voting
+    .voting {
+      .gray-body {
+        min-height: calc(100vh - 330px);
+        padding-top: 10px;
+        &:before {
+          content: none;
+        }
+      }
+    }
+
+    .voting-balances {
+      h1 {
+        font-size: 2em;
+        white-space: nowrap;
+        span {
+          font-size: 0.5em;
+        }
+      }
+
+      .gray-border {
+        border: 2px solid $gray-gradient1;
+        border-width: 2px 2px 2px 0;
+        height: 200px;
+        max-height: 200px;
+        padding-top: 20px;
+        overflow-y: auto;
+        &+.gray-border {
+          border-right: 0;
+        }
+      }
+
+      .default-button {
+        margin-top: 10px;
+      }
+    }
+
+    .voting-return-button {
+      display:none;
+    }
+
+    .vote-list-details-wrap {
+      margin-top: 16px;
+      .vote-list-container {
+        width: 100%;
+
+        .list-group {
+          border: 0;
+          box-shadow: none;
+          border-radius: 0;
+
+          .list-group-item {
+            border: 0;
+            border-top: 2px solid $gray-bg;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            background-color: transparent;
+            min-height: 45px;
+            padding-left: 0;
+            padding-right: 0;
+            margin-bottom: 0;
+            &:first-of-type {
+              border-top: 2px solid transparent;
+            }
+            &:last-child {
+              border-bottom: 2px solid $gray-bg;
+            }
+            &:hover, &.active{
+              background: white;
+              border-radius: 8px;
+              border: 2px solid $gray-bg;
+              margin-left: -15px;
+              margin-right: -15px;
+              padding-left: 13px;
+              padding-right: 13px;
+              width: calc(100% + 30px);
+              &+.list-group-item {
+                border-top: 2px solid transparent;
+              }
+            }
+
+            .status-expired, .status-future {
+              font-size: 0.875em;
+              letter-spacing: 0.05em;
+              font-weight: 400;
+            }
+
+            .status-future {
+              font-weight: 500;
+            }
+
+            .bot-name {
+              font-size: 1.125em;
+              font-weight: 500;
+              small {
+                font-weight: 300;
+                display: inline-block;
+                margin-left: 7px;
+                color: $gray-text;
+                letter-spacing: 0.05em;
+              }
+              .status {
+                display: none;
+                height: 13px;
+                width: 13px;
+                background: url('img/voting.png') no-repeat;
+                margin-right: 5px
+              }
+              &.red, &.green {
+                font-size: 1em;
+
+                small {
+                  color: $gray;
+                }
+
+                .status {
+                  display: inline-block;
+                }
+              }
+              &.red {
+                .status {
+                  background-position: -14px 1px;
+                }
+              }
+            }
+
+            .reward {
+              font-size: 1.125em;
+              font-weight: 500;
+              letter-spacing: 0.04em;
+
+              &.gray {
+                font-size: 0.875em;
+                font-weight: 400;
+                .botcoin-title {
+                  font-size: 0.857em;
+                  color: $gray;
+                }
+              }
+
+              .botcoin-title {
+                font-size: 0.725em;
+              }
+            }
+          }
+        }
+      }
+      .vote-details {
+        display: none;
+      }
+    }
+
+    .voting-with-details {
+      .voting-return-button {
+        display: block;
+        font-size: 0.875em;
+        margin-top: 5px;
+        &:hover {
+          color: $state;
+        }
+      }
+      .vote-list-details-wrap {
+        .vote-list-container {
+          width: 50%;
+          float: left;
+        }
+        .vote-details {
+          width: 50%;
+          float: left;
+          display: block;
+          padding-left: 15px;
+
+          a {
+            font-size: 0.75em;
+          }
+        }
+      }
+    }
+    //end voting
   }
   &.trans-bg {
     background-color: $trans-gray;
@@ -811,6 +1015,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   }
 }
 
+//modal
 .modal-backdrop {
   background-color: $black;
   &.in {
@@ -906,54 +1111,32 @@ input:focus, select:focus, textarea:focus, button:focus {
   &.reject-modal {
     .modal-content {
       background: white url('img/reject_bg.png') no-repeat top right / cover;
-    }
-
-    .modal-content {
       min-height: 320px;
     }
   }
   &.approve-modal {
     .modal-content {
       background: white url('img/approve_bg.png') no-repeat top right / cover;
-    }
-
-    .modal-content {
       min-height: 320px;
     }
-  }
-}
-
-// voting
-
-.voting-return-button {
-  display:none;
-}
-
-.vote-list-details-wrap {
-  margin-top: 16px;
-  .vote-list-container {
-    width: 100%;
-  }
-  .vote-details {
-    display: none;
-  }
-}
-
-.voting-with-details {
-  .voting-return-button {
-    display:block;
-    margin-top: 16px;
-  }
-  .vote-list-details-wrap {
-    .vote-list-container {
-      width: 50%;
-      float: left;
+    .modal-title {
+      color: $check-green;
+      margin-bottom: 10px;
+      h4 {
+        margin-bottom: 20px;
+      }
     }
-    .vote-details {
-      width: 50%;
-      float: left;
-      display: block;
-      padding-left: 15px;
+    .modal-body {
+      h4 {
+        margin-bottom: 15px;
+        .botcoin-title {
+          font-size: 0.66em;
+        }
+      }
+    }
+    .modal-footer {
+      margin-top: 60px;
     }
   }
 }
+//end modal
