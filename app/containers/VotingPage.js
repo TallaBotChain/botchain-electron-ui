@@ -13,7 +13,6 @@ class VotingPage extends Component {
   componentDidMount() {
     this.props.getStakedBalance();
     this.props.getBalances();
-    this.props.castVoteEstGas(1, true)
   }
 
   componentWillReceiveProps(nextProps){
