@@ -39,7 +39,7 @@ class VotingPage extends Component {
       body = this.renderInProgress()
     } else if (this.props.curationCouncil.stakedBalance > 0) {
       body = this.renderVoting()
-    }else {
+    } else {
       body = this.renderNoStake()
     }
     return (
@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => {
       dispatch( VotingActions.getRewardBalance() );
     },
     getStakedBalance: () => {
-      dispatch(CurationCouncilActions.getStakedBalance());
+      dispatch(CurationCouncilActions.reloadStakedBalance());
     },
     getVotes: () => {
       dispatch( VotingActions.getVotes() );

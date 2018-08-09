@@ -19,8 +19,8 @@ const setInProgress = (inProgress) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'inProgress', value: inProgress }
 }
 
-const setStakedBallance = (ballance) => {
-  return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'stakedBalance', value: ballance }
+const setStakedBalance = (balance) => {
+  return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'stakedBalance', value: balance }
 }
 
 export const resetState = () => {
@@ -41,17 +41,21 @@ export const resetLeaveState = () => (dispatch) => {
   dispatch(setError(null))
 }
 
+export const reloadStakedBalance = () => (dispatch) => {
+  dispatch(setStakedBalance(0));
+  dispatch(getStakedBalance());
+}
 
 export const getStakedBalance = () => (dispatch) => {
   dispatch(setInProgress(true))
   let curationCouncil = new CurationCouncil()
   // ethers
   curationCouncil.getStakedBalance().then((balance) => {
-    dispatch(setStakedBallance(curationCouncil.web3.utils.fromWei(balance, 'ether')))
+    dispatch(setStakedBalance(curationCouncil.web3.utils.fromWei(balance, 'ether')))
     dispatch(setInProgress(false))
   }, (error) => {
     console.log(error)
-    dispatch(setBallance(0))
+    dispatch(setBalance(0))
     dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'error', value: "Failed to retrieve staked balance" })
     dispatch(setInProgress(false))
   });
