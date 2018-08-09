@@ -44,10 +44,10 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'BotChain',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About BotChain',
           selector: 'orderFrontStandardAboutPanel:'
         },
         { type: 'separator' },
@@ -147,7 +147,7 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('http://electron.atom.io');
+            shell.openExternal('https://botchain.network/');
           }
         },
         {

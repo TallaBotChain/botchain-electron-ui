@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "botchain-electron-ui",
+  "productName": "BotChain",
+  "version": "0.1.0",
+  "description": "The goal of the BotChain application is to serve as a gateway to BotChain.  BotChain is the decentralized identity and audit ledger for autonomous AI agents. Using this BotChain application, you can play a key role in curating the registry and get rewarded for your contribution.",
   "main": "./main.prod.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "BotChain Team",
+    "email": "hello@botchain.network",
+    "url": "https://botchain.network/"
   },
   "scripts": {
     "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
