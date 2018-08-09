@@ -62,7 +62,7 @@ export default class VoteListItem extends Component {
       <div>
         <Row className="text-left">
           <Col xs={2}>{this.voteStatus(vote)}</Col>
-          {this.renderBriefRow(vote)}
+          <Col xs={5}>{this.renderBriefRow(vote)}</Col>
           <Col xs={5} className={((vote.expired || this.props.voting.pastVotes[vote.key]) ? "gray" : "state-text") + " reward text-right"} >{vote.reward} <span className='botcoin-title'>BOTC</span></Col>
         </Row>
       </div>
@@ -71,10 +71,10 @@ export default class VoteListItem extends Component {
 
   renderBriefRow(vote) {
     return (
-      <Col xs={5} className={this.voteStatusBrief(vote)}>
+      <div className={this.voteStatusBrief(vote)}>
         <span className="status"></span>
         {this.props.developer.records[vote.address] ? this.props.developer.records[vote.address].metadata.name : "Loading..."  } <small>{this.voteDomain(vote)}</small>
-      </Col>
+      </div>
     );
   }
 
@@ -89,8 +89,8 @@ export default class VoteListItem extends Component {
 
     return (
       <ListGroupItem title={vote.address} className={className} onClick={this.props.voteClick(vote)}>
-
         {this.props.voting.voteToShow ? this.renderBriefRow(vote) : this.renderFullRow(vote) }
+        <span className="inner-radius"></span>
       </ListGroupItem>);
   }
 

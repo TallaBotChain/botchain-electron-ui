@@ -554,7 +554,7 @@ input:focus, select:focus, textarea:focus, button:focus {
             border-bottom: 2px solid transparent;
             border-radius: 0;
             background-color: transparent;
-            min-height: 45px;
+            min-height: 47px;
             padding-left: 0;
             padding-right: 0;
             margin-bottom: 0;
@@ -575,6 +575,54 @@ input:focus, select:focus, textarea:focus, button:focus {
               width: calc(100% + 30px);
               &+.list-group-item {
                 border-top: 2px solid transparent;
+              }
+            }
+            &.active {
+              border-radius: 8px 0 0 8px;
+              border-right: 0;
+              text-shadow: none;
+              span.inner-radius {
+                display: block;
+                height: 61px;
+                background: white;
+                position: absolute;
+                right: -2px;
+                width: 15px;
+                top: -9px;
+                &:before, &:after {
+                  content: "";
+                  position: absolute;
+                  width: 15px;
+                  height: 9px;
+                  background-color: $gray-gradient1;
+                  border-right: 2px solid $gray-bg;
+                }
+                &:before {
+                  top: 0;
+                  border-radius: 0 0 9px 0;
+                  border-bottom: 2px solid $gray-bg;
+                }
+                &:after {
+                  bottom: 0;
+                  border-radius: 0 9px 0 0;
+                  border-top: 2px solid $gray-bg;
+                }
+              }
+              &:first-of-type {
+                &.active {
+                  span.inner-radius {
+                    height: 62px;
+                    right: -7px;
+                    &:before {
+                      border-radius: 0;
+                      border-bottom: 2px solid $gray-bg;
+                      border-right: 0;
+                    }
+                    &:after {
+                      right: 5px;
+                    }
+                  }
+                }
               }
             }
 
@@ -651,7 +699,7 @@ input:focus, select:focus, textarea:focus, button:focus {
 
     .voting-with-details {
       .voting-return-button {
-        display: block;
+        display: inline-block;
         font-size: 0.875em;
         margin-top: 5px;
         &:hover {
@@ -660,14 +708,54 @@ input:focus, select:focus, textarea:focus, button:focus {
       }
       .vote-list-details-wrap {
         .vote-list-container {
-          width: 50%;
+          width: 35%;
           float: left;
+
+          .list-group {
+            .list-group-item {
+              &:hover:not(.active) {
+                background: transparent;
+                border: 0;
+                border-top: 2px solid $gray-bg;
+                border-bottom: 2px solid transparent;
+                border-radius: 0;
+                margin-left: 0;
+                margin-right: 0;
+                padding-left: 0;
+                padding-right: 0;
+                margin-bottom: 0;
+                width: 100%;
+                &:first-of-type {
+                  border-top: 2px solid transparent;
+                }
+                &:last-child {
+                  border-bottom: 2px solid $gray-bg;
+                }
+                &+.list-group-item {
+                  border-top: 2px solid $gray-bg;
+                }
+              }
+              &.active {
+                &+.list-group-item:hover {
+                  border-top: 2px solid transparent;
+                }
+              }
+
+              .bot-name {
+                white-space: nowrap;
+                overflow: hidden;
+              }
+            }
+          }
         }
         .vote-details {
-          width: 50%;
+          width: 65%;
           float: left;
           display: block;
           padding-left: 15px;
+          background-color: white;
+          border-radius: 8px;
+          border: 2px solid $gray-bg;
 
           a {
             font-size: 0.75em;
