@@ -13,8 +13,13 @@ class VotingPage extends Component {
   componentDidMount() {
     this.props.getStakedBalance();
     this.props.getBalances();
-    this.props.getVotes();
     this.props.castVoteEstGas(1, true)
+  }
+  
+  componentWillReceiveProps(nextProps){
+    if(( this.props.curationCouncil.stakedBalance != nextProps.curationCouncil.stakedBalance ) && ( nextProps.curationCouncil.stakedBalance > 0 ) ) {
+      this.props.getVotes();
+    }
   }
 
   renderNoStake() {
