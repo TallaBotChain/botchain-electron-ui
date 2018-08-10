@@ -28,6 +28,7 @@ $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
 $yellow: #E6C900;
+$green-bg: #DAFCF4;
 
 @mixin arrow ($top, $left, $color: white) {
   content: '';
@@ -94,11 +95,11 @@ $yellow: #E6C900;
 }
 
 .green {
-  color : $green-text;
+  color: $green-text;
 }
 
 .red {
-  color : $error;
+  color: $error;
 }
 
 ::selection {
@@ -502,6 +503,7 @@ input:focus, select:focus, textarea:focus, button:focus {
       .gray-body {
         min-height: calc(100vh - 330px);
         padding-top: 10px;
+        padding-bottom: 30px;
         &:before {
           content: none;
         }
@@ -539,10 +541,8 @@ input:focus, select:focus, textarea:focus, button:focus {
     }
 
     .vote-list-details-wrap {
-      margin-top: 16px;
+      margin-top: 15px;
       .vote-list-container {
-        width: 100%;
-
         .list-group {
           border: 0;
           box-shadow: none;
@@ -708,9 +708,6 @@ input:focus, select:focus, textarea:focus, button:focus {
       }
       .vote-list-details-wrap {
         .vote-list-container {
-          width: 35%;
-          float: left;
-
           .list-group {
             .list-group-item {
               &:hover:not(.active) {
@@ -749,16 +746,85 @@ input:focus, select:focus, textarea:focus, button:focus {
           }
         }
         .vote-details {
-          width: 65%;
           float: left;
           display: block;
-          padding-left: 15px;
+          padding-top: 15px;
           background-color: white;
           border-radius: 8px;
           border: 2px solid $gray-bg;
+          height: calc(100vh - 410px);
+          overflow: auto;
+          min-height: 300px;
 
-          a {
+          .vote-details-header {
+            .small-button.green-button {
+              min-width: 104px;
+              padding: 0 10px;
+            }
+            small {
+              &.gray-text, &.state-text {
+                display: inline-block;
+                font-weight: 500;
+                letter-spacing: 0.01em;
+                white-space: nowrap;
+              }
+              &.gray-text {
+                font-size: 0.75em;
+                font-weight: 300;
+              }
+            }
+
+            .fake-button {
+              height: 32px;
+              width: 114px;
+              line-height: 32px;
+              font-size: 0.875em;
+              font-weight: 500;
+              border-radius: 4px;
+              text-transform: uppercase;
+              &.approved {
+                background: $green-bg;
+                color: $active-green;
+              }
+              &.rejected {
+                background-color: $error-bg;
+                color: $red;
+              }
+              &.pending {
+                background-color: $gray-gradient1;
+                color: $gray;
+              }
+            }
+          }
+
+          small {
+            font-weight: 400;
+            display: block;
+            line-height: 1.6em;
+          }
+
+          a.dollar-text {
+            &:hover {
+              color: $blue-link;
+            }
             font-size: 0.75em;
+          }
+
+          dt {
+            font-size: 0.8125em;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+          }
+
+          dd {
+            margin-bottom: 15px;
+            font-weight: 400;
+          }
+
+          .divider {
+            background: $gray-gradient1;
+            margin-top: 15px;
+            margin-bottom: 15px;
           }
         }
       }
