@@ -114,6 +114,18 @@ export const hideVote = () => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: null }
 }
 
+export const castVoteEstGas = (idx, vote) => async (dispatch) => {
+  let curationCouncil = new CurationCouncil();
+  try {
+    var voteGas = await curationCouncil.castRegistrationVoteEstGas(idx, vote);
+    let gasFee = curationCouncil.web3.utils.fromWei((voteGas*curationCouncil.gasPrice).toString())
+    dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxEstGas', value: gasFee });
+
+  } catch( ex ) {
+    console.log("Cast vote estimate gas: ", ex);
+  }
+}
+
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {
@@ -158,6 +170,18 @@ export const resetVoteState = () => (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxId', value: null });
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: false });
   dispatch(setError(null));
+}
+
+export const payoutRewardEstGas = () => async (dispatch) => {
+  try {
+    let tokenVault = new TokenVault();
+    var rewardGas = await tokenVault.collectCuratorRewardEstGas();
+    let gasFee = tokenVault.web3.utils.fromWei((rewardGas*tokenVault.gasPrice).toString())
+    dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxEstGas', value: gasFee });
+  } catch(e) {
+    console.log(e)
+    dispatch( setError( "Failed to estimate gas." ));
+  }
 }
 
 export const payoutReward = () => async (dispatch) => {
@@ -225,7 +249,7 @@ const setPastVotes = (transactions) => (dispatch, getState) => {
   let prevPastVotes = getState().voting.pastVotes;
   let curationCouncil = new CurationCouncil();
   console.log("all transactions:", transactions);
-  const contractAddress = remote.getGlobal('config').couration_council_contract;
+  const contractAddress = remote.getGlobal('config').curation_council_contract;
   const castVoteMethod = curationCouncil.getMethodSignature("castRegistrationVote");
   let coucilTransactions = transactions.filter( tx => ( (tx.to == contractAddress) && (tx.isError == "0") && (tx.input.startsWith(castVoteMethod)) ) );
   console.log("council transactions:", coucilTransactions );

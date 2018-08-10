@@ -12,8 +12,13 @@ class Balances extends Component {
     };
   }
 
-  togglePayoutModal = () => {
-    this.setState({ show_payout_modal: !this.state.show_payout_modal });
+  showPayoutModal = () => {
+    this.setState({ show_payout_modal: true });
+    this.props.payoutEstGas()
+  }
+
+  hidePayoutModal = () => {
+    this.setState({ show_payout_modal: false });
   }
 
   render() {
@@ -34,7 +39,7 @@ class Balances extends Component {
                 {this.props.voting.rewardBalance} BOTC
               </div>
             </Well>
-            {(this.props.voting.rewardBalance > 0) && <Button block onClick={this.togglePayoutModal}>Payout reward</Button>}
+            {(this.props.voting.rewardBalance > 0) && <Button block onClick={this.showPayoutModal}>Payout reward</Button>}
           </Col>
           <Col xs={6} md={6}>
             <Well>
@@ -44,7 +49,7 @@ class Balances extends Component {
               </div>
             </Well>
           </Col>
-          <PayoutModal show={this.state.show_payout_modal} handleClose={this.togglePayoutModal} {...this.props.voting} />
+          <PayoutModal show={this.state.show_payout_modal} handleClose={this.hidePayoutModal} {...this.props.voting} />
         </Row>
       </div>
       );

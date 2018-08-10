@@ -35,7 +35,7 @@ class VotingPage extends Component {
 
   render() {
     let body = ""
-    if (this.props.voting.inProgress) {
+    if (this.props.curationCouncil.inProgress) {
       body = this.renderInProgress()
     } else if (this.props.curationCouncil.stakedBalance > 0) {
       body = this.renderVoting()
@@ -54,7 +54,8 @@ function mapStateToProps(state) {
     return {
       voting: state.voting,
       developer: state.developer,
-      curationCouncil: state.curationCouncil
+      curationCouncil: state.curationCouncil,
+      usdExchangeRate: state.ethereum.usdExchangeRate
     };
 }
 
@@ -81,8 +82,14 @@ const mapDispatchToProps = dispatch => {
     hideVote: () => {
       dispatch( VotingActions.hideVote() );
     },
+    castVoteEstGas: (idx, vote) => {
+      dispatch( VotingActions.castVoteEstGas(idx, vote) );
+    },
     castVote: (idx, vote) => {
       dispatch( VotingActions.castVote(idx, vote) );
+    },
+    payoutEstGas: () => {
+      dispatch( VotingActions.payoutRewardEstGas() );
     },
     payout: () => {
       dispatch( VotingActions.payoutReward() );

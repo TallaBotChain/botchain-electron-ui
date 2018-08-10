@@ -60,7 +60,7 @@ export const getStakedBalance = () => (dispatch) => {
 export const approveJoinPayment = (amount) => async (dispatch) => {
   dispatch(resetJoinState())
   let botCoin = new BotCoin();
-  let chargingContract = remote.getGlobal('config').couration_council_contract;
+  let chargingContract = remote.getGlobal('config').curation_council_contract;
   console.log("Approving for amount ", amount);
 
   try {
@@ -74,12 +74,27 @@ export const approveJoinPayment = (amount) => async (dispatch) => {
   }
 }
 
+export const joinCouncilEstGas = (amount) => async (dispatch) => {
+  dispatch(resetJoinState())
+  try {
+    let botCoin = new BotCoin();
+    let chargingContract = remote.getGlobal('config').curation_council_contract;
+    let approveGas = await botCoin.approveEstGas(amount, chargingContract);
+    let curationCouncil = new CurationCouncil()
+    let joinGas = await curationCouncil.joinCouncilEstGas(amount);
+    let gasFee = curationCouncil.web3.utils.fromWei(((approveGas+joinGas)*curationCouncil.gasPrice).toString())
+    dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxEstGas', value: gasFee });
+  }catch(e) {
+    console.log(e);
+    dispatch( setError( "Failed to Estimate Gas. "+ e ));
+    dispatch(setInProgress(false))
+  }
+}
 
 export const joinCouncil = (amount) => async (dispatch) => {
-  console.log("joinCouncil")
   dispatch(setInProgress(true))
-  let curationCouncil = new CurationCouncil()
   try {
+    let curationCouncil = new CurationCouncil()
     let txId = await curationCouncil.joinCouncil(amount);
     dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxId', value: txId });
     dispatch(startTxObserver(txId, joinCouncilTxMined));
@@ -103,6 +118,19 @@ const joinCouncilTxMined = (status) => (dispatch) => {
   }
 }
 
+export const leaveCouncilEstGas = () => async (dispatch) => {
+  dispatch(setInProgress(true))
+  try {
+    let curationCouncil = new CurationCouncil()
+    let leaveGas = await curationCouncil.leaveCouncilEstGas();
+    let gasFee = curationCouncil.web3.utils.fromWei((leaveGas*curationCouncil.gasPrice).toString())
+    dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxEstGas', value: gasFee });
+  }catch(e) {
+    console.log(e);
+    dispatch( setError( "Failed to estimate gas." ));
+    dispatch(setInProgress(false))
+  }
+}
 
 export const leaveCouncil = () => async (dispatch) => {
   dispatch(resetLeaveState())

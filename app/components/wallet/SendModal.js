@@ -28,9 +28,6 @@ export default class SendModal extends Component {
               </div>
             )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.handleClose}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
   }

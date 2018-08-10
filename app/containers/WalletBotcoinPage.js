@@ -37,9 +37,12 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(BotcoinActions.getTransactionList());
-    }
+    },
+    transferEstGas: (to, amount) => {
+      dispatch(BotcoinActions.transferEstGas(to, amount));
+    },
   }
 }
-  
-  
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(WalletBotcoinPage);

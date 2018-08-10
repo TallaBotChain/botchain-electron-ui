@@ -16,12 +16,21 @@ export default class WalletBotcoin extends Component {
     };
   }
 
-  toggleSendModal = () => {
-    this.setState({ show_send_modal: !this.state.show_send_modal });
+  showSendModal = () => {
+    this.setState({ show_send_modal: true });
+    this.props.transferEstGas(KeyTools.address, 0)
   }
 
-  toggleReceiveModal = () => {
-    this.setState({ show_receive_modal: !this.state.show_receive_modal });
+  hideSendModal = () => {
+    this.setState({ show_send_modal: false });
+  }
+
+  showReceiveModal = () => {
+    this.setState({ show_receive_modal: true });
+  }
+
+  hideReceiveModal = () => {
+    this.setState({ show_receive_modal: false });
   }
 
   render() {
@@ -37,19 +46,19 @@ export default class WalletBotcoin extends Component {
               {this.props.walletData.balance}<span>BOTC</span>
             </h1>
             <div className="center-buttons">
-              <Button onClick={this.toggleSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
-              <Button onClick={this.toggleReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
+              <Button onClick={this.showSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
+              <Button onClick={this.showReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
             </div>
             <Col xs={12}>
               <h5 className="gray text-left">TRANSACTION HISTORY</h5>
-              <TransactionList transactions={this.props.walletData.transactions} 
+              <TransactionList transactions={this.props.walletData.transactions}
               currency={this.props.walletData.currency}
-              usdExchangeRate={this.props.usdExchangeRate} 
+              usdExchangeRate={this.props.usdExchangeRate}
               />
             </Col>
           </Col>
-          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.toggleReceiveModal} address={KeyTools.address} currency="botcoin" />
-          <SendModal show={this.state.show_send_modal} handleClose={this.toggleSendModal} {...this.props} />
+          <ReceiveModal show={this.state.show_receive_modal} handleClose={this.hideReceiveModal} address={KeyTools.address} currency="botcoin" />
+          <SendModal show={this.state.show_send_modal} handleClose={this.hideSendModal} {...this.props} />
         </Col>
       </div>
     )

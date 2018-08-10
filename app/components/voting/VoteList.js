@@ -11,6 +11,9 @@ export default class VoteList extends Component {
   }
 
   voteClick = (vote) => () => {
+    if (!vote.expired && !vote.votedOnStatus) {
+       this.props.castVoteEstGas(vote.key, true)
+    }
     this.props.resetVoteState();
     if (!this.props.developer.records[vote.address]) {
       this.props.getDeveloperInfo(vote.address);

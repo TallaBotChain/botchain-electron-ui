@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Alert, Well } from 'react-bootstrap';
+import { Modal, Button, Alert, Well, Col, Row } from 'react-bootstrap';
 import StakeForm from './StakeForm';
 
 export default class StakeModal extends Component {
@@ -29,13 +29,10 @@ export default class StakeModal extends Component {
                   <Well>{this.props.curationCouncil.joinSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
                 <h4>Available Balance: {this.props.walletData.balance} BOTC</h4>
-                <StakeForm label="Stake:" onSubmit={this.handleSubmit} {...this.props} />
+                <StakeForm onSubmit={this.handleSubmit} {...this.props} />
               </div>
             )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.handleClose}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
   }
