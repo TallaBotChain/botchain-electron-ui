@@ -55,7 +55,19 @@ export const getBalance = () => (dispatch) => {
   });
 }
 
-
+export const transferEstGas = (to, amount) => async (dispatch) => {
+  dispatch(setInProgress(true))
+  try {
+    let botCoin = new BotCoin()
+    let transferGas = await botCoin.transferEtherEstGas(to, amount);
+    let gasFee = botCoin.web3.utils.fromWei((transferGas*botCoin.gasPrice).toString())
+    dispatch( { type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxEstGas', value: gasFee });
+  }catch(e) {
+    console.log(e);
+    dispatch( setError( "Failed to estimate gas." ));
+    dispatch(setInProgress(false))
+  }
+}
 
 export const transfer = (to, amount) => async (dispatch) => {
   dispatch(resetTransferState())

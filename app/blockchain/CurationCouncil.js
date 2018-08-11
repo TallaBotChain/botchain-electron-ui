@@ -5,16 +5,18 @@ import {remote} from 'electron';
 export default class CurationCouncil extends BaseConnector {
   constructor() {
     super();
-    this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').couration_council_contract);
+    this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').curation_council_contract);
+  }
+
+  joinCouncilEstGas(stake) {
+    return this.contract.methods.joinCouncil(this.web3.utils.toWei(stake.toString(), "ether")).estimateGas({from: this.account})
   }
 
   joinCouncil(stake) {
-    let self = this;
-    let fromAddress = this.account
-    return self.contract.methods.joinCouncil(self.web3.utils.toWei(stake.toString(), "ether")).estimateGas({from: fromAddress}).then(function(gas) {
-      return new Promise(function(resolve, reject) {
-        self.contract.methods.joinCouncil(self.web3.utils.toWei(stake.toString(), "ether"))
-        .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
+    return this.contract.methods.joinCouncil(this.web3.utils.toWei(stake.toString(), "ether")).estimateGas({from: this.account}).then((gas) => {
+      return new Promise((resolve, reject) => {
+        this.contract.methods.joinCouncil(this.web3.utils.toWei(stake.toString(), "ether"))
+        .send({gasPrice: this.gasPrice, from: this.account, gas: gas},
           function(err, tx_id) {
             if (!err) {
               console.log("transfer tx_id:", tx_id);
@@ -28,13 +30,15 @@ export default class CurationCouncil extends BaseConnector {
     })
   }
 
+  leaveCouncilEstGas() {
+    return this.contract.methods.leaveCouncil().estimateGas({from: this.account})
+  }
+
   leaveCouncil() {
-    let self = this;
-    let fromAddress = this.account
-    return self.contract.methods.leaveCouncil().estimateGas({from: fromAddress}).then(function(gas) {
-      return new Promise(function(resolve, reject) {
-        self.contract.methods.leaveCouncil()
-        .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
+    return this.contract.methods.leaveCouncil().estimateGas({from: this.account}).then((gas) => {
+      return new Promise((resolve, reject) => {
+        this.contract.methods.leaveCouncil()
+        .send({gasPrice: this.gasPrice, from: this.account, gas: gas},
           function(err, tx_id) {
             if (!err) {
               console.log("transfer tx_id:", tx_id);
@@ -74,6 +78,10 @@ export default class CurationCouncil extends BaseConnector {
 
   getVotedOnStatus(idx) {
     return this.contract.methods.getVotedOnStatus(idx, this.account).call({from: this.account});
+  }
+
+  castRegistrationVoteEstGas(idx, vote) {
+    return this.contract.methods.castRegistrationVote(idx, vote).estimateGas({from: this.account})
   }
 
   castRegistrationVote(idx, vote) {

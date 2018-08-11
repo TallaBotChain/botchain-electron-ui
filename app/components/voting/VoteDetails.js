@@ -107,7 +107,11 @@ export default class VoteDetails extends Component {
         </Col>
         <Col sm={6} xs={12}>
           <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <small className='botcoin-title'>BOTC</small></small><br />
-          <small className="gray-text">Gas Fee: [TDB]</small>
+          <small className="gray-text">Gas Fee: {this.props.voting.voteTxEstGas}</small>
+        </Col>
+        <Col xs={3}>
+          $0.00<br />
+          ${this.props.voting.voteTxEstGas*this.props.usdExchangeRate}
         </Col>
         <Col sm={3} xs={12} className="text-right">
           <Button className="reject-button small-button" onClick={this.rejectVote}><span></span>REJECT</Button>

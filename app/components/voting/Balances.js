@@ -12,8 +12,13 @@ class Balances extends Component {
     };
   }
 
-  togglePayoutModal = () => {
-    this.setState({ show_payout_modal: !this.state.show_payout_modal });
+  showPayoutModal = () => {
+    this.setState({ show_payout_modal: true });
+    this.props.payoutEstGas()
+  }
+
+  hidePayoutModal = () => {
+    this.setState({ show_payout_modal: false });
   }
 
   render() {
@@ -32,13 +37,13 @@ class Balances extends Component {
           <Col xs={6} className="gray-border">
             <h2 className="state-text">Your Reward Balance</h2>
             <h1 className="botcoin-green">{this.props.voting.rewardBalance}<span className="botcoin-title">BOTC</span></h1>
-            {(this.props.voting.rewardBalance > 0) && <Button onClick={this.togglePayoutModal} bsClass="btn default-button small-button">Payout reward</Button>}
+            {(this.props.voting.rewardBalance > 0) && <Button onClick={this.showPayoutModal} bsClass="btn default-button small-button">Payout reward</Button>}
           </Col>
           <Col xs={6} className="gray-border">
             <h2 className="state-text">Available Reward</h2>
             <h1 className="botcoin-green">{this.props.voting.availableReward}<span className="botcoin-title">BOTC</span></h1>
           </Col>
-          <PayoutModal show={this.state.show_payout_modal} handleClose={this.togglePayoutModal} {...this.props.voting} />
+          <PayoutModal show={this.state.show_payout_modal} handleClose={this.hidePayoutModal} {...this.props.voting} />
         </Row>
       </div>
       );

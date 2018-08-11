@@ -31,8 +31,14 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
+    stakeEstGas: (amount) => {
+      dispatch(CurationCouncilActions.joinCouncilEstGas(amount));
+    },
     stake: (amount) => {
       dispatch(CurationCouncilActions.approveJoinPayment(amount));
+    },
+    unstakeEstGas: () => {
+      dispatch(CurationCouncilActions.leaveCouncilEstGas());
     },
     unstake: () => {
       dispatch(CurationCouncilActions.leaveCouncil());
