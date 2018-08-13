@@ -9,6 +9,7 @@ export default class PayoutModal extends Component {
     }
   }
 
+
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName="app-modal approve-modal">
@@ -16,16 +17,16 @@ export default class PayoutModal extends Component {
           <Modal.Title className="text-center">Payout reward</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {this.props.payoutTxId && !this.props.payoutTxMined ? (
-            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.payoutTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
+          {this.props.voting.payoutTxId && !this.props.voting.payoutTxMined ? (
+            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.voting.payoutTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
           ) : (
               <div>
-                {this.props.payoutTxMined && (
-                  <Well>{this.props.payoutSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
+                {this.props.voting.payoutTxMined && (
+                  <Well>{this.props.voting.payoutSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
-                <h4 className="state-text">Reward Balance: <span className="botcoin-green">{this.props.rewardBalance}</span> <span className="botcoin-title">BOTC</span></h4>
+                <h4 className="state-text">Reward Balance: <span className="botcoin-green">{this.props.voting.rewardBalance}</span> <span className="botcoin-title">BOTC</span></h4>
               <Button onClick={this.props.payout} bsClass="btn green-button big-button">COLLECT</Button>
-              <div><small className="gray">Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
+              <div><small className="gray">Gas Fee: {this.props.voting.payoutTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>

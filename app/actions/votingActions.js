@@ -184,6 +184,7 @@ const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
     dispatch( alterPastVote(idx, true) );
     dispatch( markVoted(idx) );
     dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: true });
+    dispatch( getRewardBalance() );
   } else {
     dispatch( setError("Vote transaction failed." ));
   }
