@@ -102,8 +102,10 @@ $red-active: #DF3C3C;
   }
   &.small-button {
     line-height: 30px;
-    min-width: 100px;
+    min-width: 90px;
     padding: 0 10px;
+    width: 100%;
+    max-width: 101px;
   }
   &:hover, &:focus{
     border: 2px solid $red-hover;

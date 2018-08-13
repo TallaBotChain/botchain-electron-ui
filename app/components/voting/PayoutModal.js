@@ -25,7 +25,7 @@ export default class PayoutModal extends Component {
                 )}
                 <h4 className="state-text">Reward Balance: <span className="botcoin-green">{this.props.rewardBalance}</span> <span className="botcoin-title">BOTC</span></h4>
               <Button onClick={this.props.payout} bsClass="btn green-button big-button">COLLECT</Button>
-              <div><small>Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
+              <div><small className="gray">Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>

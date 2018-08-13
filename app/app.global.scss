@@ -758,19 +758,38 @@ input:focus, select:focus, textarea:focus, button:focus {
 
           .vote-details-header {
             .small-button.green-button {
-              min-width: 104px;
+              min-width: 90px;
               padding: 0 10px;
+              width: 100%;
+              max-width: 110px;
+            }
+            .exchange {
+              max-width: 130px;
             }
             small {
               &.gray-text, &.state-text {
-                display: inline-block;
+                line-height: 1.1em;
                 font-weight: 500;
                 letter-spacing: 0.01em;
                 white-space: nowrap;
+                .botcoin-title {
+                  font-size: 0.875em;
+                }
               }
               &.gray-text {
                 font-size: 0.75em;
                 font-weight: 300;
+                display: inline-block;
+              }
+              &.gray {
+                font-size: 0.6875em;
+                letter-spacing: 0.01em;
+                font-weight: 400;
+                line-height: 1.9em;
+                &.usd-exchange {
+                  font-size: 0.625em;
+                  font-weight: 300;
+                }
               }
             }
 
@@ -1290,9 +1309,13 @@ input:focus, select:focus, textarea:focus, button:focus {
           font-size: 0.66em;
         }
       }
+      small {
+        margin-top: 15px;
+        display: inline-block;
+      }
     }
     .modal-footer {
-      margin-top: 60px;
+      margin-top: 40px;
     }
   }
 }

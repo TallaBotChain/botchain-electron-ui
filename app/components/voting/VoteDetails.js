@@ -102,19 +102,27 @@ export default class VoteDetails extends Component {
   renderHeaderRegular = () => {
     return (
       <div className="vote-details-header">
-        <Col sm={3} xs={12}>
-          <Button className="green-button small-button" onClick={this.approveVote}>APPROVE</Button>
+        <Col md={7} sm={8} xs={12}>
+          <Row>
+            <Col md={4} xs={12}>
+              <Button className="green-button small-button" onClick={this.approveVote}>APPROVE</Button>
+            </Col>
+            <Col md={8} xs={12}>
+              <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <span className='botcoin-title'>BOTC</span></small>
+              <small className="gray-text">Gas Fee: {this.props.voting.voteTxEstGas} ETH</small>
+            </Col>
+          </Row>
         </Col>
-        <Col sm={6} xs={12}>
-          <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <small className='botcoin-title'>BOTC</small></small><br />
-          <small className="gray-text">Gas Fee: {this.props.voting.voteTxEstGas}</small>
-        </Col>
-        <Col xs={3}>
-          $0.00<br />
-          ${this.props.voting.voteTxEstGas*this.props.usdExchangeRate}
-        </Col>
-        <Col sm={3} xs={12} className="text-right">
-          <Button className="reject-button small-button" onClick={this.rejectVote}><span></span>REJECT</Button>
+        <Col md={5} sm={4} xs={12}>
+          <Row>
+            <Col md={7} xs={12} className="text-right pull-right">
+              <Button className="reject-button small-button" onClick={this.rejectVote}><span></span>REJECT</Button>
+            </Col>
+            <Col md={5} xs={12} className="pull-right text-left exchange">
+              <small className="gray">$0.00</small>
+              <small className="gray usd-exchange">${this.props.voting.voteTxEstGas*this.props.usdExchangeRate}</small>
+            </Col>
+          </Row>
         </Col>
       </div>
     );
