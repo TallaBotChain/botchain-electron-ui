@@ -8,6 +8,8 @@ import keyTools from '../blockchain/KeyTools';
 import axios from 'axios'
 import {remote} from 'electron';
 
+const GET_VOTES_INTERVAL_MS = 20000;
+
 export const VotingActions = {
   SET_VOTING_ATTRIBUTE: 'SET_VOTING_ATTRIBUTE',
   RESET_STATE: 'VOTING_RESET_STATE'
@@ -52,20 +54,22 @@ const getLastBlock = () => async (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlockTimestamp', value: lastBlock.timestamp });
 }
 
-export const getVotes = () => async (dispatch, getStore) => {
+export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStore) => {
   let curationCouncil = new CurationCouncil();
-  dispatch(setInProgress(true));
+  if( shouldSetInProgress) dispatch(setInProgress(true));
   await dispatch(getTotalSupply());
   await dispatch(getRewardRate());
   await dispatch(getLastBlock());
   await dispatch(getPastTransactions());
-  let { totalSupply, curatorRewardRate, lastBlock }  = getStore().voting;
+  let { totalSupply, curatorRewardRate, lastBlock, votes, updateInterval }  = getStore().voting;
   console.log("rewardRate: ",  curatorRewardRate );
   console.log("totalSupply: ", totalSupply);
   console.log("lastBlock: ", lastBlock);
-  let votes = [];
   let availableReward = new BigNumber(0);
-  for(let idx=totalSupply;idx>0;idx--) {
+  let lastVoteKey = Math.max.apply(Math, votes.map(function(o) { return o.key; }));
+  lastVoteKey = Math.max( lastVoteKey, 0);
+  console.log("last vote key: ", lastVoteKey);
+  for(let idx=totalSupply;idx>lastVoteKey;idx--) {
     let initialBlock = await curationCouncil.getVoteInitialBlock(idx);
     console.log("initialBlock: ", initialBlock);
     let initialBlockInfo = await keyTools.web3.eth.getBlock(initialBlock);
@@ -86,12 +90,31 @@ export const getVotes = () => async (dispatch, getStore) => {
       initialBlock: initialBlock,
       initialTs: initialBlockInfo.timestamp,
       finalBlock: finalBlock } );
-    console.log(typeof curatorRewardRate);
-    availableReward = availableReward.plus( BigNumber(curationCouncil.web3.utils.toWei(curatorRewardRate,'ether') ) );
   }
-  dispatch( setAvailableReward(curationCouncil.web3.utils.fromWei(availableReward.toString(), 'ether') ) );
+  if( curatorRewardRate ) {
+    availableReward = curationCouncil.web3.utils.toWei((curatorRewardRate * votes.filter((v)=>(!v.votedOnStatus && !v.expired)).length).toFixed(18).toString());
+    dispatch( setAvailableReward( curationCouncil.web3.utils.fromWei(availableReward) ) );
+  }
+  votes.sort( (a,b) => (b.key - a.key) );
   dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
-  dispatch(setInProgress(false));
+  if( shouldSetInProgress ) dispatch(setInProgress(false));
+  if( !updateInterval) {
+    updateInterval = setInterval( () => {
+      dispatch( getVotes(false) );
+    }, GET_VOTES_INTERVAL_MS );
+    dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'updateInterval', value: updateInterval } );
+  }
+}
+
+const markVoted = (idx) => (dispatch, getState) => {
+  let votes = getState().voting.votes;
+  for(let i=0;i<votes.length;i++) {
+    if(votes[i].key == idx) {
+      votes[i].votedOnStatus = true;
+    }
+  }
+  dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
+  dispatch( getVotes(false) );
 }
 
 export const getRewardBalance = () => (dispatch) => {
@@ -159,6 +182,7 @@ const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: true });
   if(status == TxStatus.SUCCEED){
     dispatch( alterPastVote(idx, true) );
+    dispatch( markVoted(idx) );
     dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: true });
   } else {
     dispatch( setError("Vote transaction failed." ));
@@ -232,14 +256,14 @@ export const getPastTransactions = () => (dispatch) => {
       apikey: remote.getGlobal('config').etherscan_api_key
     }
   })
-  .then(function (response) {
-    dispatch(setPastVotes(response.data.result));
-    return Promise.resolve();
-  })
-  .catch(function (error) {
-    dispatch( setError("Failed to retreive transaction history." ));
-    return Promise.resolve();
-  })
+    .then(function (response) {
+      dispatch(setPastVotes(response.data.result));
+      return Promise.resolve();
+    })
+    .catch(function (error) {
+      dispatch( setError("Failed to retreive transaction history." ));
+      return Promise.resolve();
+    })
 }
 
 const arrayToObject = (arr, keyField) =>
