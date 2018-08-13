@@ -90,10 +90,11 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
       initialBlock: initialBlock,
       initialTs: initialBlockInfo.timestamp,
       finalBlock: finalBlock } );
-    console.log(typeof curatorRewardRate);
-    availableReward = availableReward.plus( BigNumber(curationCouncil.web3.utils.toWei(curatorRewardRate,'ether') ) );
   }
-  dispatch( setAvailableReward(curationCouncil.web3.utils.fromWei(availableReward.toString(), 'ether') ) );
+  if( curatorRewardRate ) {
+    availableReward = curationCouncil.web3.utils.toWei((curatorRewardRate * votes.filter((v)=>(!v.votedOnStatus && !v.expired)).length).toFixed(18).toString());
+    dispatch( setAvailableReward( curationCouncil.web3.utils.fromWei(availableReward) ) );
+  }
   votes.sort( (a,b) => (b.key - a.key) );
   dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
   if( shouldSetInProgress ) dispatch(setInProgress(false));
@@ -103,6 +104,17 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
     }, GET_VOTES_INTERVAL_MS );
     dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'updateInterval', value: updateInterval } );
   }
+}
+
+const markVoted = (idx) => (dispatch, getState) => {
+  let votes = getState().voting.votes;
+  for(let i=0;i<votes.length;i++) {
+    if(votes[i].key == idx) {
+      votes[i].votedOnStatus = true;
+    }
+  }
+  dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
+  dispatch( getVotes(false) );
 }
 
 export const getRewardBalance = () => (dispatch) => {
@@ -170,6 +182,7 @@ const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: true });
   if(status == TxStatus.SUCCEED){
     dispatch( alterPastVote(idx, true) );
+    dispatch( markVoted(idx) );
     dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteSuccess', value: true });
   } else {
     dispatch( setError("Vote transaction failed." ));
