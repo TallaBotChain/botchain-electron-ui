@@ -11,9 +11,9 @@ export default class PayoutModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose} >
-        <Modal.Header closeButton>
-          <Modal.Title>Payout reward</Modal.Title>
+      <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName="app-modal approve-modal">
+        <Modal.Header>
+          <Modal.Title className="text-center">Payout reward</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
           {this.props.payoutTxId && !this.props.payoutTxMined ? (
@@ -23,12 +23,15 @@ export default class PayoutModal extends Component {
                 {this.props.payoutTxMined && (
                   <Well>{this.props.payoutSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
-                <h4>Reward Balance: {this.props.rewardBalance} BOTC</h4>
-                <Button onClick={this.props.payout}>Collect</Button>
-                <div><small>Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
+                <h4 className="state-text">Reward Balance: <span className="botcoin-green">{this.props.rewardBalance}</span> <span className="botcoin-title">BOTC</span></h4>
+              <Button onClick={this.props.payout} bsClass="btn green-button big-button">COLLECT</Button>
+              <div><small className="gray">Gas Fee: {this.props.payoutTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.handleClose} bsClass="btn default-button small-button width-100">Close</Button>
+        </Modal.Footer>
       </Modal>
     );
   }

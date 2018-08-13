@@ -38,11 +38,11 @@ export default class VoteList extends Component {
         <VoteListItem key={vote.key} vote={vote} voteClick={this.voteClick} {...this.props} />
       );
     return (
-      <div className='vote-list-container'>
+      <Col xs={this.props.voting.voteToShow ? 4 : 12} className='vote-list-container'>
         <ListGroup>
           {votes}
         </ListGroup>
-      </div>
+      </Col>
     )
   }
 
