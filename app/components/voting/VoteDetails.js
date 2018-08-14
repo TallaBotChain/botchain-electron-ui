@@ -3,6 +3,7 @@ import { Button, Row, Col, Well, Alert } from 'react-bootstrap';
 import JsonList from './JsonList';
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
+import ConfirmModal from "./ConfirmModal";
 
 momentDurationFormatSetup(moment);
 
@@ -11,6 +12,14 @@ const STATUS_VOTED_PENDING = 1;
 const STATUS_VOTED_MINED = 2;
 
 export default class VoteDetails extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      show_confirm_modal: false,
+      confirm_modal_action: ""
+    };
+  }
 
   developer = () => {
     return this.props.voting.voteToShow ? this.props.developer.records[this.props.voting.voteToShow.address] : null
@@ -58,10 +67,12 @@ export default class VoteDetails extends Component {
 
   approveVote = () => {
     this.props.castVote(this.currentVoteKey, true);
+    this.setState( {show_confirm_modal: false} );
   }
 
   rejectVote = () => {
     this.props.castVote(this.currentVoteKey, false);
+    this.setState( {show_confirm_modal: false} );
   }
 
   votedStatus = () => {
@@ -99,13 +110,30 @@ export default class VoteDetails extends Component {
     }
   }
 
+  closeConfirmModal = () => {
+    this.setState({show_confirm_modal: false});
+  }
+
+  showApproveModal = () => {
+    this.setState({show_confirm_modal: true,
+                   confirm_modal_action: "approve",
+                   confirm_modal_method: this.approveVote });
+  }
+
+  showRejectModal = () => {
+    this.setState({show_confirm_modal: true,
+                   confirm_modal_action: "reject",
+                   confirm_modal_method: this.rejectVote });
+  }
+
   renderHeaderRegular = () => {
     return (
       <div className="vote-details-header">
+        <ConfirmModal show={this.state.show_confirm_modal} action={this.state.confirm_modal_action} handleClose={this.closeConfirmModal} confirmMethod={this.state.confirm_modal_method}  {...this.props} />
         <Col md={7} sm={8} xs={12}>
           <Row>
             <Col md={4} xs={12}>
-              <Button className="green-button small-button" onClick={this.approveVote}>APPROVE</Button>
+              <Button className="green-button small-button" onClick={this.showApproveModal}>APPROVE</Button>
             </Col>
             <Col md={8} xs={12}>
               <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <span className='botcoin-title'>BOTC</span></small>
@@ -116,7 +144,7 @@ export default class VoteDetails extends Component {
         <Col md={5} sm={4} xs={12}>
           <Row>
             <Col md={7} xs={12} className="text-right pull-right">
-              <Button className="reject-button small-button" onClick={this.rejectVote}><span></span>REJECT</Button>
+              <Button className="reject-button small-button" onClick={this.showRejectModal}><span></span>REJECT</Button>
             </Col>
             <Col md={5} xs={12} className="pull-right text-left exchange">
               <small className="gray">$0.00</small>

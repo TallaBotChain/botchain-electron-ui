@@ -152,6 +152,7 @@ export const castVoteEstGas = (idx, vote) => async (dispatch) => {
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {
+    console.log("Casting vote: ",idx,vote);
     var txId = await curationCouncil.castRegistrationVote(idx, vote);
     //var txId = "0xbe641855458ec0cc83fea52bbb935d34a7b69d1100ca36446c00711979c1a6da";
     console.log("Casted vote, tx_id: ", txId);
