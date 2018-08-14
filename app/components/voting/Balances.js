@@ -43,7 +43,7 @@ class Balances extends Component {
             <h2 className="state-text">Available Reward</h2>
             <h1 className="botcoin-green">{this.props.voting.availableReward}<span className="botcoin-title">BOTC</span></h1>
           </Col>
-          <PayoutModal show={this.state.show_payout_modal} handleClose={this.hidePayoutModal} {...this.props.voting} />
+          <PayoutModal show={this.state.show_payout_modal} handleClose={this.hidePayoutModal} {...this.props} />
         </Row>
       </div>
       );
