@@ -95,7 +95,11 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
     availableReward = curationCouncil.web3.utils.toWei((curatorRewardRate * votes.filter((v)=>(!v.votedOnStatus && !v.expired)).length).toFixed(18).toString());
     dispatch( setAvailableReward( curationCouncil.web3.utils.fromWei(availableReward) ) );
   }
-  votes.sort( (a,b) => (b.key - a.key) );
+  votes.sort( (a,b) => {
+    if( a.votedOnStatus && (!b.votedOnStatus) ) return 1;
+    if( b.votedOnStatus && (!a.votedOnStatus) ) return -1;
+    return (b.key - a.key);
+  });
   dispatch( { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'votes', value: votes } );
   if( shouldSetInProgress ) dispatch(setInProgress(false));
   if( !updateInterval) {
