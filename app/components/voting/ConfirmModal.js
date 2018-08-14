@@ -52,7 +52,7 @@ export default class ConfirmModal extends Component {
           {this.renderActionButton()}
         </Modal.Body>
         <Modal.Footer className="text-center">
-          <Button onClick={this.props.handleClose} className="btn default-button small-button width-100">Close</Button>
+          <Button onClick={this.props.handleClose} bsSize="small">Close</Button>
         </Modal.Footer>
       </Modal>
       );

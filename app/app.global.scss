@@ -1289,6 +1289,16 @@ input:focus, select:focus, textarea:focus, button:focus {
       background: white url('img/reject_bg.png') no-repeat top right / cover;
       min-height: 320px;
     }
+    .modal-footer {
+      margin-top: 40px;
+    }
+    .modal-body {
+      small {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: inline-block;
+      }
+    }
   }
   &.approve-modal {
     .modal-content {
@@ -1311,6 +1321,7 @@ input:focus, select:focus, textarea:focus, button:focus {
       }
       small {
         margin-top: 15px;
+        margin-bottom: 15px;
         display: inline-block;
       }
     }
