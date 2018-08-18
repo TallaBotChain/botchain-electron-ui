@@ -71,7 +71,7 @@ export const approveJoinPayment = (amount) => async (dispatch) => {
     let txId = await botCoin.approve(amount, chargingContract);
     dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxId', value: txId });
     dispatch(startTxObserver(txId, () => joinCouncil(amount)));
-  }catch(e) {
+      }catch(e) {
     console.log(e);
     dispatch( setError( "Not approved. Request cancelled." ));
     dispatch(setInProgress(false))

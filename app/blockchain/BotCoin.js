@@ -11,18 +11,22 @@ class BotCoin extends BaseConnector{
     //console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
   }
 
+  toWei(amount) {
+    return this.web3.utils.toWei(amount);
+  }
+
   convertToHuman(bigNumber) {
-    return bigNumber / (10**this.decimals);
+    return this.web3.utils.fromWei(bigNumber);
   }
 
   approveEstGas(amount, to) {
-    return this.contract.methods.approve(to,amount*10**this.decimals).estimateGas({from: this.account})
+    return this.contract.methods.approve(to, this.toWei(amount) ).estimateGas({from: this.account})
   }
 
   approve(amount,to) {
-    return this.contract.methods.approve(to, amount*10**this.decimals).estimateGas({from: this.account}).then((gas) => {
+    return this.contract.methods.approve(to, this.toWei(amount) ).estimateGas({from: this.account}).then((gas) => {
       return new Promise((resolve,reject) => {
-        this.contract.methods.approve(to, amount*10**this.decimals)
+        this.contract.methods.approve(to, this.toWei(amount) )
         .send({from: this.account, gas: gas, gasPrice: this.gasPrice},
           function(err,tx_id) {
             if( ! err ) {
@@ -40,7 +44,7 @@ class BotCoin extends BaseConnector{
     let self = this;
     return this.web3.eth.getAccounts().then( (accounts) => {
       return new Promise(function(resolve,reject) {
-        self.contract.methods.transfer(to,amount*10**self.decimals)
+        self.contract.methods.transfer(to, this.toWei(amount) )
           .send({from: accounts[0]},
             function(err,tx_id) {
               if( ! err ) {
