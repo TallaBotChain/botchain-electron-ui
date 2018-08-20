@@ -9,11 +9,30 @@ export default class AppNav extends Component {
 
   render() {
     return (
-      <ListGroup>
-        <NavLink className="list-group-item" exact to="/">Voting</NavLink>
-        <NavLink className="list-group-item" to="/wallet">Wallet</NavLink>
-        <NavLink className="list-group-item" to="/settings">Settings</NavLink>
-      </ListGroup> 
+      <ListGroup className="nav-list">
+        <NavLink className="list-group-item voting text-center" exact to="/">
+          <span className="center-block"></span>
+          Voting
+        </NavLink>
+        <NavLink className="list-group-item stake text-center" to="/stake">
+          <span className="center-block"></span>
+          Stake
+        </NavLink>
+        <NavLink className="list-group-item wallet text-center" to="/wallet" isActive={checkActive}>
+          <span className="center-block"></span>
+          Wallet
+        </NavLink>
+        <NavLink className="list-group-item settings text-center" to="/settings">
+          <span className="center-block"></span>
+          Settings
+        </NavLink>
+      </ListGroup>
     );
+  }
+}
+
+const checkActive = (match, location) => {
+  if (location.pathname==="/wallet/botcoin" || location.pathname==="/wallet/ethereum") {
+    return true
   }
 }

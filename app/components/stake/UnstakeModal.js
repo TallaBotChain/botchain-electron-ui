@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Alert, Well } from 'react-bootstrap';
+import { remote } from 'electron';
 
 export default class UnstakeModal extends Component {
 
@@ -28,13 +29,16 @@ export default class UnstakeModal extends Component {
                   <Well>{this.props.curationCouncil.leaveSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
                 <h4>Staked Balance: {this.props.curationCouncil.stakedBalance} BOTC</h4>
+                <form>
+                  <label>Curation Council</label>
+                  <input type="text" readOnly={true} placeholder={remote.getGlobal('config').curation_council_contract} />
+                </form>
+                <p>Retrieving your stake will return all of <br/> the stake balance to your Wallet.</p>
                 <Button onClick={this.props.unstake}>Unstake</Button>
+                <div><small>Gas Fee: {this.props.curationCouncil.leaveTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.handleClose}>Close</Button>
-        </Modal.Footer>
       </Modal>
     );
   }

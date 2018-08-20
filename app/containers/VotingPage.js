@@ -1,26 +1,51 @@
 // @flow
 import React, { Component } from 'react';
-import Balances from '../components/voting/Balances';
-import VoteList from '../components/voting/VoteList';
+import { Col } from 'react-bootstrap'
+import NoStake from '../components/voting/NoStake';
+import Voting from '../components/voting/Voting';
 import * as VotingActions from '../actions/votingActions';
 import * as DeveloperActions from '../actions/developerActions';
+import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import { connect } from 'react-redux';
 
 class VotingPage extends Component {
 
   componentDidMount() {
+    this.props.getStakedBalance();
     this.props.getBalances();
-    this.props.getVotes();
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(( this.props.curationCouncil.stakedBalance != nextProps.curationCouncil.stakedBalance ) && ( nextProps.curationCouncil.stakedBalance > 0 ) ) {
+      this.props.getVotes();
+    }
+  }
+
+  renderNoStake() {
+    return (<NoStake />)
+  }
+
+  renderInProgress() {
+    return (<div className='text-center'>Loading...</div>)
+  }
+
+  renderVoting = () => {
+    return (<Voting {...this.props} />);
   }
 
   render() {
+    let body = ""
+    if (this.props.curationCouncil.inProgress) {
+      body = this.renderInProgress()
+    } else if (this.props.curationCouncil.stakedBalance > 0) {
+      body = this.renderVoting()
+    } else {
+      body = this.renderNoStake()
+    }
     return (
-      <div>
-        <h1>Voting</h1>
-        <Balances {...this.props.voting} payout={this.props.payout} />
-        {this.props.voting.inProgress ? <div className='text-center'>Loading...</div> : "" }
-        <VoteList votes={this.props.voting.votes} {...this.props}  />
-      </div>
+      <Col xs={12} className="content-inner white-bg">
+        {body}
+      </Col>
     )
   }
 }
@@ -28,7 +53,9 @@ class VotingPage extends Component {
 function mapStateToProps(state) {
     return {
       voting: state.voting,
-      developer: state.developer
+      developer: state.developer,
+      curationCouncil: state.curationCouncil,
+      usdExchangeRate: state.ethereum.usdExchangeRate
     };
 }
 
@@ -36,6 +63,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getBalances: () => {
       dispatch( VotingActions.getRewardBalance() );
+    },
+    getStakedBalance: () => {
+      dispatch(CurationCouncilActions.reloadStakedBalance());
     },
     getVotes: () => {
       dispatch( VotingActions.getVotes() );
@@ -52,8 +82,14 @@ const mapDispatchToProps = dispatch => {
     hideVote: () => {
       dispatch( VotingActions.hideVote() );
     },
+    castVoteEstGas: (idx, vote) => {
+      dispatch( VotingActions.castVoteEstGas(idx, vote) );
+    },
     castVote: (idx, vote) => {
       dispatch( VotingActions.castVote(idx, vote) );
+    },
+    payoutEstGas: () => {
+      dispatch( VotingActions.payoutRewardEstGas() );
     },
     payout: () => {
       dispatch( VotingActions.payoutReward() );

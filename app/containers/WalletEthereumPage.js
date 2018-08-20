@@ -20,6 +20,7 @@ class WalletEthereumPage extends Component {
 
 function mapStateToProps(state) {
     return {
+      usdExchangeRate: state.ethereum.usdExchangeRate,
       walletData: state.ethereum,
     };
 }
@@ -34,9 +35,12 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(EthereumActions.getTransactionList());
-    }
+    },
+    transferEstGas: (to, amount) => {
+      dispatch(EthereumActions.transferEstGas(to, amount));
+    },
   }
 }
-  
-  
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(WalletEthereumPage);

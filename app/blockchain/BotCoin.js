@@ -11,15 +11,23 @@ class BotCoin extends BaseConnector{
     //console.log("New instance of BotCoin connector with address ", window.app_config.botcoin_contract);
   }
 
+  toWei(amount) {
+    return this.web3.utils.toWei(amount);
+  }
+
   convertToHuman(bigNumber) {
-    return bigNumber / (10**this.decimals);
+    return this.web3.utils.fromWei(bigNumber);
+  }
+
+  approveEstGas(amount, to) {
+    return this.contract.methods.approve(to, this.toWei(amount) ).estimateGas({from: this.account})
   }
 
   approve(amount,to) {
-    // TODO: estimate gas
-    return new Promise((resolve,reject) => {
-      this.contract.methods.approve(to,amount*10**this.decimals)
-        .send({from: this.account,gas: 100000,gasPrice: this.gasPrice},
+    return this.contract.methods.approve(to, this.toWei(amount) ).estimateGas({from: this.account}).then((gas) => {
+      return new Promise((resolve,reject) => {
+        this.contract.methods.approve(to, this.toWei(amount) )
+        .send({from: this.account, gas: gas, gasPrice: this.gasPrice},
           function(err,tx_id) {
             if( ! err ) {
               console.log("approve tx_id:",tx_id);
@@ -28,6 +36,7 @@ class BotCoin extends BaseConnector{
           }).catch( (err) => {
             reject(err);
           });
+        });
     });
   }
 
@@ -35,7 +44,7 @@ class BotCoin extends BaseConnector{
     let self = this;
     return this.web3.eth.getAccounts().then( (accounts) => {
       return new Promise(function(resolve,reject) {
-        self.contract.methods.transfer(to,amount*10**self.decimals)
+        self.contract.methods.transfer(to, this.toWei(amount) )
           .send({from: accounts[0]},
             function(err,tx_id) {
               if( ! err ) {
@@ -83,13 +92,15 @@ class BotCoin extends BaseConnector{
     return this.web3.eth.getBalance(address)
   }
 
+  transferTokensEstGas(to, amount) {
+    return this.contract.methods.transfer(to, this.web3.utils.toWei(amount.toString(), "ether")).estimateGas({from: this.account})
+  }
+
   transferTokens(to, amount) {
-    let self = this;
-    let fromAddress = this.account
-    return self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether")).estimateGas({from: fromAddress}).then(function(gas) {
-      return new Promise(function(resolve, reject) {
-        self.contract.methods.transfer(to, self.web3.utils.toWei(amount.toString(), "ether"))
-        .send({gasPrice: self.gasPrice, from: fromAddress, gas: gas},
+    return this.contract.methods.transfer(to, this.web3.utils.toWei(amount.toString(), "ether")).estimateGas({from: this.account}).then((gas) => {
+      return new Promise((resolve, reject) => {
+        this.contract.methods.transfer(to, this.web3.utils.toWei(amount.toString(), "ether"))
+        .send({gasPrice: self.gasPrice, from: this.account, gas: gas},
           function(err, tx_id) {
             if (!err) {
               console.log("transfer tx_id:", tx_id);
@@ -103,13 +114,14 @@ class BotCoin extends BaseConnector{
     })
   }
 
+  transferEtherEstGas(to, amount) {
+    return this.web3.eth.estimateGas({from: this.account, to: to, value: this.web3.utils.toWei(amount.toString(), "ether")})
+  }
+
   transferEther(to, amount) {
-    let self = this;
-    let fromAddress = this.account
-    return self.web3.eth.estimateGas({from: fromAddress, to: to, value: self.web3.utils.toWei(amount.toString(), "ether")}).then(function(gas) {
-      console.log("Gas = ", gas)
-      return new Promise(function(resolve, reject) {
-        self.web3.eth.sendTransaction({from: fromAddress, to: to, value: self.web3.utils.toWei(amount.toString(), "ether"), gas: gas},
+    return this.web3.eth.estimateGas({from: this.account, to: to, value: this.web3.utils.toWei(amount.toString(), "ether")}).then((gas) => {
+      return new Promise((resolve, reject) => {
+        this.web3.eth.sendTransaction({from: this.account, to: to, value: this.web3.utils.toWei(amount.toString(), "ether"), gas: gas},
           function(err, tx_id) {
             if (!err) {
               console.log("transfer tx_id:", tx_id);
@@ -122,7 +134,7 @@ class BotCoin extends BaseConnector{
       });
     })
   }
-  
+
 }
 
 

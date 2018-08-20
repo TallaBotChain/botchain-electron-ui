@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
-import VoteModal from './VoteModal'
+import VoteModal from './VoteModal';
+import VoteListItem from './VoteListItem';
 
 export default class VoteList extends Component {
 
@@ -10,6 +11,9 @@ export default class VoteList extends Component {
   }
 
   voteClick = (vote) => () => {
+    if (!vote.expired && !vote.votedOnStatus) {
+       this.props.castVoteEstGas(vote.key, true)
+    }
     this.props.resetVoteState();
     if (!this.props.developer.records[vote.address]) {
       this.props.getDeveloperInfo(vote.address);
@@ -31,22 +35,14 @@ export default class VoteList extends Component {
 
   render() {
     const votes = this.props.votes.map((vote) =>
-      <ListGroupItem key={vote.key} title={vote.address} className='clearfix' onClick={this.voteClick(vote)}>
-        <Col xs={6} md={9}>{vote.name}</Col>
-        <Col xs={6} md={3}>Reward {vote.reward}</Col>
-      </ListGroupItem>
+        <VoteListItem key={vote.key} vote={vote} voteClick={this.voteClick} {...this.props} />
       );
     return (
-      <div className='vote-list-container'>
+      <Col xs={this.props.voting.voteToShow ? 4 : 12} className='vote-list-container'>
         <ListGroup>
           {votes}
         </ListGroup>
-        <VoteModal address={this.props.voting.voteToShow ? this.props.voting.voteToShow.address : null}
-          handleClose={this.hideVote}
-          onApprove={this.approveVote}
-          onReject={this.rejectVote}
-          {...this.props}/>
-      </div>
+      </Col>
     )
   }
 

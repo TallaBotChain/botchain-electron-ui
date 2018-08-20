@@ -7,9 +7,7 @@ class CreateWalletNav extends Component {
   render() {
     return (
       <div>
-        <ButtonToolbar>
-          <Link to="/registration" className="btn btn-primary">Create New Wallet</Link>
-        </ButtonToolbar>
+        <Link to="/registration" className="btn default-button small-button">Create New Wallet</Link>
         <p>Create a new wallet to use with the Curation Council App. <br /> The wallet will hold Botcoin and Ethereum.</p>
       </div>
     )

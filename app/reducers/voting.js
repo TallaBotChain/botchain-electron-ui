@@ -8,16 +8,21 @@ const initialState = {
   rewardBalance: null,
   availableReward: null,
   votes: [],
+  pastVotes: {},
   totalSupply: null,
   curatorRewardRate: null,
   lastBlock: null,
   voteToShow: null,
+  voteTxEstGas: 0,
   voteTxId: null,
   voteTxMined: false,
   voteSuccess: false,
+  payoutTxEstGas: 0,
   payoutTxId: null,
   payoutTxMined: false,
-  payoutSuccess: false
+  payoutSuccess: false,
+  ethereumBlocktime: 15, // average
+  updateInterval: null
 }
 
 const voting = (state = initialState, action) => {

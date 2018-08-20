@@ -1,0 +1,157 @@
+$orange: #FF6F59;
+$gray-text: #757B83;
+$gray-border: rgba(29,32,36,.22);
+$gray-text-hover: #60676F;
+$gray-border-hover: rgba(29,32,36,0.69);
+$lighter-gray: #E1E2E4;
+$placeholder: #8B9096;
+$gray-gradient1: #F6F7F7;
+$gray-gradient2: #E1E2E4;
+$gray-gradient3: #CBCED0;
+$botcoin-green: #00BC90;
+$active-green: #3ABCA5;
+$check-green: #00A37D;
+$red: #E95858;
+$red-hover: #C24C3A;
+$red-active: #DF3C3C;
+
+@mixin form-button ($color, $font-color: white) {
+  border-color: $color;
+  background: $color;
+  color: $font-color;
+  font-weight: 400;
+  font-size: 0.875em;
+  text-shadow: none;
+  &:hover, &:active, &:focus, &:active:focus, &:active:hover {
+    color: $font-color;
+    border: 1px solid $color;
+    background: $color;
+    outline: none;
+    text-decoration: none;
+  }
+}
+
+.orange-button{
+  @include form-button($orange);
+  &:hover, &:focus{
+    border-color: $botcoin-green;
+    background: $botcoin-green;
+  }
+  &:active, &:active:focus, &:active:hover {
+    background: $active-green;
+    border-color: $active-green;
+  }
+}
+
+.default-button{
+  @include form-button($gray-border, $gray-text);
+  background: linear-gradient($gray-gradient1, $gray-gradient2);
+  &:hover, &:focus{
+    color: $gray-text-hover;
+    border-color: $gray-border-hover;
+    background: linear-gradient($gray-gradient1, $gray-gradient3);
+  }
+  &:active, &:active:focus, &:active:hover {
+    color: $gray-text-hover;
+    background: $gray-gradient1;
+    border-color: $gray-gradient1;
+  }
+  &.cta-button {
+    font-weight: 600;
+    padding: 0 12px;
+  }
+}
+
+.green-button {
+  @include form-button($botcoin-green);
+  &:hover, &:focus{
+    border-color: $check-green;
+    background: $check-green;
+  }
+  &:active, &:active:focus, &:active:hover {
+    background: $active-green;
+    border-color: $active-green;
+  }
+}
+
+.gray-button {
+  @include form-button($gray-text-hover, $lighter-gray);
+  &:hover, &:focus{
+    color: white;
+    border-color: $gray-text;
+    background: $gray-text;
+  }
+  &:active, &:active:focus, &:active:hover {
+    color: white;
+    background: $placeholder;
+    border-color: $placeholder;
+  }
+}
+
+.reject-button {
+  @include form-button(white, $red);
+  border: 2px solid $red;
+  span {
+    display: inline-block;
+    height: 14px;
+    width: 13px;
+    background: url('img/voting.png') no-repeat -14px 0;
+    margin-right: 5px;
+    margin-top: 2px;
+    vertical-align: text-top;
+  }
+  &.small-button {
+    line-height: 30px;
+    min-width: 90px;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 101px;
+  }
+  &:hover, &:focus{
+    border: 2px solid $red-hover;
+    color: $red-hover;
+    span {
+      background-position: -26px 0;
+    }
+  }
+  &:active, &:active:focus, &:active:hover {
+    border: 2px solid $red-active;
+    color: $red-active;
+    span {
+      background-position: -38px 0;
+    }
+  }
+}
+
+.cta-button {
+  height: 40px;
+  min-width: 110px;
+  letter-spacing: 0.08em;
+  margin-top: 5px;
+  line-height: 40px;
+  padding: 0 27px;
+}
+
+.big-button {
+  height: 48px;
+  min-width: 148px;
+  letter-spacing: 0.08em;
+  line-height: 48px;
+  padding: 0 27px;
+  font-size: 1.125em;
+}
+
+.small-button {
+  height: 32px;
+  line-height: 32px;
+  min-width: 114px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 0 15px;
+}
+
+.width-100 {
+  min-width: 100px;
+}

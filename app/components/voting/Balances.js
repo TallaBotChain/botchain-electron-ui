@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Row, Col, Well, Button } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import PayoutModal from './PayoutModal';
 
 class Balances extends Component {
@@ -12,33 +12,41 @@ class Balances extends Component {
     };
   }
 
-  togglePayoutModal = () => {
-    this.setState({ show_payout_modal: !this.state.show_payout_modal });
+  showPayoutModal = () => {
+    this.setState({ show_payout_modal: true });
+    this.props.payoutEstGas()
+  }
+
+  hidePayoutModal = () => {
+    this.setState({ show_payout_modal: false });
   }
 
   render() {
     return (
-      <Row className="show-grid">
-        <Col xs={6} md={6}>
-          <Well>
-            <div className="text-center">
-              <h4>Reward Balance</h4>
-              {this.props.rewardBalance} BOTC
+      <div className='voting-balances'>
+        <Row>
+          <Col xs={12}>
+            <div className="white-header text-center">
+              <p className="gray-text">
+                <small>Staked Balance:</small> {this.props.curationCouncil.stakedBalance} <span>BOTC</span>
+              </p>
             </div>
-          </Well>
-          {(this.props.rewardBalance > 0) && <Button block onClick={this.togglePayoutModal}>Payout reward</Button>}
-        </Col>
-        <Col xs={6} md={6}>
-          <Well>
-            <div className="text-center">
-              <h4>Available Reward</h4>
-              {this.props.availableReward} BOTC
-            </div>
-          </Well>
-        </Col>
-        <PayoutModal show={this.state.show_payout_modal} handleClose={this.togglePayoutModal} {...this.props} />
-      </Row>
-    );
+          </Col>
+        </Row>
+        <Row className="text-center">
+          <Col xs={6} className="gray-border">
+            <h2 className="state-text">Your Reward Balance</h2>
+            <h1 className="botcoin-green">{this.props.voting.rewardBalance}<span className="botcoin-title">BOTC</span></h1>
+            {(this.props.voting.rewardBalance > 0) && <Button onClick={this.showPayoutModal} bsClass="btn default-button small-button">Payout reward</Button>}
+          </Col>
+          <Col xs={6} className="gray-border">
+            <h2 className="state-text">Available Reward</h2>
+            <h1 className="botcoin-green">{this.props.voting.availableReward}<span className="botcoin-title">BOTC</span></h1>
+          </Col>
+          <PayoutModal show={this.state.show_payout_modal} handleClose={this.hidePayoutModal} {...this.props} />
+        </Row>
+      </div>
+      );
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Well } from 'react-bootstrap';
+import { Button, Well, Col, } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as WalletActions from '../actions/walletActions';
 import CreateWalletForm from '../components/wallet/CreateWalletForm';
@@ -30,24 +30,30 @@ class CreateWalletPage extends Component {
 
   render() {
     return (
-      <div>
+      <Col xs={12} className="content-inner trans-bg">
         {this.state.is_saved ? (
-          <div>
-            <h1>Step 2 of 2: Secret Backup Phrase</h1>
-            <p>Please save or remember this backup phrase. It is very important. <br /> Your will have no way to recover your wallet contents if you forget it.</p>
+          <Col md={9} sm={8} xs={7} >
+            <h3>Step 2 of 2: Secret Backup Phrase</h3>
+            <p>
+              Please save or remember this backup phrase. It is very important.<br/>
+              You will have no way to recover your wallet contents if you forget it.
+            </p>
             <Well>
-              {this.props.mnemonic}
+              { this.props.mnemonic }
             </Well>
-            <Link to="/wallet" className="btn btn-primary">I HAVE COPIED IT SOMEWHERE SAFE</Link>
-          </div>
+            <Link to="/" className="btn orange-button cta-button">I HAVE COPIED IT SOMEWHERE SAFE</Link>
+          </Col>
         ) : (
-            <div>
-              <h1>Step 1 of 2: New Wallet Password</h1>
-              <p>Create a password for your new wallet. <br /> Your secret backup phrase will be given in Step 2.</p>
-              <CreateWalletForm onSubmit={this.submit} {...this.props} />
-            </div>
+          <Col md={6} sm={8} xs={7}>
+            <h3>Step 1 of 2: New Wallet Password</h3>
+            <p>
+              Create a password for your new wallet.<br/>
+              Your secret backup phrase will be given in Step 2.
+            </p>
+            <CreateWalletForm onSubmit={ this.submit } {...this.props} />
+          </Col>
           )}
-      </div >
+      </Col >
     );
   }
 }

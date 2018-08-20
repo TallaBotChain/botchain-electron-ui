@@ -45,6 +45,7 @@ export const getBalance = () => (dispatch) => {
   // ethers
   botCoin.getBalance().then((balance) => {
     dispatch(setBallance(botCoin.web3.utils.fromWei(balance, 'ether')))
+    dispatch(getExchangeRate())
     dispatch(setInProgress(false))
   }, (error) => {
     console.log(error)
@@ -54,7 +55,19 @@ export const getBalance = () => (dispatch) => {
   });
 }
 
-
+export const transferEstGas = (to, amount) => async (dispatch) => {
+  dispatch(setInProgress(true))
+  try {
+    let botCoin = new BotCoin()
+    let transferGas = await botCoin.transferEtherEstGas(to, amount);
+    let gasFee = botCoin.web3.utils.fromWei((transferGas*botCoin.gasPrice).toString())
+    dispatch( { type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxEstGas', value: gasFee });
+  }catch(e) {
+    console.log(e);
+    dispatch( setError( "Failed to estimate gas." ));
+    dispatch(setInProgress(false))
+  }
+}
 
 export const transfer = (to, amount) => async (dispatch) => {
   dispatch(resetTransferState())
@@ -95,9 +108,24 @@ export const getTransactionList = () => (dispatch) => {
     }
   })
   .then(function (response) {
-    dispatch(setTransactions(response.data.result))
+    //filter list by eth amount.
+    if (response.data.result){
+      let records = response.data.result.filter(record => record.value > 0);
+      dispatch(setTransactions(records))
+    }
   })
   .catch(function (error) {
     dispatch( setError("Failed to retreive transaction history." ));
   })
+}
+
+export const getExchangeRate = () => (dispatch) => {
+  axios.get(remote.getGlobal('config').coinbase_price_api_url)
+    .then(function (response) {
+      dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'usdExchangeRate', value: response.data.data.amount });
+    })
+    .catch(function (error) {
+      dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'usdExchangeRate', value: 0 });
+      console.log("Failed to retreive ETH - USD exchange rate." + error)
+    })
 }

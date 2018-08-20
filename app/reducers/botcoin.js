@@ -5,11 +5,13 @@ import update from 'immutability-helper';
 const initialState = {
   inProgress: false,
   balance: 0,
+  transferTxEstGas: 0,
   transferTxId: null,
   transferTxMined: false,
   transferSuccess: false,
   transactions: [],
-  currency: "BOTC"
+  currency: "BOTC",
+  usdExchangeRate: 0
 }
 
 const botcoin = (state = initialState, action) => {

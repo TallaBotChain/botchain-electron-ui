@@ -9,7 +9,6 @@ class WalletBotcoinPage extends Component {
 
   componentDidMount () {
     this.props.getBalance()
-    this.props.getStakedBalance()
     this.props.getTransactionList()
   }
 
@@ -22,6 +21,7 @@ class WalletBotcoinPage extends Component {
 
 function mapStateToProps(state) {
     return {
+      usdExchangeRate: state.ethereum.usdExchangeRate,
       walletData: state.botcoin,
       curationCouncil: state.curationCouncil
     };
@@ -38,17 +38,11 @@ const mapDispatchToProps = dispatch => {
     getTransactionList: () => {
       dispatch(BotcoinActions.getTransactionList());
     },
-    stake: (amount) => {
-      dispatch(CurationCouncilActions.approveJoinPayment(amount));
+    transferEstGas: (to, amount) => {
+      dispatch(BotcoinActions.transferEstGas(to, amount));
     },
-    unstake: () => {
-      dispatch(CurationCouncilActions.leaveCouncil());
-    },
-    getStakedBalance: () => {
-      dispatch(CurationCouncilActions.getStakedBalance());
-    }
   }
 }
-  
-  
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(WalletBotcoinPage);

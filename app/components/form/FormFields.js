@@ -3,27 +3,33 @@ import { FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap';
 
 export const inputField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => (
   <FormGroup controlId={input.name}>
+    <FormControl {...input} placeholder={placeholder || label} type={type} readOnly={readOnly} className={touched && error && 'error'} />
+      {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
+      {asyncValidating && (<span>validating...</span>)}
+      {appendComponent}
     <ControlLabel>{label}</ControlLabel>
-    <FormControl {...input} placeholder={placeholder || label} type={type} readOnly={readOnly}  />
-    {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
-    {asyncValidating && (<span>validating...</span>)}
-    {appendComponent}
   </FormGroup>
 )
 
 export const radioField = ({ input, label, type }) => (
-    <Radio {...input}>{label}</Radio>
+  <div className='radio'>
+    <label>
+      <input {...input} type={type} />
+      <span>{label}</span>
+    </label>
+  </div>
 )
 
 export const fileField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => {
   delete input.value
   return (
     <FormGroup controlId={input.name}>
-      <ControlLabel>{label}</ControlLabel>
       <FormControl {...input} type={type} />
       {touched && ((error && <span className='validation-error'>{error}</span>) || (warning && <span>{warning}</span>))}
       {asyncValidating && (<span>validating...</span>)}
       {appendComponent}
+      <ControlLabel className="btn small-button default-button">{label}</ControlLabel>
+      <small className="gray-label">{placeholder}</small>
     </FormGroup>
   );
 }
