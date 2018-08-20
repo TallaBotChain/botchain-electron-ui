@@ -33,7 +33,7 @@ class SendForm extends Component {
                     </Col>
                   </Row>
                 </Col>
-                <Col xs={2}><button className='btn btn-default' type="submit">Cancel</button></Col>
+                <Col xs={2}><button className='btn btn-default' type="button" onClick={this.props.handleClose}>Cancel</button></Col>
               </Row>
             </Col>
           </Row>
