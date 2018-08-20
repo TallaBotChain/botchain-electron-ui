@@ -18,7 +18,7 @@ export default class WalletEthereum extends Component {
 
   showSendModal = () => {
     this.setState({ show_send_modal: true });
-    this.props.transferEstGas(KeyTools.address, 0)
+    this.props.transferEstGas(KeyTools.address, "0")
   }
 
   hideSendModal = () => {
