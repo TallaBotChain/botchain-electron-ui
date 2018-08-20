@@ -280,12 +280,11 @@ const setPastVotes = (transactions) => (dispatch, getState) => {
   let coucilTransactions = transactions.filter( tx => ( (tx.to == contractAddress) && (tx.isError == "0") && (tx.input.startsWith(castVoteMethod)) ) );
   console.log("council transactions:", coucilTransactions );
   let voteObjects = coucilTransactions.map( (tx) => {
-    let voteId = parseInt(tx.input.substr(10,64));
-    let voted = parseInt(tx.input.substring(75));
+    let voteId = parseInt(tx.input.substr(10,64), 16);
+    let voted = parseInt(tx.input.substring(75), 16);
     let txId = tx.hash;
     let mined = true;
     let timestamp = tx.timeStamp;
-    // if( voteId == 4) voted = 0;
     return { voteId, voted, txId, mined, timestamp };
   });
   console.log("past vote objects: ", voteObjects);
