@@ -32,7 +32,7 @@ class SendForm extends Component {
               <button className='btn orange-button small-button width-100' type="submit">SUBMIT</button>
             </Col>
             <Col xs={6}>
-              <Row>
+              <Row>      
                 <Row>
                   <Col xs={8} className="gray-text">
                     <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>{this.props.walletData.currency}</small></strong></small></div>
@@ -46,7 +46,7 @@ class SendForm extends Component {
               </Row>
             </Col>
             <Col xs={3}>
-              <button className='btn default-button small-button width-86 pull-right' type="submit">Cancel</button>
+              <button className='btn default-button small-button width-86 pull-right' type="button" onClick={this.props.handleClose}>Cancel</button>
             </Col>
           </Col>
         </Row>
