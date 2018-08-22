@@ -1309,7 +1309,7 @@ input.form-control {
         div {
           overflow-x: hidden;
         }
-        
+
         strong {
           font-size: 500;
         }
@@ -1379,25 +1379,8 @@ input.form-control {
       background: white url('img/stake_bg.png') no-repeat bottom right / cover;
     }
   }
-  &.reject-modal {
+  &.confirm-modal {
     .modal-content {
-      background: white url('img/reject_bg.png') no-repeat top right / cover;
-      min-height: 320px;
-    }
-    .modal-footer {
-      margin-top: 40px;
-    }
-    .modal-body {
-      small {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        display: inline-block;
-      }
-    }
-  }
-  &.approve-modal {
-    .modal-content {
-      background: white url('img/approve_bg.png') no-repeat top right / cover;
       min-height: 320px;
     }
     .modal-title {
@@ -1407,6 +1390,35 @@ input.form-control {
         margin-bottom: 20px;
       }
     }
+    .name {
+      font-size: 1.125em;
+    }
+    .modal-body {
+      small {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: inline-block;
+        small {
+          margin: 0;
+        }
+      }
+    }
+    .modal-footer {
+      margin-top: 40px;
+    }
+  }
+  &.reject-modal {
+    .modal-content {
+      background: white url('img/reject_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $error;
+    }
+  }
+  &.approve-modal {
+    .modal-content {
+      background: white url('img/approve_bg.png') no-repeat top right / cover;
+    }
     .modal-body {
       h4 {
         margin-bottom: 15px;
@@ -1414,14 +1426,6 @@ input.form-control {
           font-size: 0.66em;
         }
       }
-      small {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        display: inline-block;
-      }
-    }
-    .modal-footer {
-      margin-top: 40px;
     }
   }
 }

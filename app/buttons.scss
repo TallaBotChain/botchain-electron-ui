@@ -107,6 +107,26 @@ $red-active: #DF3C3C;
     width: 100%;
     max-width: 101px;
   }
+  &.big-button {
+    line-height: 45px;
+    span {
+      width: 14px;
+      background-size: auto 100%;
+      background-position: -16px 0;
+      margin-right: 15px;
+      margin-top: 4px;
+    }
+    &:hover, &:focus{
+      span {
+        background-position: -30px 0;
+      }
+    }
+    &:active, &:active:focus, &:active:hover {
+      span {
+        background-position: -44px 0;
+      }
+    }
+  }
   &:hover, &:focus{
     border: 2px solid $red-hover;
     color: $red-hover;
