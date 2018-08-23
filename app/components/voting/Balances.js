@@ -37,7 +37,7 @@ class Balances extends Component {
           <Col xs={6} className="gray-border">
             <h2 className="state-text">Your Reward Balance</h2>
             <h1 className="botcoin-green">{this.props.voting.rewardBalance}<span className="botcoin-title">BOTC</span></h1>
-            {(this.props.voting.rewardBalance > 0) && <Button onClick={this.showPayoutModal} bsClass="btn default-button small-button">Payout reward</Button>}
+          {(this.props.voting.rewardBalance > 0) && <Button onClick={this.showPayoutModal} bsClass="btn default-button small-button">Payout Reward</Button>}
           </Col>
           <Col xs={6} className="gray-border">
             <h2 className="state-text">Available Reward</h2>
