@@ -30,9 +30,9 @@ export default class ConfirmModal extends Component {
   renderActionButton() {
     let result = "";
     if(this.props.action == "approve") {
-      result = <Button className="green-button" onClick={this.doConfirm}>APPROVE</Button>;
+      result = <Button className="green-button big-button" onClick={this.doConfirm}>APPROVE</Button>;
     } else {
-      result = <Button className="reject-button" onClick={this.doConfirm}><span></span>REJECT</Button>
+      result = <Button className="reject-button big-button" onClick={this.doConfirm}><span></span>REJECT</Button>
     }
     return result;
   }
@@ -40,19 +40,16 @@ export default class ConfirmModal extends Component {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName={`app-modal confirm-modal ${this.props.action}-modal`}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="text-center">CONFIRM {this.props.action == 'approve' ? "APPROVAL" : "REJECTION"}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <div><b className='name'>{this.voteName()}</b> {this.voteDomain()}</div>
-
-          <div>
-            <small className="gray-text">Gas Fee: {this.props.voting.voteTxEstGas} ETH</small>
-          </div>
+          <div className="dollar-text"><strong className='name state-text'>{this.voteName()}</strong> {this.voteDomain()}</div>
+          <div><small className="gray">Gas Fee: {this.props.voting.voteTxEstGas} <small>ETH</small></small></div>
           {this.renderActionButton()}
         </Modal.Body>
         <Modal.Footer className="text-center">
-          <Button onClick={this.props.handleClose} bsSize="small">Close</Button>
+          <Button onClick={this.props.handleClose} bsClass="btn default-button small-button width-86">Cancel</Button>
         </Modal.Footer>
       </Modal>
       );

@@ -62,7 +62,7 @@ $green-bg: #DAFCF4;
   color: $lighter-gray;
 }
 
-.ethereum {
+.ethereum, .eth {
   color: $ethereum;
 }
 
@@ -70,7 +70,7 @@ $green-bg: #DAFCF4;
   color: $botcoin-gold;
 }
 
-.botcoin-title {
+.botcoin-title, .botc {
   color: $botcoin-title;
 }
 
@@ -135,6 +135,10 @@ h3 {
   font-size: 1.125em;
   letter-spacing: 0.04em;
   margin-top: 10px;
+
+  small {
+    font-size: 0.78em;
+  }
 }
 
 h5 {
@@ -169,6 +173,10 @@ input:focus, select:focus, textarea:focus, button:focus {
   box-shadow: inset 0 0 5px $error-gray-input;
 }
 
+.loading {
+  margin-top: 50px;
+}
+
 .container-state {
   background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
   height: 100vh;
@@ -195,199 +203,199 @@ input:focus, select:focus, textarea:focus, button:focus {
   margin-left: 80px;
 }
 
+.form-group {
+  margin-bottom: 5px;
+  min-height: 48px;
+}
+label.control-label {
+  font-weight: 400;
+  font-size: 0.875em;
+  display: none;
+  margin: 0;
+  color: $gray-label;
+}
+input.form-control {
+  border: 2px solid $gray-input;
+  box-shadow: inset 0 0 5px $gray-input;
+  height: 48px;
+  color: $state;
+  line-height: 23px;
+  font-size: 1em;
+  border-radius: 6px;
+  font-weight: 500;
+  &:not(:placeholder-shown) {
+    padding-top: 13px;
+    &+label.control-label {
+      display: block;
+      color: $placeholder;
+      font-size: 0.625em;
+      padding: 0 0 0 15px;
+      letter-spacing: 0.1em;
+      margin-top: -42px;
+      text-transform: uppercase;
+    }
+  }
+
+  &:placeholder-shown {
+    color: $placeholder;
+    padding-top: 0;
+    font-weight: 300;
+  }
+
+  &.error {
+    color: $error;
+    border-color: $error-border;
+    background-color: $error-bg;
+    box-shadow: inset 0 0 5px $error-gray-input;
+    &:placeholder-shown {
+      color: $error-placeholder;
+    }
+
+    &:not(:placeholder-shown) {
+      &+.validation-error {
+        &+label.control-label {
+          display: block;
+          color: $error-placeholder;
+          font-size: 0.625em;
+          padding: 0 0 0 15px;
+          letter-spacing: 0.1em;
+          margin-top: -63px;
+          margin-bottom: 25px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
+
+.validation-error {
+  font-size: 0.875em;
+  color: $error-placeholder;
+  margin-top: 3px;
+  display: block;
+}
+
+.required {
+  margin-top: 10px;
+}
+
+.checkbox {
+  input[type="checkbox"] {
+    height: 16px;
+    width: 16px;
+    border: 1px solid $gray-input;
+    margin: 30px 15px 0 0;
+    vertical-align: top;
+    position: absolute;
+    opacity: 0;
+    border-radius: 4px;
+    &+label {
+      cursor: pointer;
+    }
+    &:not(checked){
+      &+label {
+        position: relative;
+        padding: 6px 0 0 25px;
+        font-size: 0.875em;
+        font-weight: 300;
+        color: $gray-link;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          border: 1px solid $gray-input;
+          box-shadow: 0 0 5px $error-gray-input;
+          background: white;
+          border-radius: 4px;
+        }
+      }
+      &:hover {
+        &+label:before {
+          background: $check-green;
+          border: 2px solid $check-green;
+        }
+      }
+    }
+    &:checked {
+      &+label:before {
+        background: $check-green url('img/check.png') no-repeat -11px 2px;
+        border: 2px solid $check-green;
+      }
+      &:hover {
+        &+label:before {
+          background: white url('img/check.png') no-repeat 1px 2px;
+        }
+      }
+    }
+  }
+}
+
+.radio {
+  &+.radio {
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+
+  label{
+    padding-left: 0;
+  }
+
+  input[type="radio"] {
+    opacity: 0;
+
+    &:not(checked){
+      &+span {
+        position: relative;
+        padding: 6px 0 0 25px;
+        font-size: 0.875em;
+        font-weight: 300;
+        color: $gray-link;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          border: 1px solid $gray-input;
+          box-shadow: 0 0 5px $error-gray-input;
+          background: rgba(255,255,255,.5);
+          border-radius: 8px;
+        }
+      }
+      &:hover {
+        &+span:before {
+          background: white;
+        }
+      }
+    }
+    &:checked {
+      &+span {
+        color: white;
+        &:before {
+          background: $botcoin-green;
+          border: 2px solid white;
+        }
+      }
+      &:hover {
+        &+span:before {
+          background: $botcoin-green;
+          border: 2px solid white;
+        }
+      }
+    }
+  }
+}
+
 .content-inner {
   height: calc(100vh - 30px);
   border-radius: 13px;
   padding-bottom: 55px;
   padding-top: 30px;
   overflow-y: auto;
-
-  .form-group {
-    margin-bottom: 5px;
-    min-height: 48px;
-  }
-  label.control-label {
-    font-weight: 400;
-    font-size: 0.875em;
-    display: none;
-    margin: 0;
-    color: $gray-label;
-  }
-  input.form-control {
-    border: 2px solid $gray-input;
-    box-shadow: inset 0 0 5px $gray-input;
-    height: 48px;
-    color: $state;
-    line-height: 23px;
-    font-size: 1em;
-    border-radius: 6px;
-    font-weight: 500;
-    &:not(:placeholder-shown) {
-      padding-top: 13px;
-      &+label.control-label {
-        display: block;
-        color: $placeholder;
-        font-size: 0.625em;
-        padding: 0 0 0 15px;
-        letter-spacing: 0.1em;
-        margin-top: -42px;
-        text-transform: uppercase;
-      }
-    }
-
-    &:placeholder-shown {
-      color: $placeholder;
-      padding-top: 0;
-      font-weight: 300;
-    }
-
-    &.error {
-      color: $error;
-      border-color: $error-border;
-      background-color: $error-bg;
-      box-shadow: inset 0 0 5px $error-gray-input;
-      &:placeholder-shown {
-        color: $error-placeholder;
-      }
-
-      &:not(:placeholder-shown) {
-        &+.validation-error {
-          &+label.control-label {
-            display: block;
-            color: $error-placeholder;
-            font-size: 0.625em;
-            padding: 0 0 0 15px;
-            letter-spacing: 0.1em;
-            margin-top: -63px;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-          }
-        }
-      }
-    }
-  }
-
-  .validation-error {
-    font-size: 0.875em;
-    color: $error-placeholder;
-    margin-top: 3px;
-    display: block;
-  }
-
-  .required {
-    margin-top: 10px;
-  }
-
-  .checkbox {
-    input[type="checkbox"] {
-      height: 16px;
-      width: 16px;
-      border: 1px solid $gray-input;
-      margin: 30px 15px 0 0;
-      vertical-align: top;
-      position: absolute;
-      opacity: 0;
-      border-radius: 4px;
-      &+label {
-        cursor: pointer;
-      }
-      &:not(checked){
-        &+label {
-          position: relative;
-          padding: 6px 0 0 25px;
-          font-size: 0.875em;
-          font-weight: 300;
-          color: $gray-link;
-          &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 16px;
-            height: 16px;
-            border: 1px solid $gray-input;
-            box-shadow: 0 0 5px $error-gray-input;
-            background: white;
-            border-radius: 4px;
-          }
-        }
-        &:hover {
-          &+label:before {
-            background: $check-green;
-            border: 2px solid $check-green;
-          }
-        }
-      }
-      &:checked {
-        &+label:before {
-          background: $check-green url('img/check.png') no-repeat -11px 2px;
-          border: 2px solid $check-green;
-        }
-        &:hover {
-          &+label:before {
-            background: white url('img/check.png') no-repeat 1px 2px;
-          }
-        }
-      }
-    }
-  }
-
-  .radio {
-    &+.radio {
-      margin-top: 10px;
-      margin-left: 15px;
-    }
-
-    label{
-      padding-left: 0;
-    }
-
-    input[type="radio"] {
-      opacity: 0;
-
-      &:not(checked){
-        &+span {
-          position: relative;
-          padding: 6px 0 0 25px;
-          font-size: 0.875em;
-          font-weight: 300;
-          color: $gray-link;
-          &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 16px;
-            height: 16px;
-            border: 1px solid $gray-input;
-            box-shadow: 0 0 5px $error-gray-input;
-            background: rgba(255,255,255,.5);
-            border-radius: 8px;
-          }
-        }
-        &:hover {
-          &+span:before {
-            background: white;
-          }
-        }
-      }
-      &:checked {
-        &+span {
-          color: white;
-          &:before {
-            background: $botcoin-green;
-            border: 2px solid white;
-          }
-        }
-        &:hover {
-          &+span:before {
-            background: $botcoin-green;
-            border: 2px solid white;
-          }
-        }
-      }
-    }
-  }
 
   &.gray-bg {
     background-color: $gray-bg;
@@ -1204,6 +1212,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   .modal-content {
     min-height: 370px;
     box-shadow: 0 0 8px $gray-border;
+    padding-bottom: 15px;
   }
   .modal-header {
     border-bottom: 0;
@@ -1235,6 +1244,96 @@ input:focus, select:focus, textarea:focus, button:focus {
     padding-top: 0;
     small {
       font-weight: 500;
+    }
+  }
+
+  &.send-modal {
+    .modal-header {
+      padding-bottom: 0;
+    }
+
+    .modal-body {
+      padding-top: 0;
+
+      form {
+        margin-top: 30px;
+      }
+    }
+
+    .modal-content {
+      h3.gray-text {
+        font-weight: 400;
+        span {
+          &.eth {
+            small {
+              color: $ethereum;
+            }
+          }
+          &.botc {
+            small {
+              color: $botcoin-title;
+            }
+          }
+        }
+      }
+
+      .form-icon {
+        display: block;
+        height: 28px;
+        width: 28px;
+        background: url('img/form_icons.png') no-repeat;
+        position: absolute;
+        top: 11px;
+        left: 10px;
+
+        &.currency-icon {
+          background-position: -30px 0;
+        }
+      }
+
+      .form-group {
+        width: 100%;
+        max-width: 430px;
+        margin: 0 10px 8px auto;
+        input#amount {
+          max-width: 174px;
+        }
+      }
+
+      .currency {
+        position: absolute;
+        top: 11px;
+        left: 225px;
+        font-weight: 500;
+      }
+
+      .form-footer {
+        margin-top: 40px;
+
+        div {
+          overflow-x: hidden;
+        }
+
+        strong {
+          font-size: 500;
+        }
+
+        .right-small {
+          border-left: 1px solid $gray-input;
+        }
+      }
+    }
+
+    &.botc-modal {
+      .modal-content {
+        .form-icon {
+          background-position: -58px 0;
+
+          &.currency-icon {
+            background-position: -88px 0;
+          }
+        }
+      }
     }
   }
 
@@ -1284,25 +1383,8 @@ input:focus, select:focus, textarea:focus, button:focus {
       background: white url('img/stake_bg.png') no-repeat bottom right / cover;
     }
   }
-  &.reject-modal {
+  &.confirm-modal {
     .modal-content {
-      background: white url('img/reject_bg.png') no-repeat top right / cover;
-      min-height: 320px;
-    }
-    .modal-footer {
-      margin-top: 40px;
-    }
-    .modal-body {
-      small {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        display: inline-block;
-      }
-    }
-  }
-  &.approve-modal {
-    .modal-content {
-      background: white url('img/approve_bg.png') no-repeat top right / cover;
       min-height: 320px;
     }
     .modal-title {
@@ -1312,6 +1394,35 @@ input:focus, select:focus, textarea:focus, button:focus {
         margin-bottom: 20px;
       }
     }
+    .name {
+      font-size: 1.125em;
+    }
+    .modal-body {
+      small {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: inline-block;
+        small {
+          margin: 0;
+        }
+      }
+    }
+    .modal-footer {
+      margin-top: 40px;
+    }
+  }
+  &.reject-modal {
+    .modal-content {
+      background: white url('img/reject_bg.png') no-repeat top right / cover;
+    }
+    .modal-title {
+      color: $error;
+    }
+  }
+  &.approve-modal {
+    .modal-content {
+      background: white url('img/approve_bg.png') no-repeat top right / cover;
+    }
     .modal-body {
       h4 {
         margin-bottom: 15px;
@@ -1319,14 +1430,6 @@ input:focus, select:focus, textarea:focus, button:focus {
           font-size: 0.66em;
         }
       }
-      small {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        display: inline-block;
-      }
-    }
-    .modal-footer {
-      margin-top: 40px;
     }
   }
 }

@@ -7,7 +7,7 @@ export default class TransactionList extends Component {
 
   isTxMine = (address) => {
     return keyTools.address.toUpperCase() === address.toUpperCase()
-  } 
+  }
 
   label = (address) => {
     return this.isTxMine(address) ? (this.props.isStakeList ? "STAKE" : "SENT") : (this.props.isStakeList ? "UNSTAKE" : "RECEIVED")
@@ -26,7 +26,7 @@ export default class TransactionList extends Component {
                   {this.isTxMine(tx.from) && <div><span className="gray">gas fee: </span><span className="dollar-text">${(keyTools.web3.utils.fromWei((tx.gasPrice * tx.gasUsed).toString()) * this.props.usdExchangeRate).toFixed(3)}</span></div>}
                 </td>
                 <td className="text-right">
-                  <span className="state-text">({keyTools.web3.utils.fromWei(tx.value)} <span className={this.props.currency === "ETH" ? "ethereum" : "botcoin"}>{this.props.currency}</span>)</span><br />
+                  <span className="state-text">{keyTools.web3.utils.fromWei(tx.value)} <span className={this.props.currency === "ETH" ? "ethereum" : "botcoin"}>{this.props.currency}</span></span><br />
                   {this.props.currency === "ETH" && <span className="dollar-text">${(keyTools.web3.utils.fromWei(tx.value) * this.props.usdExchangeRate).toFixed(2)}</span> }
                 </td>
               </tr>
