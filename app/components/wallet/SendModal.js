@@ -8,6 +8,12 @@ export default class SendModal extends Component {
     this.props.transfer(values.to, values.amount)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(!this.props.walletData.hasPendingTx && nextProps.walletData.hasPendingTx && this.props.show) {
+      this.props.handleClose()
+    }
+  }
+
 
   render() {
     return (
@@ -16,17 +22,8 @@ export default class SendModal extends Component {
           <Modal.Title className="text-center">Send {this.props.walletData.currency==="ETH" ? "ETHEREUM" : "BOTCOIN"}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {this.props.walletData.transferTxId && !this.props.walletData.transferTxMined ? (
-            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.walletData.transferTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
-          ) : (
-              <div>
-                {this.props.walletData.transferTxMined && (
-                  <Well>{this.props.walletData.transferSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
-                )}
-                <h3>Available Balance: {this.props.walletData.balance} {this.props.walletData.currency}</h3>
-                <SendForm onSubmit={this.handleSubmit} {...this.props} />
-              </div>
-            )}
+          <h3>Available Balance: {this.props.walletData.balance} {this.props.walletData.currency}</h3>
+          <SendForm onSubmit={this.handleSubmit} {...this.props} />
         </Modal.Body>
       </Modal>
     );

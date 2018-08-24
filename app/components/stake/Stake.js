@@ -35,10 +35,8 @@ export default class Stake extends Component {
   }
 
   transactionList = () => {
-    let curationCouncil = new CurationCouncil();
-    const stakeMethod = curationCouncil.getMethodSignature("joinCouncil");
-    const unstakeMethod = curationCouncil.getMethodSignature("leaveCouncil");
-    return this.props.walletData.transactions.filter(record => (record.input.startsWith(stakeMethod) || record.input.startsWith(unstakeMethod)))
+    let list = this.props.history.stake.map((hash) => this.props.history.transactions[hash] )
+    return list
   }
 
 
@@ -53,13 +51,17 @@ export default class Stake extends Component {
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>
               <div className="center-button">
-              <Button className="btn orange-button small-button" onClick={this.showUnstakeModal}>UNSTAKE</Button>
+              <Button className="btn orange-button small-button" onClick={this.showUnstakeModal} disabled={this.props.curationCouncil.hasPendingTx}>
+                {this.props.curationCouncil.hasPendingTx ? "IN PROGRESS" : "UNSTAKE"}
+              </Button>
               </div>
             </div>
           ) : (
             <div>
               <div className="center-button">
-                <Button className="btn orange-button small-button" onClick={this.showStakeModal}>STAKE</Button>
+                <Button className="btn orange-button small-button" onClick={this.showStakeModal} disabled={this.props.curationCouncil.hasPendingTx}>
+                  {this.props.curationCouncil.hasPendingTx ? "IN PROGRESS" : "STAKE"}
+                </Button>
               </div>
               <Col md={6} sm={8} xs={12} componentClass="h3" className="text-left">
                 In order to participate in Curation Council voting you must first stake a fixed amount of Botcoin.
@@ -74,7 +76,6 @@ export default class Stake extends Component {
             <TransactionList transactions={this.transactionList()}
               currency={this.props.walletData.currency}
               usdExchangeRate={this.props.usdExchangeRate}
-              isStakeList={true}
             />
           </Col>
         </Col>

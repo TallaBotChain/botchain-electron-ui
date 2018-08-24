@@ -5,6 +5,7 @@ import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import axios from 'axios'
 import {remote} from 'electron';
+import * as HistoryActions from '../actions/historyActions';
 
 export const EthereumActions = {
   SET_ETHEREUM_ATTRIBUTE: 'SET_ETHEREUM_ATTRIBUTE',
@@ -31,11 +32,8 @@ export const resetState = () => {
   return { type: EthereumActions.RESET_STATE }
 }
 
-export const resetTransferState = () => (dispatch) => {
-  dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxMined', value: false });
-  dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxId', value: null });
-  dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferSuccess', value: false });
-  dispatch(setError(null))
+const setPendingTx = (hasPendingTx) => {
+  return { type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'hasPendingTx', value: hasPendingTx }
 }
 
 
@@ -70,54 +68,38 @@ export const transferEstGas = (to, amount) => async (dispatch) => {
 }
 
 export const transfer = (to, amount) => async (dispatch) => {
-  dispatch(resetTransferState())
   dispatch(setInProgress(true))
-  let botCoin = new BotCoin()
+  dispatch(setPendingTx(true))
   try {
+    let botCoin = new BotCoin()
     let txId = await botCoin.transferEther(to, amount);
-    dispatch( { type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxId', value: txId });
-    dispatch(startTxObserver(txId, transferTxMined));
+    dispatch(startTxObserver(txId, (status, receipt) => transferTxMined(txId, status, receipt, amount)));
+    dispatch(reset('eth_transfer'));
+    dispatch(setInProgress(false))
+    //create new history row
+    let data = { value: amount, txId, input: "0x", from: keyTools.address}
+    dispatch(HistoryActions.addNewTransaction('ethereum', data))
+
   }catch(e) {
     console.log(e);
     dispatch( setError( "Failed to initiate transfer." ));
     dispatch(setInProgress(false))
+    dispatch(setPendingTx(false))
   }
 }
 
-const transferTxMined = (status) => (dispatch) => {
-  dispatch(setInProgress(false))
-  dispatch(reset('eth_transfer'));
-  dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferTxMined', value: true });
+const transferTxMined = (txId, status, receipt, amount) => (dispatch) => {
+  dispatch(setPendingTx(false))
   if(status == TxStatus.SUCCEED){
-    dispatch({ type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'transferSuccess', value: true });
     dispatch(getBalance())
-    dispatch(getTransactionList())
   } else {
     dispatch( setError("Transfer transaction failed." ));
   }
+  //update history row
+  let data = { value: amount, txId, input: "0x", from: keyTools.address, ...receipt}
+  dispatch(HistoryActions.addNewTransaction('ethereum', data))
 }
 
-export const getTransactionList = () => (dispatch) => {
-  axios.get(remote.getGlobal('config').etherscan_api_url, {
-    params: {
-      module: "account",
-      action: "txlist",
-      address: keyTools.address,
-      sort: "desc",
-      apikey: remote.getGlobal('config').etherscan_api_key
-    }
-  })
-  .then(function (response) {
-    //filter list by eth amount.
-    if (response.data.result){
-      let records = response.data.result.filter(record => record.value > 0);
-      dispatch(setTransactions(records))
-    }
-  })
-  .catch(function (error) {
-    dispatch( setError("Failed to retreive transaction history." ));
-  })
-}
 
 export const getExchangeRate = () => (dispatch) => {
   axios.get(remote.getGlobal('config').coinbase_price_api_url)

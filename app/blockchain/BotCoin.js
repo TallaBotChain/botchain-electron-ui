@@ -69,10 +69,14 @@ class BotCoin extends BaseConnector{
   isTxSucceed(tx_id){
     return this.web3.eth.getTransactionReceipt(tx_id).then( (receipt) => {
       console.log("receipt: ",receipt)
-      return Promise.resolve(receipt.status == 1);
+      return Promise.resolve(receipt.status == 1, receipt);
     }).catch(error => {
       return Promise.reject();
     });
+  }
+
+  getTxReceipt(tx_id){
+    return this.web3.eth.getTransactionReceipt(tx_id)
   }
 
   // @return Promise

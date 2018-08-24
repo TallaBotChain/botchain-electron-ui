@@ -33,6 +33,11 @@ export default class WalletEthereum extends Component {
     this.setState({ show_receive_modal: false });
   }
 
+  transactionList = () => {
+    let list = this.props.history.ethereum.map((hash) => this.props.history.transactions[hash] )
+    return list
+  }
+
   render() {
     return (
       <div>
@@ -50,12 +55,14 @@ export default class WalletEthereum extends Component {
               <span>$</span>{(this.props.walletData.balance * this.props.usdExchangeRate).toFixed(2)}
             </strong>
             <div className="center-buttons">
-              <Button onClick={this.showSendModal} bsClass="btn orange-button small-button width-100">SEND</Button>
+              <Button onClick={this.showSendModal} bsClass="btn orange-button small-button width-100" disabled={this.props.walletData.hasPendingTx}>
+                {this.props.walletData.hasPendingTx ? "IN PROGRESS" : "SEND"}
+              </Button>
               <Button onClick={this.showReceiveModal} bsClass="btn default-button small-button width-100">Receive</Button>
             </div>
             <Col xs={12}>
               <h5 className="gray text-left">TRANSACTION HISTORY</h5>
-              <TransactionList transactions={this.props.walletData.transactions}
+              <TransactionList transactions={this.transactionList()}
                 currency={this.props.walletData.currency}
                 usdExchangeRate={this.props.usdExchangeRate}
               />

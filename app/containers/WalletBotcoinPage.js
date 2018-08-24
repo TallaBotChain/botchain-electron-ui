@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import WalletBotcoin from '../components/wallet/WalletBotcoin';
 import * as BotcoinActions from '../actions/botcoinActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
+import * as HistoryActions from '../actions/historyActions';
 import { connect } from 'react-redux';
 
 class WalletBotcoinPage extends Component {
@@ -23,7 +24,8 @@ function mapStateToProps(state) {
     return {
       usdExchangeRate: state.ethereum.usdExchangeRate,
       walletData: state.botcoin,
-      curationCouncil: state.curationCouncil
+      curationCouncil: state.curationCouncil,
+      history: state.history
     };
 }
 
@@ -36,7 +38,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(BotcoinActions.transfer(to, amount));
     },
     getTransactionList: () => {
-      dispatch(BotcoinActions.getTransactionList());
+      dispatch(HistoryActions.getBotcoinHistory());
     },
     transferEstGas: (to, amount) => {
       dispatch(BotcoinActions.transferEstGas(to, amount));

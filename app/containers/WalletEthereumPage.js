@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import WalletEthereum from '../components/wallet/WalletEthereum';
 import * as EthereumActions from '../actions/ethereumActions';
+import * as HistoryActions from '../actions/historyActions';
 import { connect } from 'react-redux';
 
 class WalletEthereumPage extends Component {
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
     return {
       usdExchangeRate: state.ethereum.usdExchangeRate,
       walletData: state.ethereum,
+      history: state.history
     };
 }
 
@@ -34,7 +36,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(EthereumActions.transfer(to, amount));
     },
     getTransactionList: () => {
-      dispatch(EthereumActions.getTransactionList());
+      dispatch(HistoryActions.getEthereumHistory());
     },
     transferEstGas: (to, amount) => {
       dispatch(EthereumActions.transferEstGas(to, amount));
