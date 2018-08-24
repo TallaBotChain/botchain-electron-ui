@@ -18,11 +18,11 @@ export default class SendModal extends Component {
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose} dialogClassName={`app-modal send-modal ${this.props.walletData.currency.toLowerCase()}-modal`}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title className="text-center">Send {this.props.walletData.currency==="ETH" ? "ETHEREUM" : "BOTCOIN"}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center">
-          <h3>Available Balance: {this.props.walletData.balance} {this.props.walletData.currency}</h3>
+        <Modal.Body>
+          <h3 className="gray-text text-center">Available Balance: <span className={this.props.walletData.currency.toLowerCase()}>{this.props.walletData.balance} <small>{this.props.walletData.currency}</small></span></h3>
           <SendForm onSubmit={this.handleSubmit} {...this.props} />
         </Modal.Body>
       </Modal>

@@ -18,7 +18,7 @@ export default class Stake extends Component {
 
   showStakeModal = () => {
     this.setState({ show_stake_modal: true });
-    this.props.stakeEstGas(0)
+    this.props.stakeEstGas("0")
   }
 
   hideStakeModal = () => {

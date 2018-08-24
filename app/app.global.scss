@@ -2,7 +2,6 @@
 @import '~bootstrap/dist/css/bootstrap-theme.min.css';
 
 @import 'buttons';
-$check-green: #00A37D;
 $state: #32373E;
 $light-green: #BFEEE3;
 $gray: #A0A4AA;
@@ -28,6 +27,8 @@ $green-text: #008A6A;
 $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
+$yellow: #E6C900;
+$green-bg: #DAFCF4;
 
 @mixin arrow ($top, $left, $color: white) {
   content: '';
@@ -61,7 +62,7 @@ $blue-link: #3772D0;
   color: $lighter-gray;
 }
 
-.ethereum {
+.ethereum, .eth {
   color: $ethereum;
 }
 
@@ -69,12 +70,36 @@ $blue-link: #3772D0;
   color: $botcoin-gold;
 }
 
+.botcoin-title, .botc {
+  color: $botcoin-title;
+}
+
+.botcoin-green {
+  color: $botcoin-green;
+}
+
 .state-text {
   color: $state;
 }
 
-.dollar-text {
+.dollar-text, .status-expired {
   color: $placeholder;
+}
+
+.yellow {
+  color: $yellow;
+}
+
+.orange {
+  color: $orange;
+}
+
+.green {
+  color: $green-text;
+}
+
+.red {
+  color: $error;
 }
 
 ::selection {
@@ -110,6 +135,10 @@ h3 {
   font-size: 1.125em;
   letter-spacing: 0.04em;
   margin-top: 10px;
+
+  small {
+    font-size: 0.78em;
+  }
 }
 
 h5 {
@@ -144,6 +173,10 @@ input:focus, select:focus, textarea:focus, button:focus {
   box-shadow: inset 0 0 5px $error-gray-input;
 }
 
+.loading {
+  margin-top: 50px;
+}
+
 .container-state {
   background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
   height: 100vh;
@@ -170,199 +203,199 @@ input:focus, select:focus, textarea:focus, button:focus {
   margin-left: 80px;
 }
 
+.form-group {
+  margin-bottom: 5px;
+  min-height: 48px;
+}
+label.control-label {
+  font-weight: 400;
+  font-size: 0.875em;
+  display: none;
+  margin: 0;
+  color: $gray-label;
+}
+input.form-control {
+  border: 2px solid $gray-input;
+  box-shadow: inset 0 0 5px $gray-input;
+  height: 48px;
+  color: $state;
+  line-height: 23px;
+  font-size: 1em;
+  border-radius: 6px;
+  font-weight: 500;
+  &:not(:placeholder-shown) {
+    padding-top: 13px;
+    &+label.control-label {
+      display: block;
+      color: $placeholder;
+      font-size: 0.625em;
+      padding: 0 0 0 15px;
+      letter-spacing: 0.1em;
+      margin-top: -42px;
+      text-transform: uppercase;
+    }
+  }
+
+  &:placeholder-shown {
+    color: $placeholder;
+    padding-top: 0;
+    font-weight: 300;
+  }
+
+  &.error {
+    color: $error;
+    border-color: $error-border;
+    background-color: $error-bg;
+    box-shadow: inset 0 0 5px $error-gray-input;
+    &:placeholder-shown {
+      color: $error-placeholder;
+    }
+
+    &:not(:placeholder-shown) {
+      &+.validation-error {
+        &+label.control-label {
+          display: block;
+          color: $error-placeholder;
+          font-size: 0.625em;
+          padding: 0 0 0 15px;
+          letter-spacing: 0.1em;
+          margin-top: -63px;
+          margin-bottom: 25px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
+
+.validation-error {
+  font-size: 0.875em;
+  color: $error-placeholder;
+  margin-top: 3px;
+  display: block;
+}
+
+.required {
+  margin-top: 10px;
+}
+
+.checkbox {
+  input[type="checkbox"] {
+    height: 16px;
+    width: 16px;
+    border: 1px solid $gray-input;
+    margin: 30px 15px 0 0;
+    vertical-align: top;
+    position: absolute;
+    opacity: 0;
+    border-radius: 4px;
+    &+label {
+      cursor: pointer;
+    }
+    &:not(checked){
+      &+label {
+        position: relative;
+        padding: 6px 0 0 25px;
+        font-size: 0.875em;
+        font-weight: 300;
+        color: $gray-link;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          border: 1px solid $gray-input;
+          box-shadow: 0 0 5px $error-gray-input;
+          background: white;
+          border-radius: 4px;
+        }
+      }
+      &:hover {
+        &+label:before {
+          background: $check-green;
+          border: 2px solid $check-green;
+        }
+      }
+    }
+    &:checked {
+      &+label:before {
+        background: $check-green url('img/check.png') no-repeat -11px 2px;
+        border: 2px solid $check-green;
+      }
+      &:hover {
+        &+label:before {
+          background: white url('img/check.png') no-repeat 1px 2px;
+        }
+      }
+    }
+  }
+}
+
+.radio {
+  &+.radio {
+    margin-top: 10px;
+    margin-left: 15px;
+  }
+
+  label{
+    padding-left: 0;
+  }
+
+  input[type="radio"] {
+    opacity: 0;
+
+    &:not(checked){
+      &+span {
+        position: relative;
+        padding: 6px 0 0 25px;
+        font-size: 0.875em;
+        font-weight: 300;
+        color: $gray-link;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          border: 1px solid $gray-input;
+          box-shadow: 0 0 5px $error-gray-input;
+          background: rgba(255,255,255,.5);
+          border-radius: 8px;
+        }
+      }
+      &:hover {
+        &+span:before {
+          background: white;
+        }
+      }
+    }
+    &:checked {
+      &+span {
+        color: white;
+        &:before {
+          background: $botcoin-green;
+          border: 2px solid white;
+        }
+      }
+      &:hover {
+        &+span:before {
+          background: $botcoin-green;
+          border: 2px solid white;
+        }
+      }
+    }
+  }
+}
+
 .content-inner {
   height: calc(100vh - 30px);
   border-radius: 13px;
   padding-bottom: 55px;
   padding-top: 30px;
   overflow-y: auto;
-
-  .form-group {
-    margin-bottom: 5px;
-    min-height: 48px;
-  }
-  label.control-label {
-    font-weight: 400;
-    font-size: 0.875em;
-    display: none;
-    margin: 0;
-    color: $gray-label;
-  }
-  input.form-control {
-    border: 2px solid $gray-input;
-    box-shadow: inset 0 0 5px $gray-input;
-    height: 48px;
-    color: $state;
-    line-height: 23px;
-    font-size: 1em;
-    border-radius: 6px;
-    font-weight: 500;
-    &:not(:placeholder-shown) {
-      padding-top: 13px;
-      &+label.control-label {
-        display: block;
-        color: $placeholder;
-        font-size: 0.625em;
-        padding: 0 0 0 15px;
-        letter-spacing: 0.1em;
-        margin-top: -42px;
-        text-transform: uppercase;
-      }
-    }
-
-    &:placeholder-shown {
-      color: $placeholder;
-      padding-top: 0;
-      font-weight: 300;
-    }
-
-    &.error {
-      color: $error;
-      border-color: $error-border;
-      background-color: $error-bg;
-      box-shadow: inset 0 0 5px $error-gray-input;
-      &:placeholder-shown {
-        color: $error-placeholder;
-      }
-
-      &:not(:placeholder-shown) {
-        &+.validation-error {
-          &+label.control-label {
-            display: block;
-            color: $error-placeholder;
-            font-size: 0.625em;
-            padding: 0 0 0 15px;
-            letter-spacing: 0.1em;
-            margin-top: -63px;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-          }
-        }
-      }
-    }
-  }
-
-  .validation-error {
-    font-size: 0.875em;
-    color: $error-placeholder;
-    margin-top: 3px;
-    display: block;
-  }
-
-  .required {
-    margin-top: 10px;
-  }
-
-  .checkbox {
-    input[type="checkbox"] {
-      height: 16px;
-      width: 16px;
-      border: 1px solid $gray-input;
-      margin: 30px 15px 0 0;
-      vertical-align: top;
-      position: absolute;
-      opacity: 0;
-      border-radius: 4px;
-      &+label {
-        cursor: pointer;
-      }
-      &:not(checked){
-        &+label {
-          position: relative;
-          padding: 6px 0 0 25px;
-          font-size: 0.875em;
-          font-weight: 300;
-          color: $gray-link;
-          &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 16px;
-            height: 16px;
-            border: 1px solid $gray-input;
-            box-shadow: 0 0 5px $error-gray-input;
-            background: white;
-            border-radius: 4px;
-          }
-        }
-        &:hover {
-          &+label:before {
-            background: $check-green;
-            border: 2px solid $check-green;
-          }
-        }
-      }
-      &:checked {
-        &+label:before {
-          background: $check-green url('img/check.png') no-repeat -11px 2px;
-          border: 2px solid $check-green;
-        }
-        &:hover {
-          &+label:before {
-            background: white url('img/check.png') no-repeat 1px 2px;
-          }
-        }
-      }
-    }
-  }
-
-  .radio {
-    &+.radio {
-      margin-top: 10px;
-      margin-left: 15px;
-    }
-
-    label{
-      padding-left: 0;
-    }
-
-    input[type="radio"] {
-      opacity: 0;
-
-      &:not(checked){
-        &+span {
-          position: relative;
-          padding: 6px 0 0 25px;
-          font-size: 0.875em;
-          font-weight: 300;
-          color: $gray-link;
-          &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 16px;
-            height: 16px;
-            border: 1px solid $gray-input;
-            box-shadow: 0 0 5px $error-gray-input;
-            background: rgba(255,255,255,.5);
-            border-radius: 8px;
-          }
-        }
-        &:hover {
-          &+span:before {
-            background: white;
-          }
-        }
-      }
-      &:checked {
-        &+span {
-          color: white;
-          &:before {
-            background: $botchain-green;
-            border: 2px solid white;
-          }
-        }
-        &:hover {
-          &+span:before {
-            background: $botchain-green;
-            border: 2px solid white;
-          }
-        }
-      }
-    }
-  }
 
   &.gray-bg {
     background-color: $gray-bg;
@@ -472,6 +505,358 @@ input:focus, select:focus, textarea:focus, button:focus {
         z-index: 100;
       }
     }
+
+    // voting
+    .voting {
+      .gray-body {
+        min-height: calc(100vh - 330px);
+        padding-top: 10px;
+        padding-bottom: 30px;
+        &:before {
+          content: none;
+        }
+      }
+    }
+
+    .voting-balances {
+      h1 {
+        font-size: 2em;
+        white-space: nowrap;
+        span {
+          font-size: 0.5em;
+        }
+      }
+
+      .gray-border {
+        border: 2px solid $gray-gradient1;
+        border-width: 2px 2px 2px 0;
+        height: 200px;
+        max-height: 200px;
+        padding-top: 20px;
+        overflow-y: auto;
+        &+.gray-border {
+          border-right: 0;
+        }
+      }
+
+      .default-button {
+        margin-top: 10px;
+      }
+    }
+
+    .voting-return-button {
+      display:none;
+    }
+
+    .vote-list-details-wrap {
+      margin-top: 15px;
+      .vote-list-container {
+        .list-group {
+          border: 0;
+          box-shadow: none;
+          border-radius: 0;
+
+          .list-group-item {
+            border: 0;
+            border-top: 2px solid $gray-bg;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            background-color: transparent;
+            min-height: 48px;
+            padding-left: 0;
+            padding-right: 0;
+            margin-bottom: 0;
+            &:first-of-type {
+              border-top: 2px solid transparent;
+            }
+            &:last-child {
+              border-bottom: 2px solid $gray-bg;
+            }
+            &:hover, &.active{
+              background: white;
+              border-radius: 8px;
+              border: 2px solid $gray-bg;
+              margin-left: -15px;
+              margin-right: -15px;
+              padding-left: 13px;
+              padding-right: 13px;
+              width: calc(100% + 30px);
+              &+.list-group-item {
+                border-top: 2px solid transparent;
+              }
+            }
+            &.active {
+              border-radius: 8px 0 0 8px;
+              border-right: 0;
+              text-shadow: none;
+              span.inner-radius {
+                display: block;
+                height: 62px;
+                background: white;
+                position: absolute;
+                right: -2px;
+                width: 15px;
+                top: -9px;
+                &:before, &:after {
+                  content: "";
+                  position: absolute;
+                  width: 15px;
+                  height: 9px;
+                  background-color: $gray-gradient1;
+                  border-right: 2px solid $gray-bg;
+                }
+                &:before {
+                  top: 0;
+                  border-radius: 0 0 9px 0;
+                  border-bottom: 2px solid $gray-bg;
+                }
+                &:after {
+                  bottom: 0;
+                  border-radius: 0 9px 0 0;
+                  border-top: 2px solid $gray-bg;
+                }
+              }
+              &:first-of-type {
+                &.active {
+                  span.inner-radius {
+                    height: 62px;
+                    right: -7px;
+                    &:before {
+                      border-radius: 0;
+                      border-bottom: 2px solid $gray-bg;
+                      border-right: 0;
+                    }
+                    &:after {
+                      right: 5px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .status-expired, .status-future {
+              font-size: 0.875em;
+              letter-spacing: 0.05em;
+              font-weight: 400;
+            }
+
+            .status-future {
+              font-weight: 500;
+            }
+
+            .bot-name {
+              font-size: 1.125em;
+              font-weight: 500;
+              small {
+                font-weight: 300;
+                display: inline-block;
+                margin-left: 7px;
+                color: $gray-text;
+                letter-spacing: 0.05em;
+              }
+              .status {
+                display: none;
+                height: 13px;
+                width: 13px;
+                background: url('img/voting.png') no-repeat;
+                margin-right: 5px
+              }
+              &.red, &.green {
+                font-size: 1em;
+
+                small {
+                  color: $gray;
+                }
+
+                .status {
+                  display: inline-block;
+                }
+              }
+              &.red {
+                .status {
+                  background-position: -14px 1px;
+                }
+              }
+            }
+
+            .reward {
+              font-size: 1.125em;
+              font-weight: 500;
+              letter-spacing: 0.04em;
+
+              &.gray {
+                font-size: 0.875em;
+                font-weight: 400;
+                .botcoin-title {
+                  font-size: 0.857em;
+                  color: $gray;
+                }
+              }
+
+              .botcoin-title {
+                font-size: 0.725em;
+              }
+            }
+          }
+        }
+      }
+      .vote-details {
+        display: none;
+      }
+    }
+
+    .voting-with-details {
+      .voting-return-button {
+        display: inline-block;
+        font-size: 0.875em;
+        margin-top: 5px;
+        &:hover {
+          color: $state;
+        }
+      }
+      .vote-list-details-wrap {
+        .vote-list-container {
+          .list-group {
+            .list-group-item {
+              &:hover:not(.active) {
+                background: transparent;
+                border: 0;
+                border-top: 2px solid $gray-bg;
+                border-bottom: 2px solid transparent;
+                border-radius: 0;
+                margin-left: 0;
+                margin-right: 0;
+                padding-left: 0;
+                padding-right: 0;
+                margin-bottom: 0;
+                width: 100%;
+                &:first-of-type {
+                  border-top: 2px solid transparent;
+                }
+                &:last-child {
+                  border-bottom: 2px solid $gray-bg;
+                }
+                &+.list-group-item {
+                  border-top: 2px solid $gray-bg;
+                }
+              }
+              &.active {
+                &+.list-group-item:hover {
+                  border-top: 2px solid transparent;
+                }
+              }
+
+              .bot-name {
+                white-space: nowrap;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+        .vote-details {
+          float: left;
+          display: block;
+          padding-top: 15px;
+          background-color: white;
+          border-radius: 8px;
+          border: 2px solid $gray-bg;
+          height: calc(100vh - 410px);
+          overflow: auto;
+          min-height: 300px;
+
+          .vote-details-header {
+            .small-button.green-button {
+              min-width: 90px;
+              padding: 0 10px;
+              width: 100%;
+              max-width: 110px;
+            }
+            .exchange {
+              max-width: 130px;
+            }
+            small {
+              &.gray-text, &.state-text {
+                line-height: 1.1em;
+                font-weight: 500;
+                letter-spacing: 0.01em;
+                white-space: nowrap;
+                .botcoin-title {
+                  font-size: 0.875em;
+                }
+              }
+              &.gray-text {
+                font-size: 0.75em;
+                font-weight: 300;
+                display: inline-block;
+              }
+              &.gray {
+                font-size: 0.6875em;
+                letter-spacing: 0.01em;
+                font-weight: 400;
+                line-height: 1.9em;
+                &.usd-exchange {
+                  font-size: 0.625em;
+                  font-weight: 300;
+                }
+              }
+            }
+
+            .fake-button {
+              height: 32px;
+              width: 114px;
+              line-height: 32px;
+              font-size: 0.875em;
+              font-weight: 500;
+              border-radius: 4px;
+              text-transform: uppercase;
+              &.approved {
+                background: $green-bg;
+                color: $active-green;
+              }
+              &.rejected {
+                background-color: $error-bg;
+                color: $red;
+              }
+              &.pending {
+                background-color: $gray-gradient1;
+                color: $gray;
+              }
+            }
+          }
+
+          small {
+            font-weight: 400;
+            display: block;
+            line-height: 1.6em;
+          }
+
+          a.dollar-text {
+            &:hover {
+              color: $blue-link;
+            }
+            font-size: 0.75em;
+          }
+
+          dt {
+            font-size: 0.8125em;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+          }
+
+          dd {
+            margin-bottom: 15px;
+            font-weight: 400;
+          }
+
+          .divider {
+            background: $gray-gradient1;
+            margin-top: 15px;
+            margin-bottom: 15px;
+          }
+        }
+      }
+    }
+    //end voting
   }
   &.trans-bg {
     background-color: $trans-gray;
@@ -814,6 +1199,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   }
 }
 
+//modal
 .modal-backdrop {
   background-color: $black;
   &.in {
@@ -826,6 +1212,7 @@ input:focus, select:focus, textarea:focus, button:focus {
   .modal-content {
     min-height: 370px;
     box-shadow: 0 0 8px $gray-border;
+    padding-bottom: 15px;
   }
   .modal-header {
     border-bottom: 0;
@@ -857,6 +1244,96 @@ input:focus, select:focus, textarea:focus, button:focus {
     padding-top: 0;
     small {
       font-weight: 500;
+    }
+  }
+
+  &.send-modal {
+    .modal-header {
+      padding-bottom: 0;
+    }
+
+    .modal-body {
+      padding-top: 0;
+
+      form {
+        margin-top: 30px;
+      }
+    }
+
+    .modal-content {
+      h3.gray-text {
+        font-weight: 400;
+        span {
+          &.eth {
+            small {
+              color: $ethereum;
+            }
+          }
+          &.botc {
+            small {
+              color: $botcoin-title;
+            }
+          }
+        }
+      }
+
+      .form-icon {
+        display: block;
+        height: 28px;
+        width: 28px;
+        background: url('img/form_icons.png') no-repeat;
+        position: absolute;
+        top: 11px;
+        left: 10px;
+
+        &.currency-icon {
+          background-position: -30px 0;
+        }
+      }
+
+      .form-group {
+        width: 100%;
+        max-width: 430px;
+        margin: 0 10px 8px auto;
+        input#amount {
+          max-width: 174px;
+        }
+      }
+
+      .currency {
+        position: absolute;
+        top: 11px;
+        left: 225px;
+        font-weight: 500;
+      }
+
+      .form-footer {
+        margin-top: 40px;
+
+        div {
+          overflow-x: hidden;
+        }
+
+        strong {
+          font-size: 500;
+        }
+
+        .right-small {
+          border-left: 1px solid $gray-input;
+        }
+      }
+    }
+
+    &.botc-modal {
+      .modal-content {
+        .form-icon {
+          background-position: -58px 0;
+
+          &.currency-icon {
+            background-position: -88px 0;
+          }
+        }
+      }
     }
   }
 
@@ -906,57 +1383,54 @@ input:focus, select:focus, textarea:focus, button:focus {
       background: white url('img/stake_bg.png') no-repeat bottom right / cover;
     }
   }
+  &.confirm-modal {
+    .modal-content {
+      min-height: 320px;
+    }
+    .modal-title {
+      color: $check-green;
+      margin-bottom: 10px;
+      h4 {
+        margin-bottom: 20px;
+      }
+    }
+    .name {
+      font-size: 1.125em;
+    }
+    .modal-body {
+      small {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: inline-block;
+        small {
+          margin: 0;
+        }
+      }
+    }
+    .modal-footer {
+      margin-top: 40px;
+    }
+  }
   &.reject-modal {
     .modal-content {
       background: white url('img/reject_bg.png') no-repeat top right / cover;
     }
-
-    .modal-content {
-      min-height: 320px;
+    .modal-title {
+      color: $error;
     }
   }
   &.approve-modal {
     .modal-content {
       background: white url('img/approve_bg.png') no-repeat top right / cover;
     }
-
-    .modal-content {
-      min-height: 320px;
+    .modal-body {
+      h4 {
+        margin-bottom: 15px;
+        .botcoin-title {
+          font-size: 0.66em;
+        }
+      }
     }
   }
 }
-
-// voting
-
-.voting-return-button {
-  display:none;
-}
-
-.vote-list-details-wrap {
-  margin-top: 16px;
-  .vote-list-container {
-    width: 100%;
-  }
-  .vote-details {
-    display: none;
-  }
-}
-
-.voting-with-details {
-  .voting-return-button {
-    display:block;
-    margin-top: 16px;
-  }
-  .vote-list-details-wrap {
-    .vote-list-container {
-      width: 50%;
-      float: left;
-    }
-    .vote-details {
-      width: 50%;
-      float: left;
-      display: block;
-      padding-left: 15px;
-    }
-  }
-}
+//end modal

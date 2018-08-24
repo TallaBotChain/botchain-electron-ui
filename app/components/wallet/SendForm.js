@@ -14,30 +14,43 @@ class SendForm extends Component {
   render() {
     const {handleSubmit, pristine, reset, submitting} = this.props;
     return (
-        <form onSubmit={handleSubmit}>
-          <Field name="to" type="text" component={inputField} label="To:" placeholder="0x123" validate={[required(), ethAddress]}/>
-          <Field name="amount" type="text" component={inputField} label="Value:" placeholder="1.0" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]}/>
-          <Row>
-            <Col xs={12}>
-              <Row>
-                <Col xs={2}><button className='btn btn-primary' type="submit">Submit</button></Col>
-                <Col xs={8}>
-                  <Row>
-                    <Col xs={6}>
-                      <div><small>Send {this.props.amount ? this.props.amount : 0} {this.props.walletData.currency}</small></div>
-                      <div><small>Gas Fee: {this.props.walletData.transferTxEstGas} ETH</small></div>
-                    </Col>
-                    <Col xs={6}>
-                      <div><small>{this.props.walletData.currency==="ETH" && this.props.amount ? `$${this.props.amount*this.props.usdExchangeRate}` : "$0" }</small></div>
-                      <div><small>${this.props.walletData.transferTxEstGas*this.props.usdExchangeRate}</small></div>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={2}><button className='btn btn-default' type="submit">Cancel</button></Col>
+      <form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs={10} xsOffset={1}>
+            <span className="form-icon arrow-icon"></span>
+            <Field name="to" type="text" component={inputField} label="To:" placeholder={this.props.walletData.currency==="ETH" ? "Send to Ethereum address" : "Send to Botcoin address"} validate={[required(), ethAddress]}/>
+          </Col>
+          <Col xs={10} xsOffset={1}>
+            <span className="form-icon currency-icon"></span>
+            <Field name="amount" type="text" component={inputField} label="Amount" placeholder="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]}/>
+            <span className={`currency ${this.props.walletData.currency.toLowerCase()}`}>{this.props.walletData.currency}</span>
+          </Col>
+        </Row>
+        <Row className="form-footer">
+          <Col xs={12}>
+            <Col xs={3}>
+              <button className='btn orange-button small-button width-100' type="submit">SUBMIT</button>
+            </Col>
+            <Col xs={6}>
+              <Row>      
+                <Row>
+                  <Col xs={8} className="gray-text">
+                    <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>{this.props.walletData.currency}</small></strong></small></div>
+                    <div><small><small>Gas Fee: {this.props.walletData.transferTxEstGas} <small>ETH</small></small></small></div>
+                  </Col>
+                  <Col xs={4} className="gray-text right-small">
+                    <div><small><small><strong>{this.props.walletData.currency==="ETH" && this.props.amount ? `$${this.props.amount*this.props.usdExchangeRate}` : "$0" }</strong></small></small></div>
+                    <div><small><small><small>${this.props.walletData.transferTxEstGas*this.props.usdExchangeRate}</small></small></small></div>
+                  </Col>
+                </Row>
               </Row>
             </Col>
-          </Row>
-        </form>
+            <Col xs={3}>
+              <button className='btn default-button small-button width-86 pull-right' type="button" onClick={this.props.handleClose}>Cancel</button>
+            </Col>
+          </Col>
+        </Row>
+      </form>
     );
   }
 }
