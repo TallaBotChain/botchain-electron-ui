@@ -36,23 +36,27 @@ class SettingsPage extends Component {
       <div>
         <Col xs={12} className="content-inner black-bg">
           <Row>
-            <Col xs={12} className="content-inner lighter-gray-bg top50">
-              <Col md={6} sm={8} xs={7}>
-                <h3>Change Password</h3>
-                {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
-              </Col>
-              <Clearfix />
-              <PasswordForm onSubmit={this.updatePassword} {...this.props} />
-            </Col>
-            <Col xs={12} className="divider"></Col>
-            <Col xs={12} className="content-inner lighter-gray-bg bottom50">
-              <Col md={6} sm={8} xs={7}>
-                <h3>Export Wallet</h3>
-                <p>Backup your wallet using one of the options below.</p>
-                {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
-              </Col>
-              <Clearfix />
-              <ExportForm onSubmit={this.exportWallet} {...this.props}  />
+            <Col xs={12} className="content-inner lighter-gray-bg">
+              <div className="top">
+                <Col md={6} sm={8} xs={7}>
+                  <h3>Change Password</h3>
+                  {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
+                </Col>
+                <Clearfix />
+                <PasswordForm onSubmit={this.updatePassword} {...this.props} />
+              </div>
+              <Row>
+                <Col xs={12} className="divider"></Col>
+              </Row>
+              <div className="bottom">
+                <Col md={6} sm={8} xs={7}>
+                  <h3>Export Wallet</h3>
+                  <p>Backup your wallet using one of the options below.</p>
+                  {(this.props.wallet.error ? <Alert bsStyle="danger">{this.props.wallet.error}</Alert> : "")}
+                </Col>
+                <Clearfix />
+                <ExportForm onSubmit={this.exportWallet} {...this.props}  />
+              </div>
             </Col>
           </Row>
         </Col>

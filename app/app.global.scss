@@ -419,8 +419,33 @@ input.form-control {
   }
 
   &.lighter-gray-bg {
+    height: calc(100vh - 85px);
     background-color:$gray-text-hover;
     color: white;
+    border-radius: 13px 13px 0 0;
+
+    .top {
+      min-height: 50%;
+      padding-bottom: 35px;
+
+      h3 {
+        margin-top: 5px;
+      }
+    }
+
+    .bottom {
+      padding-top: 20px;
+      
+      h3 {
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 10px 0 20px;
+        color: $gray-bg;
+      }
+    }
+
     h3 {
       margin-bottom: 20px;
     }
@@ -962,10 +987,6 @@ input.form-control {
     border-radius: 13px 13px 0 0;
     height: calc(48.5vh - 16px);
     padding-bottom: 15px;
-
-    &.lighter-gray-bg {
-      height: calc(48.5vh - 44px);
-    }
   }
 
   &.bottom50 {
@@ -975,21 +996,6 @@ input.form-control {
 
     h3 {
       margin-bottom: 20px;
-    }
-
-    &.lighter-gray-bg {
-      border-radius: 0;
-      height: calc(51.5vh - 43px);
-      padding-top: 20px;
-
-      h3 {
-        margin-bottom: 10px;
-      }
-
-      p {
-        margin: 10px 0 20px;
-        color: $gray-bg;
-      }
     }
   }
   &.left-inner {
