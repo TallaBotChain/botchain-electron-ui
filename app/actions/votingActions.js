@@ -215,6 +215,7 @@ export const payoutRewardEstGas = () => async (dispatch) => {
 }
 
 export const payoutReward = () => async (dispatch) => {
+  dispatch(resetPayoutState());
   let tokenVault = new TokenVault();
   dispatch(setInProgress(true));
   try {

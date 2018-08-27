@@ -4,7 +4,7 @@ import { Modal, Button, Alert, Well } from 'react-bootstrap';
 export default class PayoutModal extends Component {
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.rewardBalance > 0 && nextProps.rewardBalance == 0 && this.props.show) {
+    if (this.props.voting.rewardBalance > 0 && nextProps.voting.rewardBalance == 0 && this.props.show) {
       this.props.handleClose();
     }
   }
