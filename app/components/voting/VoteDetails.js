@@ -21,6 +21,12 @@ export default class VoteDetails extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.node && this.props.voting.voteToShow !== nextProps.voting.voteToShow) {
+      this.node.scrollIntoView(true);
+    }
+  }
+
   developer = () => {
     return this.props.voting.voteToShow ? this.props.developer.records[this.props.voting.voteToShow.address] : null
   }
@@ -204,6 +210,7 @@ export default class VoteDetails extends Component {
   render() {
     return (
       <Col xs={8} className="vote-details state-text">
+        <div ref={node => this.node = node}>
         {this.renderHeader()}
         <Col xs={12}>
           <Col xs={12} className="divider"></Col>
@@ -221,6 +228,7 @@ export default class VoteDetails extends Component {
           </dl>
         </Col>
         {this.developer() ? <JsonList data={this.developer().metadata} /> : "" }
+        </div>
       </Col>
     );
   }
