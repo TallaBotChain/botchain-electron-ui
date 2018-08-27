@@ -161,6 +161,16 @@ $red-active: #DF3C3C;
   font-size: 1.125em;
 }
 
+.medium-button {
+  height: 36px;
+  line-height: 36px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  padding: 0 15px;
+}
+
 .small-button {
   height: 32px;
   line-height: 32px;

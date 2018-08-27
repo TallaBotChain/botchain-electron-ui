@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Alert, Well } from 'react-bootstrap';
 import { remote } from 'electron';
+import { Col, Row } from 'react-bootstrap';
 
 export default class UnstakeModal extends Component {
 
@@ -19,19 +20,26 @@ export default class UnstakeModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.handleClose} >
-        <Modal.Header closeButton>
-          <Modal.Title>Retreive Stake</Modal.Title>
+      <Modal show={this.props.show} dialogClassName="app-modal stake-modal retrieve-modal" onHide={this.props.handleClose} >
+        <Modal.Header>
+          <Modal.Title className="text-center"><strong>Retrieve Stake</strong></Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <h4>Staked Balance: {this.props.curationCouncil.stakedBalance} BOTC</h4>
+          <h3 className="gray-text">Staked Balance: <strong className="state-text">{this.props.curationCouncil.stakedBalance}</strong> <small className="botc">BOTC</small></h3>
           <form>
-            <label>Curation Council</label>
-            <input type="text" readOnly={true} placeholder={remote.getGlobal('config').curation_council_contract} />
+            <Row>
+              <Col xs={10} xsOffset={1} className="text-left">
+                <span className="form-icon botcoin-icon"></span>
+                <div className="form-group">
+                  <label className="botcoin-green">COUNCIL ADDRESS</label>
+                  <input className="form-control green-input" type="text" readOnly={true} value={remote.getGlobal('config').curation_council_contract} />
+                </div>
+              </Col>
+            </Row>
           </form>
-          <p>Retrieving your stake will return all of <br/> the stake balance to your Wallet.</p>
-          <Button onClick={this.props.unstake}>Unstake</Button>
-          <div><small>Gas Fee: {this.props.curationCouncil.leaveTxEstGas} ETH</small></div>
+          <p className="gray-text"><small>Retrieving your stake will return all of <br/> the stake balance to your Wallet.</small></p>
+          <Button className="btn orange-button medium-button" onClick={this.props.unstake}>RETRIEVE STAKE</Button>
+          <div className="gray-text"><small><small>Gas Fee: {this.props.curationCouncil.leaveTxEstGas} <small>ETH</small></small></small></div>
         </Modal.Body>
       </Modal>
     );

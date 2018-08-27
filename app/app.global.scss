@@ -29,6 +29,7 @@ $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
 $yellow: #E6C900;
 $green-bg: #DAFCF4;
+$green-input-text: #138F72;
 
 @mixin arrow ($top, $left, $color: white) {
   content: '';
@@ -233,6 +234,15 @@ input.form-control {
       letter-spacing: 0.1em;
       margin-top: -42px;
       text-transform: uppercase;
+    }
+  }
+
+  &[readonly] {
+    &.green-input {
+      color: $green-input-text;
+      background: $green-bg;
+      padding-top: 0;
+      max-width: 430px;
     }
   }
 
@@ -1235,6 +1245,22 @@ input.form-control {
     }
   }
 
+  .form-footer {
+    margin-top: 40px;
+
+    div {
+      overflow-x: hidden;
+    }
+
+    strong {
+      font-size: 500;
+    }
+
+    .right-small {
+      border-left: 1px solid $gray-input;
+    }
+  }
+
   .modal-body {
     padding-bottom: 0;
   }
@@ -1306,22 +1332,6 @@ input.form-control {
         left: 225px;
         font-weight: 500;
       }
-
-      .form-footer {
-        margin-top: 40px;
-
-        div {
-          overflow-x: hidden;
-        }
-
-        strong {
-          font-size: 500;
-        }
-
-        .right-small {
-          border-left: 1px solid $gray-input;
-        }
-      }
     }
 
     &.botc-modal {
@@ -1381,6 +1391,65 @@ input.form-control {
   &.stake-modal {
     .modal-content {
       background: white url('img/stake_bg.png') no-repeat bottom right / cover;
+    }
+    .modal-header {
+      padding-bottom: 0;
+    }
+    .modal-body {
+      padding-top: 0;
+    }
+    h3 {
+      font-weight: 400;
+    }
+    small {
+      small {
+        letter-spacing: 0.01em;
+      }
+    }
+    form {
+      margin-top: 40px;
+    }
+    label.botcoin-green {
+      font-size: 0.6875em;
+      letter-spacing: 0.11em;
+      font-weight: 500;
+    }
+    .form-icon {
+      display: block;
+      height: 28px;
+      width: 28px;
+      background: url('img/form_icons.png') no-repeat;
+      position: absolute;
+      top: 11px;
+      left: 10px;
+
+      &.botcoin-icon {
+        background-position: -120px 0;
+        top: 35px;
+      }
+
+      &.currency-icon {
+        background-position: -88px 0;
+      }
+    }
+    .form-group {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 10px 8px auto;
+      input#amount {
+        max-width: 174px;
+      }
+    }
+    .currency {
+      position: absolute;
+      top: 11px;
+      left: 225px;
+      font-weight: 500;
+    }
+    &.retrieve-modal {
+      .form-group {
+        margin-bottom: 20px;
+      }
     }
   }
   &.confirm-modal {
