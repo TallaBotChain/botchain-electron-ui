@@ -12,26 +12,42 @@ class StakeForm extends Component {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-        <Field name="address" type="text" readOnly={true} component={inputField} label="Council Address" placeholder={remote.getGlobal('config').curation_council_contract} />
-        <Field name="amount" type="text" component={inputField} label={this.props.label} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]} />
         <Row>
+          <Col xs={10} xsOffset={1}>
+            <span className="form-icon botcoin-icon"></span>
+            <div className="form-group">
+              <label className="botcoin-green">COUNCIL ADDRESS</label>
+              <input className="form-control green-input" type="text" readOnly={true} value={remote.getGlobal('config').curation_council_contract} />
+            </div>
+          </Col>
+          <Col xs={10} xsOffset={1}>
+            <span className="form-icon currency-icon"></span>
+            <Field name="amount" type="text" component={inputField} label={this.props.label} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]} />
+            <span className="currency botc">BOTC</span>
+          </Col>
+        </Row>
+        <Row className="form-footer">
           <Col xs={12}>
-            <Row>
-              <Col xs={2}><button className='btn btn-primary' type="submit">Submit</button></Col>
-              <Col xs={8}>
+            <Col xs={3}>
+              <button className='btn orange-button small-button width-100' type="submit">SUBMIT</button>
+            </Col>
+            <Col xs={6}>
+              <Row>
                 <Row>
-                  <Col xs={6}>
-                    <div><small>Stake {this.props.amount ? this.props.amount : 0} BOTC</small></div>
-                    <div><small>Gas Fee: {this.props.curationCouncil.joinTxEstGas} ETH</small></div>
+                  <Col xs={8} className="gray-text">
+                    <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>BOTC</small></strong></small></div>
+                    <div><small><small>Gas Fee: {this.props.curationCouncil.joinTxEstGas} <small>ETH</small></small></small></div>
                   </Col>
-                  <Col xs={6}>
-                    <div><small>$0</small></div>
-                      <div><small>${this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate}</small></div>
+                  <Col xs={4} className="gray-text right-small">
+                    <div><small><small><strong>$0</strong></small></small></div>
+                    <div><small><small><small>${this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate}</small></small></small></div>
                   </Col>
                 </Row>
-              </Col>
-              <Col xs={2}><button className='btn btn-default' type="button" onClick={this.props.handleClose}>Cancel</button></Col>
-            </Row>
+              </Row>
+            </Col>
+            <Col xs={3}>
+              <button className='btn default-button small-button width-86 pull-right' type="button" onClick={this.props.handleClose}>Cancel</button>
+            </Col>
           </Col>
         </Row>
       </form>

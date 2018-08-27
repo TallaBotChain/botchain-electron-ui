@@ -1245,6 +1245,22 @@ input.form-control {
     }
   }
 
+  .form-footer {
+    margin-top: 40px;
+
+    div {
+      overflow-x: hidden;
+    }
+
+    strong {
+      font-size: 500;
+    }
+
+    .right-small {
+      border-left: 1px solid $gray-input;
+    }
+  }
+
   .modal-body {
     padding-bottom: 0;
   }
@@ -1315,22 +1331,6 @@ input.form-control {
         top: 11px;
         left: 225px;
         font-weight: 500;
-      }
-
-      .form-footer {
-        margin-top: 40px;
-
-        div {
-          overflow-x: hidden;
-        }
-
-        strong {
-          font-size: 500;
-        }
-
-        .right-small {
-          border-left: 1px solid $gray-input;
-        }
       }
     }
 
@@ -1420,17 +1420,36 @@ input.form-control {
       width: 28px;
       background: url('img/form_icons.png') no-repeat;
       position: absolute;
-      top: 35px;
+      top: 11px;
       left: 10px;
 
       &.botcoin-icon {
         background-position: -120px 0;
+        top: 35px;
+      }
+
+      &.currency-icon {
+        background-position: -88px 0;
       }
     }
     .form-group {
       width: 100%;
       max-width: 430px;
-      margin: 0 10px 20px auto;
+      margin: 0 10px 8px auto;
+      input#amount {
+        max-width: 174px;
+      }
+    }
+    .currency {
+      position: absolute;
+      top: 11px;
+      left: 225px;
+      font-weight: 500;
+    }
+    &.retrieve-modal {
+      .form-group {
+        margin-bottom: 20px;
+      }
     }
   }
   &.confirm-modal {
