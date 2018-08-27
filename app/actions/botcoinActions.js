@@ -5,6 +5,7 @@ import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import axios from 'axios'
 import {remote} from 'electron';
+import * as HistoryActions from '../actions/historyActions';
 
 export const BotcoinActions = {
   SET_BOTCOIN_ATTRIBUTE: 'SET_BOTCOIN_ATTRIBUTE',
@@ -31,11 +32,8 @@ export const resetState = () => {
   return { type: BotcoinActions.RESET_STATE }
 }
 
-export const resetTransferState = () => (dispatch) => {
-  dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferTxMined', value: false });
-  dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferTxId', value: null });
-  dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferSuccess', value: false });
-  dispatch(setError(null))
+const setPendingTx = (hasPendingTx) => {
+  return { type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'hasPendingTx', value: hasPendingTx }
 }
 
 
@@ -71,48 +69,35 @@ export const transferEstGas = (to, amount) => async (dispatch) => {
 
 
 export const transfer = (to, amount) => async (dispatch) => {
-  dispatch(resetTransferState())
   dispatch(setInProgress(true))
-  let botCoin = new BotCoin()
+  dispatch(setPendingTx(true))
   try {
+    let botCoin = new BotCoin()
     let txId = await botCoin.transferTokens(to, amount);
-    dispatch( { type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferTxId', value: txId });
-    dispatch(startTxObserver(txId, transferTxMined));
+    dispatch(startTxObserver(txId, (status, receipt) => transferTxMined(txId, status, receipt, amount)));
+    dispatch(reset('eth_transfer'));
+    dispatch(setInProgress(false))
+    //create new history row
+    let data = { value: amount, txId, input: "0x", from: keyTools.address}
+    dispatch(HistoryActions.addNewTransaction('botcoin', data))
   }catch(e) {
     console.log(e);
     dispatch( setError( "Failed to initiate transfer." ));
     dispatch(setInProgress(false))
+    dispatch(setPendingTx(false))
   }
 }
 
-const transferTxMined = (status) => (dispatch) => {
-  dispatch(setInProgress(false))
-  dispatch(reset('eth_transfer'));
-  dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferTxMined', value: true });
+const transferTxMined = (txId, status, receipt, amount) => (dispatch) => {
+  dispatch(setPendingTx(false))
+
   if(status == TxStatus.SUCCEED){
-    dispatch({ type: BotcoinActions.SET_BOTCOIN_ATTRIBUTE, key: 'transferSuccess', value: true });
     dispatch(getBalance())
-    dispatch(getTransactionList())
   } else {
     dispatch( setError("Transfer transaction failed." ));
   }
-}
 
-export const getTransactionList = () => (dispatch) => {
-  axios.get(remote.getGlobal('config').etherscan_api_url, {
-    params: {
-      module: "account",
-      action: "tokentx",
-      address: keyTools.address,
-      contractaddress: remote.getGlobal('config').botcoin_contract,
-      sort: "desc",
-      apikey: remote.getGlobal('config').etherscan_api_key
-    }
-  })
-  .then(function (response) {
-    dispatch(setTransactions(response.data.result))
-  })
-  .catch(function (error) {
-    dispatch( setError("Failed to retreive transaction history." ));
-  })
+  //update history row
+  let data = { value: amount, txId, input: "0x", from: keyTools.address, ...receipt}
+  dispatch(HistoryActions.addNewTransaction('botcoin', data))
 }

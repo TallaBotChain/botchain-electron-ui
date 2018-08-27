@@ -12,6 +12,9 @@ export default class StakeModal extends Component {
     if (this.props.curationCouncil.stakedBalance == 0 && nextProps.curationCouncil.stakedBalance > 0 && this.props.show) {
       this.props.handleClose()
     }
+    if(!this.props.curationCouncil.hasPendingTx && nextProps.curationCouncil.hasPendingTx && this.props.show) {
+      this.props.handleClose()
+    }
   }
 
   render() {
@@ -21,17 +24,8 @@ export default class StakeModal extends Component {
           <Modal.Title>Submit Stake</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          {this.props.curationCouncil.joinTxId && !this.props.curationCouncil.joinTxMined ? (
-            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.curationCouncil.joinTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
-          ) : (
-              <div>
-                {this.props.curationCouncil.joinTxMined && (
-                  <Well>{this.props.curationCouncil.joinSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
-                )}
-                <h4>Available Balance: {this.props.walletData.balance} BOTC</h4>
-                <StakeForm onSubmit={this.handleSubmit} {...this.props} />
-              </div>
-            )}
+          <h4>Available Balance: {this.props.walletData.balance} BOTC</h4>
+          <StakeForm onSubmit={this.handleSubmit} {...this.props} />
         </Modal.Body>
       </Modal>
     );

@@ -6,12 +6,9 @@ const initialState = {
   inProgress: false,
   balance: 0,
   transferTxEstGas: 0,
-  transferTxId: null,
-  transferTxMined: false,
-  transferSuccess: false,
-  transactions: [],
   currency: "ETH",
-  usdExchangeRate: 0
+  usdExchangeRate: 0,
+  hasPendingTx: false
 }
 
 const ethereum = (state = initialState, action) => {

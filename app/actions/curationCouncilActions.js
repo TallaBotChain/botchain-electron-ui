@@ -1,10 +1,12 @@
 import CurationCouncil from '../blockchain/CurationCouncil';
+import * as HistoryActions from '../actions/historyActions';
 import * as BotcoinActions from '../actions/botcoinActions';
 import BotCoin from '../blockchain/BotCoin';
 import { start as startTxObserver } from './txObserverActions';
 import TxStatus from '../utils/TxStatus'
 import {reset} from 'redux-form';
 import {remote} from 'electron';
+import keyTools from '../blockchain/KeyTools';
 
 export const CurationCouncilActions = {
   SET_ATTRIBUTE: 'SET_CURATION_COUNCIL_ATTRIBUTE',
@@ -27,24 +29,15 @@ export const resetState = () => {
   return { type: CurationCouncilActions.RESET_STATE }
 }
 
-export const resetJoinState = () => (dispatch) => {
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxMined', value: false });
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxId', value: null });
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinSuccess', value: false });
-  dispatch(setError(null))
-}
-
-export const resetLeaveState = () => (dispatch) => {
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxMined', value: false });
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxId', value: null });
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveSuccess', value: false });
-  dispatch(setError(null))
+const setPendingTx = (hasPendingTx) => {
+  return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'hasPendingTx', value: hasPendingTx }
 }
 
 export const reloadStakedBalance = () => (dispatch) => {
   dispatch(setStakedBalance(0));
   dispatch(getStakedBalance());
 }
+
 
 export const getStakedBalance = () => (dispatch) => {
   dispatch(setInProgress(true))
@@ -62,24 +55,27 @@ export const getStakedBalance = () => (dispatch) => {
 }
 
 export const approveJoinPayment = (amount) => async (dispatch) => {
-  dispatch(resetJoinState())
-  let botCoin = new BotCoin();
-  let chargingContract = remote.getGlobal('config').curation_council_contract;
-  console.log("Approving for amount ", amount);
-
+  dispatch(setInProgress(true))
+  dispatch(setPendingTx(true))
   try {
+    let botCoin = new BotCoin();
+    let chargingContract = remote.getGlobal('config').curation_council_contract;
     let txId = await botCoin.approve(amount, chargingContract);
-    dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxId', value: txId });
-    dispatch(startTxObserver(txId, () => joinCouncil(amount)));
+    //create new history row
+    let data = { value: amount, txId, input: "approving"}
+    dispatch(HistoryActions.addNewTransaction('stake', data))
+    dispatch(startTxObserver(txId, () => joinCouncil(amount, txId)));
+    dispatch(setInProgress(false))
+    dispatch(reset('stake'));
   }catch(e) {
     console.log(e);
     dispatch( setError( "Not approved. Request cancelled." ));
     dispatch(setInProgress(false))
+    dispatch(setPendingTx(false))
   }
 }
 
 export const joinCouncilEstGas = (amount) => async (dispatch) => {
-  dispatch(resetJoinState())
   try {
     let botCoin = new BotCoin();
     let chargingContract = remote.getGlobal('config').curation_council_contract;
@@ -95,31 +91,39 @@ export const joinCouncilEstGas = (amount) => async (dispatch) => {
   }
 }
 
-export const joinCouncil = (amount) => async (dispatch) => {
+export const joinCouncil = (amount, approveTxId) => async (dispatch) => {
   dispatch(setInProgress(true))
   try {
     let curationCouncil = new CurationCouncil()
     let txId = await curationCouncil.joinCouncil(amount);
-    dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxId', value: txId });
-    dispatch(startTxObserver(txId, joinCouncilTxMined));
+    dispatch(setInProgress(false))
+    //create new history row
+    let data = { value: amount, txId, input: curationCouncil.getMethodSignature("joinCouncil")}
+    dispatch(HistoryActions.addNewTransaction('stake', data))
+    dispatch(HistoryActions.removeTransaction('stake', approveTxId))
+
+    dispatch(startTxObserver(txId, (status, receipt) => joinCouncilTxMined(txId, status, receipt, amount)));
   }catch(e) {
     console.log(e);
     dispatch( setError( "Failed to join Council." ));
     dispatch(setInProgress(false))
+    dispatch(setPendingTx(false))
   }
 }
 
-const joinCouncilTxMined = (status) => (dispatch) => {
-  dispatch(setInProgress(false))
-  dispatch(reset('stake'));
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinTxMined', value: true });
+const joinCouncilTxMined = (txId, status, receipt, amount) => (dispatch) => {
+  console.log("joinCouncilTxMined +", receipt)
+  dispatch(setPendingTx(false))
   if(status == TxStatus.SUCCEED){
-    dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'joinSuccess', value: true });
     dispatch(BotcoinActions.getBalance())
     dispatch(getStakedBalance())
   } else {
     dispatch( setError("Join Council transaction failed." ));
   }
+  let curationCouncil = new CurationCouncil()
+  //update history row
+  let data = { value: amount, txId, input: curationCouncil.getMethodSignature("joinCouncil"), from: keyTools.address,  ...receipt}
+  dispatch(HistoryActions.addNewTransaction('stake', data))
 }
 
 export const leaveCouncilEstGas = () => async (dispatch) => {
@@ -136,29 +140,38 @@ export const leaveCouncilEstGas = () => async (dispatch) => {
   }
 }
 
-export const leaveCouncil = () => async (dispatch) => {
-  dispatch(resetLeaveState())
+export const leaveCouncil = () => async (dispatch, getState) => {
   dispatch(setInProgress(true))
+  dispatch(setPendingTx(true))
   let curationCouncil = new CurationCouncil()
   try {
     let txId = await curationCouncil.leaveCouncil();
-    dispatch( { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxId', value: txId });
-    dispatch(startTxObserver(txId, leaveCouncilTxMined));
+    let stakedBalance = getState().curationCouncil.stakedBalance
+    //create new history row
+    let data = {value: stakedBalance, txId, input: curationCouncil.getMethodSignature("leaveCouncil")}
+    dispatch(HistoryActions.addNewTransaction('stake', data))
+    dispatch(startTxObserver(txId, (status, receipt) => leaveCouncilTxMined(txId, status, receipt, stakedBalance)));
+    dispatch(setInProgress(false))
   }catch(e) {
     console.log(e);
     dispatch( setError( "Failed to leave Council." ));
     dispatch(setInProgress(false))
+    dispatch(setPendingTx(true))
   }
 }
 
-const leaveCouncilTxMined = (status) => (dispatch) => {
-  dispatch(setInProgress(false))
-  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveTxMined', value: true });
+const leaveCouncilTxMined = (txId, status, receipt, amount) => (dispatch) => {
+  console.log("leaveCouncilTxMined +", receipt)
+  dispatch(setPendingTx(false))
   if(status == TxStatus.SUCCEED){
-    dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'leaveSuccess', value: true });
     dispatch(BotcoinActions.getBalance())
     dispatch(getStakedBalance())
   } else {
     dispatch( setError("Leave Council transaction failed." ));
   }
+
+  //update history row
+  let curationCouncil = new CurationCouncil()
+  let data = {txId, value: amount, input: curationCouncil.getMethodSignature("leaveCouncil"), ...receipt}
+  dispatch(HistoryActions.addNewTransaction('stake', data))
 }

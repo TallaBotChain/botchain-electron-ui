@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import WalletBotcoin from '../components/wallet/WalletBotcoin';
+import * as HistoryActions from '../actions/historyActions';
 import * as BotcoinActions from '../actions/botcoinActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import Stake from '../components/stake/Stake'
@@ -24,6 +25,7 @@ class StakePage extends Component {
 function mapStateToProps(state) {
   return {
     walletData: state.botcoin,
+    history: state.history,
     usdExchangeRate: state.ethereum.usdExchangeRate,
     curationCouncil: state.curationCouncil
   };
@@ -50,7 +52,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(CurationCouncilActions.getStakedBalance());
     },
     getTransactionList: () => {
-      dispatch(BotcoinActions.getTransactionList());
+      dispatch(HistoryActions.getStakeHistory());
     }
   }
 }

@@ -7,13 +7,8 @@ const initialState = {
   error: null,
   stakedBalance: 0,
   joinTxEstGas: 0,
-  joinTxId: null,
-  joinTxMined: false,
-  joinSuccess: false,
   leaveTxEstGas: 0,
-  leaveTxId: null,
-  leaveTxMined: false,
-  leaveSuccess: false
+  hasPendingTx: false
 }
 
 const curationCouncil = (state = initialState, action) => {
