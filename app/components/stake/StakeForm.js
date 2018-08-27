@@ -13,7 +13,7 @@ class StakeForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <Field name="address" type="text" readOnly={true} component={inputField} label="Council Address" placeholder={remote.getGlobal('config').curation_council_contract} />
-        <Field name="amount" type="text" component={inputField} label={this.props.label} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]} />
+        <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]} />
         <Row>
           <Col xs={12}>
             <Row>
