@@ -5,14 +5,24 @@ import { connect } from 'react-redux';
 import { inputField } from '../form/FormFields'
 import { remote } from 'electron';
 import { Col, Row } from 'react-bootstrap';
+import NotEnoughEth from '../wallet/NotEnoughEth'
 
 class StakeForm extends Component {
+
+  hasEnoughEth = () => {
+    return this.props.ethBalance > this.props.curationCouncil.joinTxEstGas
+  }
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <form onSubmit={handleSubmit}>
         <Row>
+          {!this.hasEnoughEth() && (
+            <Col xs={10} xsOffset={1}>
+              <NotEnoughEth />
+            </Col>
+          )}
           <Col xs={10} xsOffset={1}>
             <span className="form-icon botcoin-icon"></span>
             <div className="form-group">
@@ -22,14 +32,14 @@ class StakeForm extends Component {
           </Col>
           <Col xs={10} xsOffset={1}>
             <span className="form-icon currency-icon"></span>
-            <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance })]} />
+            <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance, msg: {lessThanOrEqualTo: "is exceed the balance"} })]} />
             <span className="currency botc">BOTC</span>
           </Col>
         </Row>
         <Row className="form-footer">
           <Col xs={12}>
             <Col xs={3}>
-              <button className='btn orange-button small-button width-100' type="submit">SUBMIT</button>
+              <button className='btn orange-button small-button width-100' type="submit" disabled={pristine || submitting || !this.hasEnoughEth()}>SUBMIT</button>
             </Col>
             <Col xs={6}>
               <Row>

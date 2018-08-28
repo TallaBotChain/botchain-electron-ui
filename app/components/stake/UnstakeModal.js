@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Alert, Well } from 'react-bootstrap';
 import { remote } from 'electron';
 import { Col, Row } from 'react-bootstrap';
+import NotEnoughEth from '../wallet/NotEnoughEth'
 
 export default class UnstakeModal extends Component {
 
@@ -18,6 +19,10 @@ export default class UnstakeModal extends Component {
     }
   }
 
+  hasEnoughEth = () => {
+    return this.props.ethBalance > this.props.curationCouncil.leaveTxEstGas
+  }
+
   render() {
     return (
       <Modal show={this.props.show} dialogClassName="app-modal stake-modal retrieve-modal" onHide={this.props.handleClose} >
@@ -28,6 +33,11 @@ export default class UnstakeModal extends Component {
           <h3 className="gray-text">Staked Balance: <strong className="state-text">{this.props.curationCouncil.stakedBalance}</strong> <small className="botc">BOTC</small></h3>
           <form>
             <Row>
+              {!this.hasEnoughEth() && (
+                <Col xs={10} xsOffset={1}>
+                  <NotEnoughEth />
+                </Col>
+              )}
               <Col xs={10} xsOffset={1} className="text-left">
                 <span className="form-icon botcoin-icon"></span>
                 <div className="form-group">
@@ -38,7 +48,7 @@ export default class UnstakeModal extends Component {
             </Row>
           </form>
           <p className="gray-text"><small>Retrieving your stake will return all of <br/> the stake balance to your Wallet.</small></p>
-          <Button className="btn orange-button medium-button" onClick={this.props.unstake}>RETRIEVE STAKE</Button>
+          <Button className="btn orange-button medium-button" onClick={this.props.unstake} disabled={!this.hasEnoughEth()}>RETRIEVE STAKE</Button>
           <div className="gray-text"><small><small>Gas Fee: {this.props.curationCouncil.leaveTxEstGas} <small>ETH</small></small></small></div>
         </Modal.Body>
       </Modal>
