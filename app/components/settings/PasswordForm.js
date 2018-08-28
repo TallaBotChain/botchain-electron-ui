@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { required, length, confirmation} from 'redux-form-validators'
 import { inputField } from '../form/FormFields';
 import {connect} from 'react-redux'
-import { Col } from 'react-bootstrap';
+import { Col, Clearfix } from 'react-bootstrap';
 
 class PasswordForm extends Component {
   render() {
@@ -29,6 +29,7 @@ class PasswordForm extends Component {
           <button className='btn default-button cta-button' type="submit">Update Password</button>
           <small className="pull-right gray required">*Required</small>
         </Col>
+        <Clearfix />
       </form>
     );
   }
