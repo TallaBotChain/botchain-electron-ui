@@ -154,7 +154,7 @@ export default class VoteDetails extends Component {
             </Col>
             <Col md={5} xs={12} className="pull-right text-left exchange">
               <small className="gray">$0.00</small>
-              <small className="gray usd-exchange">${this.props.voting.voteTxEstGas*this.props.usdExchangeRate}</small>
+              <small className="gray usd-exchange">${(this.props.voting.voteTxEstGas*this.props.usdExchangeRate).toFixed(4)}</small>
             </Col>
           </Row>
         </Col>

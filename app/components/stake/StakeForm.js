@@ -40,7 +40,7 @@ class StakeForm extends Component {
                   </Col>
                   <Col xs={4} className="gray-text right-small">
                     <div><small><small><strong>$0</strong></small></small></div>
-                    <div><small><small><small>${this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate}</small></small></small></div>
+                    <div><small><small><small>${(this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate).toFixed(4)}</small></small></small></div>
                   </Col>
                 </Row>
               </Row>
