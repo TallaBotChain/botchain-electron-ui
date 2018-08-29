@@ -25,6 +25,7 @@ class StakePage extends Component {
 function mapStateToProps(state) {
   return {
     walletData: state.botcoin,
+    ethBalance: state.ethereum.balance,
     history: state.history,
     usdExchangeRate: state.ethereum.usdExchangeRate,
     curationCouncil: state.curationCouncil

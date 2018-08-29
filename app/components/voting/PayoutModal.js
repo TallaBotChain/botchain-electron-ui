@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Alert, Well } from 'react-bootstrap';
+import NotEnoughEth from '../wallet/NotEnoughEth'
 
 export default class PayoutModal extends Component {
 
@@ -9,6 +10,9 @@ export default class PayoutModal extends Component {
     }
   }
 
+  hasEnoughEth = () => {
+    return this.props.ethBalance > this.props.voting.payoutTxEstGas
+  }
 
   render() {
     return (
@@ -25,8 +29,13 @@ export default class PayoutModal extends Component {
                   <Well>{this.props.voting.payoutSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
                 <h4 className="state-text">Reward Balance: <span className="botcoin-green">{this.props.voting.rewardBalance}</span> <span className="botcoin-title">BOTC</span></h4>
-              <Button onClick={this.props.payout} bsClass="btn green-button big-button">COLLECT</Button>
-              <div><small className="gray">Gas Fee: {this.props.voting.payoutTxEstGas} ETH</small></div>
+                {!this.hasEnoughEth() && (
+                  <div>
+                    <NotEnoughEth />
+                  </div>
+                )}
+                <Button onClick={this.props.payout} bsClass="btn green-button big-button" disabled={!this.hasEnoughEth()}>COLLECT</Button>
+                <div><small className="gray">Gas Fee: {this.props.voting.payoutTxEstGas} ETH</small></div>
               </div>
             )}
         </Modal.Body>

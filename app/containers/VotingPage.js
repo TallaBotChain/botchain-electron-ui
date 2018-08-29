@@ -55,6 +55,7 @@ function mapStateToProps(state) {
       voting: state.voting,
       developer: state.developer,
       curationCouncil: state.curationCouncil,
+      ethBalance: state.ethereum.balance,
       usdExchangeRate: state.ethereum.usdExchangeRate
     };
 }

@@ -23,6 +23,7 @@ class WalletBotcoinPage extends Component {
 function mapStateToProps(state) {
     return {
       usdExchangeRate: state.ethereum.usdExchangeRate,
+      ethBalance: state.ethereum.balance,
       walletData: state.botcoin,
       curationCouncil: state.curationCouncil,
       history: state.history
