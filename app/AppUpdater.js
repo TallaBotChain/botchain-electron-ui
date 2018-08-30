@@ -6,6 +6,5 @@ export default class AppUpdater {
     log.transports.file.level = "debug"
     autoUpdater.logger = log
     autoUpdater.checkForUpdatesAndNotify()
-    console.log("WEeeeeeeeeeee!!!")
   }
 }
