@@ -29,6 +29,14 @@ $red-active: #DF3C3C;
     outline: none;
     text-decoration: none;
   }
+  &:disabled {
+    background: $gray-gradient3;
+    border-color: $gray-gradient3;
+    &:hover, &:focus{
+      background: $gray-gradient3;
+      border-color: $gray-gradient3;
+    }
+  }
 }
 
 .orange-button{
