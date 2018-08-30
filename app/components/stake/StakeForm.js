@@ -6,6 +6,7 @@ import { inputField } from '../form/FormFields'
 import { remote } from 'electron';
 import { Col, Row } from 'react-bootstrap';
 import NotEnoughEth from '../wallet/NotEnoughEth'
+import {round} from '../../utils/Rounder'
 
 class StakeForm extends Component {
 
@@ -46,11 +47,11 @@ class StakeForm extends Component {
                 <Row>
                   <Col xs={8} className="gray-text">
                     <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>BOTC</small></strong></small></div>
-                    <div><small><small>Gas Fee: {this.props.curationCouncil.joinTxEstGas} <small>ETH</small></small></small></div>
+                    <div><small><small>Gas Fee: {round(this.props.curationCouncil.joinTxEstGas)} <small>ETH</small></small></small></div>
                   </Col>
                   <Col xs={4} className="gray-text right-small">
                     <div><small><small><strong>$0</strong></small></small></div>
-                    <div><small><small><small>${(this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate).toFixed(4)}</small></small></small></div>
+                    <div><small><small><small>${round(this.props.curationCouncil.joinTxEstGas * this.props.usdExchangeRate)}</small></small></small></div>
                   </Col>
                 </Row>
               </Row>

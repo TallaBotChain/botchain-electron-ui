@@ -5,6 +5,7 @@ import SendModal from './SendModal';
 import WalletNav from './WalletNav'
 import TransactionList from './TransactionList'
 import KeyTools from '../../blockchain/KeyTools'
+import {round} from '../../utils/Rounder'
 
 export default class WalletBotcoin extends Component {
 
@@ -48,7 +49,7 @@ export default class WalletBotcoin extends Component {
           <Col xs={12} className="text-center content-inner not-cover-footer extra-right-padding">
             <h2>Botcoin Balance</h2>
             <h1 className="botcoin">
-              {parseFloat(this.props.walletData.balance).toFixed(3)}<span>BOTC</span>
+              {round(this.props.walletData.balance)}<span>BOTC</span>
             </h1>
             <div className="center-buttons">
               <Button onClick={this.showSendModal} bsClass="btn orange-button small-button width-100" disabled={this.props.walletData.hasPendingTx}>

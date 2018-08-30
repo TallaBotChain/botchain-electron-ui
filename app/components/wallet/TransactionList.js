@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import keyTools from '../../blockchain/KeyTools';
 import moment from "moment";
+import {round} from '../../utils/Rounder'
 
 export default class TransactionList extends Component {
 
@@ -53,7 +54,7 @@ export default class TransactionList extends Component {
     if (this.isTxMine(tx.from) && !this.isTxPending(tx)) {
       return (
         <div>
-          <span className="gray">gas fee: </span><span className="dollar-text">${(keyTools.web3.utils.fromWei((tx.gasPrice * tx.gasUsed).toString()) * this.props.usdExchangeRate).toFixed(3)}</span>
+          <span className="gray">gas fee: </span><span className="dollar-text">${round(keyTools.web3.utils.fromWei((tx.gasPrice * tx.gasUsed).toString()) * this.props.usdExchangeRate)}</span>
         </div>
       )
     }
@@ -61,7 +62,7 @@ export default class TransactionList extends Component {
 
   renderUsdAmount = (tx) => {
     if (this.props.currency === "ETH" && !this.isTxPending(tx)) {
-      return (<span className="dollar-text">${(keyTools.web3.utils.fromWei(tx.value) * this.props.usdExchangeRate).toFixed(2)}</span>)
+      return (<span className="dollar-text">${round(keyTools.web3.utils.fromWei(tx.value) * this.props.usdExchangeRate)}</span>)
     }
   }
 
