@@ -44,8 +44,8 @@ export default class WalletBotcoin extends Component {
         <Col xs={3} sm={2} className="content-inner gray-bg left-inner">
           <WalletNav />
         </Col>
-        <Col xs={9} sm={10} className="content-inner white-bg right-inner">
-          <Col xs={12} className="text-center">
+        <Col xs={9} sm={10} className="content-inner white-bg right-inner no-right-padding no-top-padding">
+          <Col xs={12} className="text-center content-inner not-cover-footer extra-right-padding">
             <h2>Botcoin Balance</h2>
             <h1 className="botcoin">
               {this.props.walletData.balance}<span>BOTC</span>

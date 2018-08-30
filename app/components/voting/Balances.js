@@ -25,12 +25,10 @@ class Balances extends Component {
     return (
       <div className='voting-balances'>
         <Row>
-          <Col xs={12}>
-            <div className="white-header text-center">
-              <p className="gray-text">
-                <small>Staked Balance:</small> {this.props.curationCouncil.stakedBalance} <span>BOTC</span>
-              </p>
-            </div>
+          <Col xs={12} className="white-header text-center">
+            <p className="gray-text">
+              <small>Staked Balance:</small> {this.props.curationCouncil.stakedBalance} <span>BOTC</span>
+            </p>
           </Col>
         </Row>
         <Row className="text-center">

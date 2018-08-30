@@ -44,9 +44,8 @@ export default class WalletEthereum extends Component {
         <Col xs={3} sm={2} className="content-inner gray-bg left-inner">
           <WalletNav />
         </Col>
-        <Col xs={9} sm={10} className="content-inner white-bg right-inner">
-
-          <Col xs={12} className="text-center">
+        <Col xs={9} sm={10} className="content-inner white-bg right-inner no-right-padding no-top-padding">
+          <Col xs={12} className="text-center content-inner not-cover-footer extra-right-padding">
             <h2>Ethereum Balance</h2>
             <h1 className="ethereum">
               {this.props.walletData.balance}<span>ETH</span>
