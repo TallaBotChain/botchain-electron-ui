@@ -5,6 +5,7 @@ import UnstakeModal from './UnstakeModal';
 import TransactionList from '../wallet/TransactionList'
 import KeyTools from '../../blockchain/KeyTools'
 import CurationCouncil from '../../blockchain/CurationCouncil';
+import {round} from '../../utils/Rounder'
 
 export default class Stake extends Component {
 
@@ -46,7 +47,7 @@ export default class Stake extends Component {
         <Col xs={12} className="content-inner not-cover-footer extra-right-padding text-center">
           <h2>Staked Balance</h2>
           <h1 className={this.props.curationCouncil.stakedBalance > 0 ? "state-text" : "gray"}>
-            {parseFloat(this.props.curationCouncil.stakedBalance).toFixed(3)}<span className="botcoin">BOTC</span>
+            {round(this.props.curationCouncil.stakedBalance)}<span className="botcoin">BOTC</span>
           </h1>
           {this.props.curationCouncil.stakedBalance > 0 ? (
             <div>

@@ -5,6 +5,7 @@ import SendModal from './SendModal';
 import TransactionList from './TransactionList'
 import WalletNav from './WalletNav'
 import KeyTools from '../../blockchain/KeyTools'
+import {round} from '../../utils/Rounder'
 
 export default class WalletEthereum extends Component {
 
@@ -48,10 +49,10 @@ export default class WalletEthereum extends Component {
           <Col xs={12} className="text-center content-inner not-cover-footer extra-right-padding">
             <h2>Ethereum Balance</h2>
             <h1 className="ethereum">
-              {parseFloat(this.props.walletData.balance).toFixed(3)}<span>ETH</span>
+              {round(this.props.walletData.balance)}<span>ETH</span>
             </h1>
             <strong className="dollar-balance gray">
-              <span>$</span>{(this.props.walletData.balance * this.props.usdExchangeRate).toFixed(2)}
+              <span>$</span>{round(this.props.walletData.balance * this.props.usdExchangeRate)}
             </strong>
             <div className="center-buttons">
               <Button onClick={this.showSendModal} bsClass="btn orange-button small-button width-100" disabled={this.props.walletData.hasPendingTx}>
