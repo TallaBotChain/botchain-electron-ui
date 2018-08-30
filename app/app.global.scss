@@ -806,7 +806,6 @@ input.form-control {
         .vote-details {
           float: left;
           display: block;
-          padding-top: 15px;
           background-color: white;
           border-radius: 8px;
           border: 2px solid $gray-bg;
@@ -815,6 +814,7 @@ input.form-control {
           min-height: 300px;
 
           .vote-details-header {
+            padding-top: 15px;
             .small-button.green-button {
               min-width: 90px;
               padding: 0 10px;
