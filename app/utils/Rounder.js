@@ -8,10 +8,7 @@ export const round = (value) => {
     float = parseFloat(value)
   }
   switch (true) {
-    case (float >= 100.0):
-        return float.toFixed(1)
-        break;
-    case (float >= 1.0 && float < 100.0 ):
+    case (float >= 1.0):
         return float.toFixed(2)
         break;
     case (float >= 0.001 && float < 1.0 ):
