@@ -29,7 +29,8 @@
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js",
     "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings -r babel-register ./internals/scripts/RunTests.js e2e",
-    "test-watch": "npm test -- --watch"
+    "test-watch": "npm test -- --watch",
+    "release": "build -mwl"
   },
   "browserslist": "electron 1.6",
   "lint-staged": {
@@ -50,6 +51,12 @@
       "main.prod.js.map",
       "package.json"
     ],
+    "mac": {
+      "publish": {
+        "provider": "s3",
+        "bucket": "botchain-electron-ui"
+      }
+    },
     "dmg": {
       "contents": [
         {
@@ -67,14 +74,22 @@
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "publish": {
+        "provider": "s3",
+        "bucket": "botchain-electron-ui"
+      }
     },
     "linux": {
       "target": [
         "deb",
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "publish": {
+        "provider": "s3",
+        "bucket": "botchain-electron-ui"
+      }
     },
     "directories": {
       "buildResources": "resources",
@@ -149,6 +164,7 @@
     "electron": "^2.0.2",
     "electron-builder": "^20.14.7",
     "electron-devtools-installer": "^2.2.4",
+    "electron-publisher-s3": "^20.17.2",
     "electron-rebuild": "^1.7.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
@@ -205,6 +221,8 @@
     "bootstrap": "3",
     "devtron": "^1.4.0",
     "electron-debug": "^1.5.0",
+    "electron-log": "^2.2.17",
+    "electron-updater": "^3.1.2",
     "ethereumjs-wallet": "^0.6.0",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",

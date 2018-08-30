@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Row, Col, Well } from 'react-bootstrap'
+import {remote} from 'electron';
 
 export default class Footer extends Component {
 
@@ -9,7 +10,7 @@ export default class Footer extends Component {
       <Row className="footer">
         <Col xs={6} className="gray-text">
           <Col xs={12}>
-            Version 1.0.2
+            Version {remote.app.getVersion()}
           </Col>
         </Col>
         <Col xs={6} className="text-right">
