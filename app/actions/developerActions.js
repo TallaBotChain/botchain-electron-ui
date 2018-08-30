@@ -42,8 +42,9 @@ export const getDeveloperInfo = (address) => async (dispatch, getStore) => {
 
 const getDeveloperMetadata = (url) => {
   return new Promise((resolve, reject) => {
+    if( url == "" ) resolve({ error: "No metadata found"});
     axios.get(url)
       .then((response) => resolve(response.data))
-      .catch((error) => reject(error))
+      .catch((error) => resolve({ error: "Unable to retrieve metadata"}))
   });
 }
