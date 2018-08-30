@@ -40,7 +40,7 @@ class SendForm extends Component {
           </Col>
           <Col xs={10} xsOffset={1}>
             <span className="form-icon currency-icon"></span>
-            <Field name="amount" type="text" component={inputField} label="Amount" placeholder="Amount" validate={[required(), numericality({ '>': 0, '<=': this.availableBalance(), msg: {lessThanOrEqualTo: "is exceed the balance"}}) ]}/>
+            <Field name="amount" type="text" component={inputField} label="Amount" placeholder="Amount" validate={[required(), numericality({ '>': 0, '<=': this.availableBalance(), msg: {lessThanOrEqualTo: "insufficient balance"}}) ]}/>
             <span className={`currency ${this.props.walletData.currency.toLowerCase()}`}>{this.props.walletData.currency}</span>
           </Col>
         </Row>

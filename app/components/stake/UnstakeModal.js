@@ -30,7 +30,7 @@ export default class UnstakeModal extends Component {
           <Modal.Title className="text-center"><strong>Retrieve Stake</strong></Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
-          <h3 className="gray-text">Staked Balance: <strong className="state-text">{this.props.curationCouncil.stakedBalance}</strong> <small className="botc">BOTC</small></h3>
+          <h3 className="gray-text">Staked Balance: <strong className="state-text">{parseFloat(this.props.curationCouncil.stakedBalance).toFixed(3)}</strong> <small className="botc">BOTC</small></h3>
           <form>
             <Row>
               {!this.hasEnoughEth() && (
