@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Modal, Button, Alert, Well } from 'react-bootstrap';
 import QRCode from 'qrcode.react';
+import {clipboard} from 'electron'
 
 export default class ReceiveModal extends Component {
+
+  copyAddressClick = (e) => {
+    e.preventDefault();
+    clipboard.writeText(this.props.address)
+  }
 
   render() {
     return (
@@ -18,7 +24,7 @@ export default class ReceiveModal extends Component {
           <h3 className={`${this.props.currency}`}>{this.props.address}</h3>
         </Modal.Body>
         <Modal.Footer className="text-center">
-          <small className="state-text">Copy address</small>
+          <a href="#" onClick={this.copyAddressClick}><small className="state-text">Copy address</small></a>
         </Modal.Footer>
       </Modal>
     );
