@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Alert, Well, Col, Row } from 'react-bootstrap';
 import StakeForm from './StakeForm';
+import {round} from '../../utils/Rounder'
 
 export default class StakeModal extends Component {
 
@@ -24,7 +25,7 @@ export default class StakeModal extends Component {
           <Modal.Title className="text-center"><strong>Submit Stake</strong></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3 className="gray-text text-center">Available Balance: <span className="botc">{parseFloat(this.props.walletData.balance).toFixed(3)}</span> <small className="botc">BOTC</small></h3>
+          <h3 className="gray-text text-center">Available Balance: <span className="botc">{round(this.props.walletData.balance)}</span> <small className="botc">BOTC</small></h3>
           <StakeForm onSubmit={this.handleSubmit} {...this.props} />
         </Modal.Body>
       </Modal>

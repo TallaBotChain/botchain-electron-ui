@@ -5,6 +5,7 @@ import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
 import ConfirmModal from "./ConfirmModal";
 import NotEnoughEth from '../wallet/NotEnoughEth'
+import {round} from '../../utils/Rounder'
 
 momentDurationFormatSetup(moment);
 
@@ -159,7 +160,7 @@ export default class VoteDetails extends Component {
             </Col>
             <Col md={5} xs={12} className="pull-right text-left exchange">
               <small className="gray">$0.00</small>
-              <small className="gray usd-exchange">${(this.props.voting.voteTxEstGas*this.props.usdExchangeRate).toFixed(4)}</small>
+              <small className="gray usd-exchange">${round(this.props.voting.voteTxEstGas*this.props.usdExchangeRate)}</small>
             </Col>
           </Row>
         </Col>
