@@ -78,7 +78,7 @@ export default class TransactionList extends Component {
                   {this.renderGasFee(tx)}
                 </td>
                 <td className="text-right">
-                  <span className="state-text">({keyTools.web3.utils.fromWei(tx.value)} <span className={this.props.currency === "ETH" ? "ethereum" : "botcoin"}>{this.props.currency}</span>)</span><br />
+                  <span className="state-text">{keyTools.web3.utils.fromWei(tx.value)} <span className={this.props.currency === "ETH" ? "ethereum" : "botcoin"}>{this.props.currency}</span></span><br />
                   {this.renderUsdAmount(tx)}
                 </td>
               </tr>
