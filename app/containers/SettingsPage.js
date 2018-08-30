@@ -34,9 +34,9 @@ class SettingsPage extends Component {
   render() {
     return (
       <div>
-        <Col xs={12} className="content-inner black-bg">
+        <Col xs={12} className="content-inner black-bg no-top-padding">
           <Row>
-            <Col xs={12} className="content-inner lighter-gray-bg">
+            <Col xs={12} className="content-inner lighter-gray-bg not-cover-footer">
               <div className="top">
                 <Col md={6} sm={8} xs={7}>
                   <h3>Change Password</h3>
@@ -56,6 +56,7 @@ class SettingsPage extends Component {
                 </Col>
                 <Clearfix />
                 <ExportForm onSubmit={this.exportWallet} {...this.props}  />
+                <Clearfix />
               </div>
             </Col>
           </Row>

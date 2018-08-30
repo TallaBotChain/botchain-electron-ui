@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import NoStake from '../components/voting/NoStake';
 import Voting from '../components/voting/Voting';
 import * as VotingActions from '../actions/votingActions';
@@ -43,8 +43,12 @@ class VotingPage extends Component {
       body = this.renderNoStake()
     }
     return (
-      <Col xs={12} className="content-inner white-bg">
-        {body}
+      <Col xs={12} className="content-inner white-bg no-top-padding">
+        <Row>
+          <Col xs={12} className="content-inner light-gray-bg not-cover-footer">
+            {body}
+          </Col>
+        </Row>
       </Col>
     )
   }

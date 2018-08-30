@@ -4,13 +4,13 @@ import {required,length,confirmation} from 'redux-form-validators'
 import {inputField, fileField, radioField} from '../form/FormFields'
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
-import { Nav, NavItem, Col } from 'react-bootstrap';
+import { Nav, NavItem, Col, Clearfix } from 'react-bootstrap';
 
 class ImportForm extends Component {
 
   changeFormat = (format) => {
     this.props.change('import_format', format);
-    
+
   }
 
   render() {
@@ -57,6 +57,7 @@ class ImportForm extends Component {
 
           </div>)}
         </Col>
+        <Clearfix />
       </form>
     );
   }

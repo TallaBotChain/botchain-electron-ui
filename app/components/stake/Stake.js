@@ -42,10 +42,10 @@ export default class Stake extends Component {
 
   render() {
     return (
-      <Col xs={12} className="content-inner white-bg">
-        <Col xs={12} className="text-center">
+      <Col xs={12} className="content-inner no-right-padding no-top-padding white-bg">
+        <Col xs={12} className="content-inner not-cover-footer extra-right-padding text-center">
           <h2>Staked Balance</h2>
-        <h1 className={this.props.curationCouncil.stakedBalance > 0 ? "state-text" : "gray"}>
+          <h1 className={this.props.curationCouncil.stakedBalance > 0 ? "state-text" : "gray"}>
             {this.props.curationCouncil.stakedBalance}<span className="botcoin">BOTC</span>
           </h1>
           {this.props.curationCouncil.stakedBalance > 0 ? (

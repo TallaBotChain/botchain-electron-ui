@@ -407,6 +407,25 @@ input.form-control {
   padding-top: 30px;
   overflow-y: auto;
 
+  &.no-top-padding {
+    padding-top: 0;
+  }
+
+  &.no-right-padding {
+    padding-right: 0;
+  }
+
+  &.not-cover-footer {
+    height: calc(100vh - 85px);
+    border-radius: 13px 13px 0 0;
+    padding-top: 30px;
+    padding-bottom: 0;
+  }
+
+  &.extra-right-padding {
+    padding-right: 30px;
+  }
+
   &.gray-bg {
     background-color: $gray-bg;
     border-color: $gray-bg;
@@ -419,14 +438,11 @@ input.form-control {
   }
 
   &.lighter-gray-bg {
-    height: calc(100vh - 85px);
     background-color:$gray-text-hover;
     color: white;
-    border-radius: 13px 13px 0 0;
 
     .top {
-      min-height: 50%;
-      padding-bottom: 35px;
+      min-height: calc( 50% - 27px);
 
       h3 {
         margin-top: 5px;
@@ -435,14 +451,9 @@ input.form-control {
 
     .bottom {
       padding-top: 20px;
-      
+
       h3 {
         margin-bottom: 10px;
-      }
-
-      p {
-        margin: 10px 0 20px;
-        color: $gray-bg;
       }
     }
 
@@ -451,8 +462,11 @@ input.form-control {
     }
   }
 
+  &.light-gray-bg {
+    background: $gray-gradient1;
+  }
+
   &.black-bg {
-    padding-top: 0;
     background-color: $black;
   }
 
@@ -546,7 +560,7 @@ input.form-control {
       .gray-body {
         min-height: calc(100vh - 330px);
         padding-top: 10px;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
         &:before {
           content: none;
         }
@@ -564,6 +578,7 @@ input.form-control {
 
       .gray-border {
         border: 2px solid $gray-gradient1;
+        background: white;
         border-width: 2px 2px 2px 0;
         height: 200px;
         max-height: 200px;
@@ -897,17 +912,15 @@ input.form-control {
     background-color: $trans-gray;
     color: white;
     z-index: 102;
-      &:not(.bottom50) {
-        &:before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 95px;
-        height: 100%;
-        background-color: rgba(50,55,62,.65);
-        z-index: 101;
-      }
+      &:before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 95px;
+      height: 100%;
+      background-color: rgba(50,55,62,.65);
+      z-index: 101;
     }
 
     p {
@@ -983,26 +996,34 @@ input.form-control {
     }
   }
 
-  &.top50 {
-    border-radius: 13px 13px 0 0;
-    height: calc(48.5vh - 16px);
-    padding-bottom: 15px;
-  }
-
-  &.bottom50 {
-    border-radius: 0 0 13px 13px;
-    height: calc(51.5vh - 16px);
-    padding-bottom: 90px;
-
-    h3 {
-      margin-bottom: 20px;
-    }
-  }
   &.left-inner {
     border-radius: 13px 0 0 13px;
   }
   &.right-inner {
     border-radius: 0 13px 13px 0;
+  }
+
+  .top {
+    min-height: 50%;
+    padding-bottom: 35px;
+
+    h3 {
+      margin-top: 5px;
+    }
+  }
+
+  .bottom {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      color: $gray-bg;
+    }
   }
 }
 
