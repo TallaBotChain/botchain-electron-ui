@@ -26,7 +26,7 @@ class VotingPage extends Component {
   }
 
   renderInProgress() {
-    return (<div className='text-center loading'><img src="img/loading.gif" alt="Loading..." /></div>)
+    return (<div className='center-block loading'></div>)
   }
 
   renderVoting = () => {
