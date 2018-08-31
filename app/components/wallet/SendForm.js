@@ -13,7 +13,7 @@ const ethAddress = value => (KeyTools.web3.utils.isAddress(value) ? undefined : 
 class SendForm extends Component {
 
   hasEnoughEth = () => {
-    return this.props.walletData.balance > this.props.walletData.transferTxEstGas
+    return this.props.ethBalance > this.props.walletData.transferTxEstGas
   }
 
   availableBalance = () => {
