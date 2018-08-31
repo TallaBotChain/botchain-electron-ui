@@ -7,6 +7,7 @@ import * as VotingActions from '../actions/votingActions';
 import * as DeveloperActions from '../actions/developerActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import { connect } from 'react-redux';
+import loading from 'img/loading.gif';
 
 class VotingPage extends Component {
 
@@ -26,7 +27,7 @@ class VotingPage extends Component {
   }
 
   renderInProgress() {
-    return (<div className='text-center loading'><img src="img/loading.gif" alt="Loading..." /></div>)
+    return (<div className='text-center loading'><img src={loading} alt="Loading..." /></div>)
   }
 
   renderVoting = () => {
