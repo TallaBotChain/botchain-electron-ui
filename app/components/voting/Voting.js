@@ -4,7 +4,6 @@ import { Row, Col } from 'react-bootstrap'
 import Balances from './Balances';
 import VoteList from './VoteList';
 import VoteDetails from './VoteDetails';
-import loading from 'img/loading.gif';
 
 class Voting extends Component {
 
@@ -20,9 +19,7 @@ class Voting extends Component {
               </Col>
             </Col>
             {this.props.voting.inProgress ? (
-              <div className='text-center loading'>
-                <img src={loading} alt="Loading..." />
-              </div>
+              <div className='center-block loading'></div>
             ) : (
               <Col xs={12} className='vote-list-details-wrap clearfix'>
                 <VoteList votes={this.props.voting.votes} {...this.props} />
