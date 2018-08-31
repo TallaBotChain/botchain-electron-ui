@@ -1,7 +1,7 @@
 {
   "name": "botchain-electron-ui",
   "productName": "BotChain",
-  "version": "0.1.0",
+  "version": "0.1.14",
   "description": "The goal of the BotChain application is to serve as a gateway to BotChain.  BotChain is the decentralized identity and audit ledger for autonomous AI agents. Using this BotChain application, you can play a key role in curating the registry and get rewarded for your contribution.",
   "main": "./main.prod.js",
   "author": {
