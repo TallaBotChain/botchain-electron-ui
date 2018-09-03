@@ -60,11 +60,13 @@ export const removeTransaction = (type, txId) => (dispatch) => {
 }
 
 //stake history
-export const getStakeHistory = () => (dispatch) => {
+export const getStakeHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
+  let startblock = getState().history.stakeBlockId
   axios.get(remote.getGlobal('config').etherscan_api_url, {
     params: {
       ...defaultAccountApiParams(),
+      startblock: parseInt(startblock)+1,
       action: "tokentx",
       contractaddress: remote.getGlobal('config').botcoin_contract,
     }
@@ -76,10 +78,12 @@ export const getStakeHistory = () => (dispatch) => {
       const stakeMethod = curationCouncil.getMethodSignature("joinCouncil");
       const unstakeMethod = curationCouncil.getMethodSignature("leaveCouncil");
       let data =  response.data.result.filter(record => (record.input.startsWith(stakeMethod) || record.input.startsWith(unstakeMethod)))
-
-      let {index, transactions} = normalizeTransactions(data)
-      dispatch({ type: HistoryActions.ADD_TRANSACTIONS, value: transactions });
-      dispatch({ type: HistoryActions.ADD_TO_INDEX, key: 'stake', value: index });
+      if (data.length > 0) {
+        let {index, transactions} = normalizeTransactions(data)
+        dispatch({ type: HistoryActions.ADD_TRANSACTIONS, value: transactions });
+        dispatch({ type: HistoryActions.ADD_TO_INDEX, key: 'stake', value: index });
+        dispatch({ type: HistoryActions.SET_ATTRIBUTE, key: 'stakeBlockId', value: data[0].blockNumber})
+      }
     }
     dispatch(setInProgress(false))
   })
@@ -91,22 +95,26 @@ export const getStakeHistory = () => (dispatch) => {
 }
 
 //ethereum history
-export const getEthereumHistory = () => (dispatch) => {
+export const getEthereumHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
+  let startblock = getState().history.ethereumBlockId
   axios.get(remote.getGlobal('config').etherscan_api_url, {
     params: {
       ...defaultAccountApiParams(),
+      startblock: parseInt(startblock)+1,
       action: "txlist"
     }
   })
   .then(function (response) {
     //filter by eth amount.
-    if (response.data.result){
+    if (response.data.result && response.data.result.length > 0){
       let data =  response.data.result.filter(record => record.value > 0)
-
-      let {index, transactions} = normalizeTransactions(data)
-      dispatch({ type: HistoryActions.ADD_TRANSACTIONS, value: transactions });
-      dispatch({ type: HistoryActions.ADD_TO_INDEX, key: 'ethereum', value: index });
+      if (data.length > 0) {
+        let {index, transactions} = normalizeTransactions(data)
+        dispatch({ type: HistoryActions.ADD_TRANSACTIONS, value: transactions });
+        dispatch({ type: HistoryActions.ADD_TO_INDEX, key: 'ethereum', value: index });
+        dispatch({ type: HistoryActions.SET_ATTRIBUTE, key: 'ethereumBlockId', value: data[0].blockNumber})
+      }
     }
     dispatch(setInProgress(false))
   })
@@ -117,20 +125,24 @@ export const getEthereumHistory = () => (dispatch) => {
 }
 
 //botcoin history
-export const getBotcoinHistory = () => (dispatch) => {
+export const getBotcoinHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
+  let startblock = getState().history.botcoinBlockId
   axios.get(remote.getGlobal('config').etherscan_api_url, {
     params: {
       ...defaultAccountApiParams(),
       action: "tokentx",
+      startblock: parseInt(startblock)+1,
       contractaddress: remote.getGlobal('config').botcoin_contract,
     }
   })
   .then(function (response) {
-    if (response.data.result){
-      let {index, transactions} = normalizeTransactions(response.data.result)
+    if (response.data.result && response.data.result.length > 0){
+      let data = response.data.result
+      let {index, transactions} = normalizeTransactions(data)
       dispatch({ type: HistoryActions.ADD_TRANSACTIONS, value: transactions });
       dispatch({ type: HistoryActions.ADD_TO_INDEX, key: 'botcoin', value: index });
+      dispatch({ type: HistoryActions.SET_ATTRIBUTE, key: 'botcoinBlockId', value: data[0].blockNumber})
     }
     dispatch(setInProgress(false))
   })
