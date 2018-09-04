@@ -22,8 +22,10 @@ class Voting extends Component {
               <div className='center-block loading'></div>
             ) : (
               <Col xs={12} className='vote-list-details-wrap clearfix'>
-                <VoteList votes={this.props.voting.votes} {...this.props} />
-                <VoteDetails {...this.props} />
+                <Row className="vertical-align">
+                  <VoteList votes={this.props.voting.votes} {...this.props} />
+                  <VoteDetails {...this.props} />
+                </Row>
               </Col>
             )}
           </Col>

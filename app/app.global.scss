@@ -161,6 +161,18 @@ input:focus, select:focus, textarea:focus, button:focus {
   outline: none;
 }
 
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+  >[class^="col-"],>[class*=" col-"] {
+    display: flex;
+    >div {
+      flex: 1;
+      flex-grow: 1;
+    }
+  }
+}
+
 .alert {
   padding: 5px 13px;
   margin-bottom: 10px;
@@ -812,9 +824,9 @@ input.form-control {
           background-color: white;
           border-radius: 8px;
           border: 2px solid $gray-bg;
-          height: calc(100vh - 410px);
+          min-height: calc(100vh - 410px);
+          align-self: stretch;
           overflow: auto;
-          min-height: 300px;
 
           .vote-details-header {
             padding-top: 15px;
