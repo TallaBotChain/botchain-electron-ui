@@ -8,6 +8,9 @@ const initialState = {
   stake: [],
   ethereum: [],
   botcoin: [],
+  stakeBlockId: 0,
+  ethereumBlockId: 0,
+  botcoinBlockId: 0,
   transactions: {}
 }
 
