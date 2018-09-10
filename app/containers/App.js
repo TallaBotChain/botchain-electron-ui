@@ -16,7 +16,7 @@ export default class App extends React.Component<Props> {
   renderMacTitleBar = () => {
     if (process.platform === 'darwin') {
       return (
-        <div style={{"height": "35px", "background":"yellow", "text-align": "center", "overflow":"hidden"}}>Botchain Curation Council</div>
+        <div style={{"height": "35px", "background":"yellow", "textAlign": "center", "overflow":"hidden"}}>Botchain Curation Council</div>
       )
     }
   }
