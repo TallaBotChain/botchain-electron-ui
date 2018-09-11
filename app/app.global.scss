@@ -27,6 +27,7 @@ $green-text: #008A6A;
 $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
+$blue-hover-link: #2463C7;
 $yellow: #E6C900;
 $green-bg: #DAFCF4;
 $green-input-text: #138F72;
@@ -1527,6 +1528,24 @@ input.form-control {
         margin-bottom: 15px;
         .botcoin-title {
           font-size: 0.66em;
+        }
+      }
+      .pending {
+        h4 {
+          margin-bottom: 5px;
+        }
+        em{
+          font-weight: 400;
+        }
+        a.gray-text {
+          text-decoration: none;
+          display: inline-block;
+          border-bottom: 1px solid $gray-input;
+
+          &:hover, &.active {
+            color: $blue-hover-link;
+            border-bottom: 1px solid $gray-border;
+          }
         }
       }
     }
