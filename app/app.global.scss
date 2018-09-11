@@ -181,6 +181,11 @@ input:focus, select:focus, textarea:focus, button:focus {
   background: transparent url('img/loading.gif');
 }
 
+.voting .loading {
+  position: relative;
+  z-index: 100;
+}
+
 .container-state {
   background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
   height: 100vh;
