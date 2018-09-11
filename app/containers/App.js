@@ -16,7 +16,7 @@ export default class App extends React.Component<Props> {
   renderMacTitleBar = () => {
     if (process.platform === 'darwin') {
       return (
-        <div style={{"height": "35px", "background":"yellow", "textAlign": "center", "overflow":"hidden"}}>Botchain Curation Council</div>
+        <div className="title-bar text-center">Botchain Curation Council</div>
       )
     }
   }
@@ -25,7 +25,7 @@ export default class App extends React.Component<Props> {
     return (
       <div>
         {this.renderMacTitleBar()}
-        <Grid fluid={true} className="container-state">
+        <Grid fluid={true} className={process.platform === 'darwin' ? "container-state container-mac" : "container-state"}>
           <div className="sidenav">
             <AppNav />
           </div>

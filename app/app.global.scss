@@ -181,11 +181,70 @@ input:focus, select:focus, textarea:focus, button:focus {
   background: transparent url('img/loading.gif');
 }
 
+.title-bar {
+  height: 35px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 9px;
+  font-size: 0.875em;
+  color: white;
+  background-image: linear-gradient(#474E57, #434951 46.41%, #3C4148);
+  -webkit-app-region: drag;
+  box-shadow: 0 1px 2px rgba(29,32,36,.34);
+  text-shadow: 0 1px 1px rgba(29,32,36,.14)
+}
+
 .container-state {
   background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
   height: 100vh;
   padding-top: 15px;
   padding-bottom: 15px;
+
+  &.container-mac {
+    height: calc( 100vh - 35px );
+    margin-top: 35px;
+
+    .sidenav {
+      height: calc( 100vh - 35px );
+      top: 35px;
+    }
+
+    .content-inner {
+      height: calc(100vh - 65px);
+      &.not-cover-footer {
+        height: calc(100vh - 120px);
+      }
+      &.white-bg {
+        .gray-body {
+          min-height: calc(100vh - 165px);
+        }
+        .voting {
+          .gray-body {
+            min-height: calc(100vh - 365px);
+          }
+
+          .voting-with-details {
+            .vote-list-details-wrap {
+              .vote-list-container {
+                .vote-details {
+                  height: calc(100vh - 445px);
+                }
+              }
+            }
+          }
+        }
+      }
+      &.trans-bg {
+        &:before {
+          top: 35px;
+          height: calc(100% - 35px);
+        }
+      }
+    }
+  }
 }
 
 .sidenav {
@@ -915,7 +974,7 @@ input.form-control {
     background-color: $trans-gray;
     color: white;
     z-index: 102;
-      &:before {
+    &:before {
       content: "";
       position: fixed;
       top: 0;
