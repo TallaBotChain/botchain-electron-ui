@@ -10,7 +10,7 @@ const LockedWalletRoute = ({ component: Component, ...rest }) => (
         <Component {...props} />
       ) : (
           keyTools.privateKeyPresent ? (
-            <Redirect to="/stake" />
+            <Redirect to="/" />
           ) : (
               <Redirect to="/registration" />
             )

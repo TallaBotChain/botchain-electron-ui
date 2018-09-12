@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 import NoStake from '../components/voting/NoStake';
 import Voting from '../components/voting/Voting';
 import * as VotingActions from '../actions/votingActions';
+import * as EthereumActions from '../actions/ethereumActions';
 import * as DeveloperActions from '../actions/developerActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import { connect } from 'react-redux';
@@ -68,6 +69,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getBalances: () => {
       dispatch( VotingActions.getRewardBalance() );
+      dispatch(EthereumActions.getBalance());
     },
     getStakedBalance: () => {
       dispatch(CurationCouncilActions.reloadStakedBalance());
