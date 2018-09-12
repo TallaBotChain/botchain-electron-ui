@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import WalletBotcoin from '../components/wallet/WalletBotcoin';
 import * as HistoryActions from '../actions/historyActions';
 import * as BotcoinActions from '../actions/botcoinActions';
+import * as EthereumActions from '../actions/ethereumActions';
 import * as CurationCouncilActions from '../actions/curationCouncilActions';
 import Stake from '../components/stake/Stake'
 import { connect } from 'react-redux';
@@ -48,6 +49,7 @@ const mapDispatchToProps = dispatch => {
     },
     getBalance: () => {
       dispatch(BotcoinActions.getBalance());
+      dispatch(EthereumActions.getBalance());
     },
     getStakedBalance: () => {
       dispatch(CurationCouncilActions.getStakedBalance());
