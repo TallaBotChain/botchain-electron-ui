@@ -13,19 +13,30 @@ type Props = {
 export default class App extends React.Component<Props> {
   props: Props;
 
+  renderMacTitleBar = () => {
+    if (process.platform === 'darwin') {
+      return (
+        <div className="title-bar text-center">Botchain Curation Council</div>
+      )
+    }
+  }
+
   render() {
     return (
-      <Grid fluid={true} className="container-state">
-        <div className="sidenav">
-          <AppNav />
-        </div>
-        <Grid fluid={true} className="content-container">
-          <Row id="content">
-            {this.props.children}
-          </Row>
-          <Footer />
+      <div>
+        {this.renderMacTitleBar()}
+        <Grid fluid={true} className={process.platform === 'darwin' ? "container-state container-mac" : "container-state"}>
+          <div className="sidenav">
+            <AppNav />
+          </div>
+          <Grid fluid={true} className="content-container">
+            <Row id="content">
+              {this.props.children}
+            </Row>
+            <Footer />
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     )
   }
 }

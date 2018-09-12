@@ -23,7 +23,13 @@ export default class PayoutModal extends Component {
         </Modal.Header>
         <Modal.Body className="text-center">
           {this.props.voting.payoutTxId && !this.props.voting.payoutTxMined ? (
-            <Well>Transaction successfully submitted. Waiting for confirmation. <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.voting.payoutTxId}`} target='_blank'>Click here</a>  to check the status of this transaction.</Well>
+            <div className="pending">
+              <h4>Transaction successfully submitted</h4>
+              <p><em>Awaiting confirmation</em></p>
+              <small>
+                <a href={`${"https://kovan.etherscan.io"}/tx/${this.props.voting.payoutTxId}`} target='_blank' className="gray-text">View transaction status on Etherscan</a>
+              </small>
+            </div>
           ) : (
               <div>
                 {this.props.voting.payoutTxMined && (
