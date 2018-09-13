@@ -14,7 +14,7 @@ export const importMnemonic = (mnemonic,password) => (dispatch) => {
   if(keyTools.isValidMnemonic(mnemonic)) {
     keyTools.applyMnemonic(mnemonic, password);
     alert("Successfully imported wallet");
-    dispatch( push('/wallet') );
+    dispatch( push('/') );
   } else {
     dispatch( setError("Invalid mnemonic") );
   }
@@ -27,7 +27,7 @@ export const importPrivateKey = (private_key,password) => (dispatch) => {
     keyTools.applyPrivateKey(private_key, password);
     alert("Successfully imported private key");
     console.log("Imported address: ", keyTools.address);
-    dispatch( push('/wallet') );
+    dispatch( push('/') );
   }catch(ex) {
     console.log(ex);
     dispatch( setError("Invalid private key") );
@@ -40,7 +40,7 @@ export const importKeystore = (json, password) => (dispatch) => {
     keyTools.applyKeystore(json, password);
     alert("Successfully imported JSON backup");
     console.log("Imported address: ", keyTools.address);
-    dispatch( push('/wallet') );
+    dispatch( push('/') );
   }catch(ex) {
     console.log(ex);
     dispatch( setError("Wrong password, unable to decrypt backup") );
@@ -52,7 +52,7 @@ export const unlockWallet = (password) => (dispatch) => {
   try {
     keyTools.decryptAndLoad(password);
     dispatch( setError(null) );
-    dispatch( push('/wallet') );
+    dispatch( push('/') );
   }catch(ex) {
     dispatch( setError("Wrong password") );
   }
@@ -113,12 +113,12 @@ export const exportWallet = (format, password) => (dispatch ) => {
     let blob = null
     switch (format) {
       case 'json':
-        blob = new Blob([JSON.stringify(keyTools.encryptedKeystore(password))], {type: 'application/json'}) 
+        blob = new Blob([JSON.stringify(keyTools.encryptedKeystore(password))], {type: 'application/json'})
         download(blob, "backup.json")
         break;
       default:
         console.log(keyTools.privateKey)
-        blob = new Blob([keyTools.privateKey], {type: 'text/plain'}) 
+        blob = new Blob([keyTools.privateKey], {type: 'text/plain'})
         download(blob, "backup.txt")
         break;
     }

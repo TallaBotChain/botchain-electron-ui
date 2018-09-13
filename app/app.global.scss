@@ -27,6 +27,7 @@ $green-text: #008A6A;
 $yellow-bg: #FFFCE5;
 $gray-bg: #E1E2E4;
 $blue-link: #3772D0;
+$blue-hover-link: #2463C7;
 $yellow: #E6C900;
 $green-bg: #DAFCF4;
 $green-input-text: #138F72;
@@ -193,11 +194,76 @@ input:focus, select:focus, textarea:focus, button:focus {
   background: transparent url('img/loading.gif');
 }
 
+.voting .loading {
+  position: relative;
+  z-index: 100;
+}
+
+.title-bar {
+  height: 35px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 9px;
+  font-size: 0.875em;
+  color: white;
+  background-image: linear-gradient(#474E57, #434951 46.41%, #3C4148);
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+  box-shadow: 0 1px 2px rgba(29,32,36,.34);
+  text-shadow: 0 1px 1px rgba(29,32,36,.14)
+}
+
 .container-state {
   background: $state url('img/bg.png') no-repeat bottom -30px right -120px;
   height: 100vh;
   padding-top: 15px;
   padding-bottom: 15px;
+
+  &.container-mac {
+    height: calc( 100vh - 35px );
+    margin-top: 35px;
+
+    .sidenav {
+      height: calc( 100vh - 35px );
+      top: 35px;
+    }
+
+    .content-inner {
+      height: calc(100vh - 65px);
+      &.not-cover-footer {
+        height: calc(100vh - 120px);
+      }
+      &.white-bg {
+        .gray-body {
+          min-height: calc(100vh - 165px);
+        }
+        .voting {
+          .gray-body {
+            min-height: calc(100vh - 365px);
+          }
+
+          .voting-with-details {
+            .vote-list-details-wrap {
+              .vote-list-container {
+                .vote-details {
+                  height: calc(100vh - 445px);
+                }
+              }
+            }
+          }
+        }
+      }
+      &.trans-bg {
+        &:before {
+          top: 35px;
+          height: calc(100% - 35px);
+        }
+      }
+    }
+  }
 }
 
 .sidenav {
@@ -927,7 +993,7 @@ input.form-control {
     background-color: $trans-gray;
     color: white;
     z-index: 102;
-      &:before {
+    &:before {
       content: "";
       position: fixed;
       top: 0;
@@ -1539,6 +1605,24 @@ input.form-control {
         margin-bottom: 15px;
         .botcoin-title {
           font-size: 0.66em;
+        }
+      }
+      .pending {
+        h4 {
+          margin-bottom: 5px;
+        }
+        em{
+          font-weight: 400;
+        }
+        a.gray-text {
+          text-decoration: none;
+          display: inline-block;
+          border-bottom: 1px solid $gray-input;
+
+          &:hover, &.active {
+            color: $blue-hover-link;
+            border-bottom: 1px solid $gray-border;
+          }
         }
       }
     }

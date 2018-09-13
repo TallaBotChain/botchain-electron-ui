@@ -18,16 +18,15 @@ class Voting extends Component {
                 <a href='#' className='voting-return-button gray' onClick={this.props.hideVote} >Cancel and return to main view</a>
               </Col>
             </Col>
+            <Col xs={12} className='vote-list-details-wrap clearfix'>
+              <Row className="vertical-align">
+                <VoteList votes={this.props.voting.votes} {...this.props} />
+                <VoteDetails {...this.props} />
+              </Row>
+            </Col>
             {this.props.voting.inProgress ? (
-              <div className='center-block loading'></div>
-            ) : (
-              <Col xs={12} className='vote-list-details-wrap clearfix'>
-                <Row className="vertical-align">
-                  <VoteList votes={this.props.voting.votes} {...this.props} />
-                  <VoteDetails {...this.props} />
-                </Row>
-              </Col>
-            )}
+            <div className='center-block loading'></div>
+            ) : ("")}
           </Col>
         </Row>
       </div>);
