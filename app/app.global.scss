@@ -669,6 +669,15 @@ input.form-control {
 
     .vote-list-details-wrap {
       margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      >[class^="col-"],>[class*=" col-"] {
+        display: flex;
+        >div {
+          flex: 1;
+          flex-grow: 1;
+        }
+      }
       .vote-list-container {
         .list-group {
           border: 0;
@@ -878,9 +887,9 @@ input.form-control {
           background-color: white;
           border-radius: 8px;
           border: 2px solid $gray-bg;
-          height: calc(100vh - 410px);
+          min-height: calc(100vh - 410px);
+          align-self: stretch;
           overflow: auto;
-          min-height: 300px;
 
           .vote-details-header {
             padding-top: 15px;
