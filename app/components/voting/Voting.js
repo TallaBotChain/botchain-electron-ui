@@ -18,7 +18,7 @@ class Voting extends Component {
                 <a href='#' className='voting-return-button gray' onClick={this.props.hideVote} >Cancel and return to main view</a>
               </Col>
             </Col>
-            <Col xs={12} className='vote-list-details-wrap vertical-align clearfix'>
+            <Col xs={12} className='vote-list-details-wrap clearfix'>
               <VoteList votes={this.props.voting.votes} {...this.props} />
               <VoteDetails {...this.props} />
             </Col>

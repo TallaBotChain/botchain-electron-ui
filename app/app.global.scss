@@ -162,18 +162,6 @@ input:focus, select:focus, textarea:focus, button:focus {
   outline: none;
 }
 
-.vertical-align {
-  display: flex;
-  flex-direction: row;
-  >[class^="col-"],>[class*=" col-"] {
-    display: flex;
-    >div {
-      flex: 1;
-      flex-grow: 1;
-    }
-  }
-}
-
 .alert {
   padding: 5px 13px;
   margin-bottom: 10px;
@@ -681,6 +669,15 @@ input.form-control {
 
     .vote-list-details-wrap {
       margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      >[class^="col-"],>[class*=" col-"] {
+        display: flex;
+        >div {
+          flex: 1;
+          flex-grow: 1;
+        }
+      }
       .vote-list-container {
         .list-group {
           border: 0;
