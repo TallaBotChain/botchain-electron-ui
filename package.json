@@ -53,8 +53,7 @@
     ],
     "mac": {
       "publish": {
-        "provider": "s3",
-        "bucket": "botchain-electron-ui"
+        "provider": "github"
       }
     },
     "dmg": {
@@ -76,8 +75,7 @@
         "nsis"
       ],
       "publish": {
-        "provider": "s3",
-        "bucket": "botchain-electron-ui"
+        "provider": "github"
       }
     },
     "linux": {
@@ -87,8 +85,7 @@
       ],
       "category": "Development",
       "publish": {
-        "provider": "s3",
-        "bucket": "botchain-electron-ui"
+        "provider": "github"
       }
     },
     "directories": {
@@ -98,7 +95,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TallaBotChain/botchain-electron-ui"
+    "url": "git+https://github.com/TallaBotChain/botchain-releases"
   },
   "author": {
     "name": "BotChain Team",

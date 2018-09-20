@@ -26,7 +26,7 @@ or
 
 NOTE: Apple dev account is required for signing build.(Auto-update will not work for unsigned app)
 
-Note: S3 storage is currently used for releases. It requires you to define  AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env variables.
+Note: GitHub personal access token is required. You can generate by going to https://github.com/settings/tokens/new. The access token should have the **repo** scope/permission!!!
 
 Note: Electron-builder allow configure multiple build targets for the same platform. We used:
  - MAC OS - .dmg
@@ -37,5 +37,7 @@ Release steps:
 
 1. Commit new changes to master branch.
 2. Upgrade build version in 'app/package.json'
+3. Draft a new release at https://github.com/TallaBotChain/botchain-releases/releases. Set the “Tag version” to the value of version in your application package.json, and prefix it with **v**.
 3. run `yarn package-all`
-4. run `yarn release`
+4. run `GH_TOKEN=your_personal_token yarn release`
+5. publish release
