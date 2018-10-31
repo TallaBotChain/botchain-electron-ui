@@ -1,6 +1,7 @@
 import BaseConnector from './BaseConnector'
 import artifact from './abi/DeveloperRegistryDelegate.json'
 import {remote} from 'electron';
+import multihashes from 'multihashes';
 
 export default class DeveloperRegistry extends BaseConnector {
   constructor() {
@@ -16,8 +17,14 @@ export default class DeveloperRegistry extends BaseConnector {
   getDeveloperUrl(developerId) {
     let self = this;
     return new Promise((resolve,reject) => {
-      self.contract.methods.developerUrl(developerId).call({from: self.account})
-      .then((url) => resolve(self.web3.utils.hexToUtf8(url)))
+      self.contract.methods.developerIpfs(developerId).call({from: self.account})
+        .then((ipfs) => {
+          let digest = Buffer.from(ipfs.digest.substring(2), 'hex');
+          let metadataMultihash = multihashes.encode( digest, parseInt(ipfs.fnCode), parseInt(ipfs.size) );
+          let metadataUrl = multihashes.toB58String(metadataMultihash);
+          let url = remote.getGlobal('config').ipfs_gateway_url + metadataUrl;
+          return resolve(url);
+        })
       .catch(((err) => reject(err)))
     });
   }
@@ -26,5 +33,4 @@ export default class DeveloperRegistry extends BaseConnector {
     let contract = this.contract;
     return contract.methods.approvalStatus(developerId).call({from: this.account});
   }
-  
 }

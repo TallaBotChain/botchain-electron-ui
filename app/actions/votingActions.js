@@ -37,7 +37,7 @@ const setAvailableReward = (val) => {
 
 const getTotalSupply = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
-  let totalSupply = await curationCouncil.getTotalSupply();
+  let totalSupply = await curationCouncil.totalVotes();
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'totalSupply', value: totalSupply});
 }
 
@@ -78,7 +78,7 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
     let expired = ( finalBlock < lastBlock );
     let votedOnStatus = await curationCouncil.getVotedOnStatus(idx);
     console.log("votedOnStatus for "+idx+" is ", votedOnStatus);
-    let address = await curationCouncil.ownerOf(idx);
+    let address = await curationCouncil.getRegistrationVoteAddressById(idx);
     dispatch(DeveloperActions.getDeveloperInfo(address));
     if( expired && (! votedOnStatus) ) continue; // skip expired and not voted
     votes.push( { key: idx,
@@ -158,7 +158,6 @@ export const castVote = (idx, vote) => async (dispatch) => {
   try {
     console.log("Casting vote: ",idx,vote);
     var txId = await curationCouncil.castRegistrationVote(idx, vote);
-    //var txId = "0xbe641855458ec0cc83fea52bbb935d34a7b69d1100ca36446c00711979c1a6da";
     console.log("Casted vote, tx_id: ", txId);
     dispatch(addPastVote(idx, vote, txId));
     dispatch(setVoteTxId(txId));
