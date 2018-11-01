@@ -54,6 +54,12 @@ const getLastBlock = () => async (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlockTimestamp', value: lastBlock.timestamp });
 }
 
+const getJoinedCouncilBlockHeight = () => async (dispatch) => {
+  let curationCouncil = new CurationCouncil();
+  let joinedHeight = parseInt(await curationCouncil.getJoinedCouncilBlockHeight());
+  dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'joinedHeight', value: joinedHeight });
+}
+
 export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStore) => {
   let curationCouncil = new CurationCouncil();
   if( shouldSetInProgress) dispatch(setInProgress(true));
@@ -61,7 +67,8 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
   await dispatch(getRewardRate());
   await dispatch(getLastBlock());
   await dispatch(getPastTransactions());
-  let { totalSupply, curatorRewardRate, lastBlock, votes, updateInterval }  = getStore().voting;
+  await dispatch(getJoinedCouncilBlockHeight());
+  let { totalSupply, curatorRewardRate, lastBlock, votes, updateInterval, joinedHeight }  = getStore().voting;
   console.log("rewardRate: ",  curatorRewardRate );
   console.log("totalSupply: ", totalSupply);
   console.log("lastBlock: ", lastBlock);
@@ -80,6 +87,7 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
     console.log("votedOnStatus for "+idx+" is ", votedOnStatus);
     let address = await curationCouncil.getRegistrationVoteAddressById(idx);
     dispatch(DeveloperActions.getDeveloperInfo(address));
+    if( joinedHeight >= initialBlock ) continue; // skip votes created before user joined council
     if( expired && (! votedOnStatus) ) continue; // skip expired and not voted
     votes.push( { key: idx,
       name: `Vote ${idx}`,
