@@ -8,7 +8,8 @@ const initialState = {
   stakedBalance: 0,
   joinTxEstGas: 0,
   leaveTxEstGas: 0,
-  hasPendingTx: false
+  hasPendingTx: false,
+  minStake: -1
 }
 
 const curationCouncil = (state = initialState, action) => {

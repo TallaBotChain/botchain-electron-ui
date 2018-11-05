@@ -24,7 +24,7 @@ class RegistrationForm extends Component {
         ]} />
 
         <Field name="organization" type="text" component={inputField} placeholder="Organization" label="ORGANIZATION"/>
-        <Field name="tos" type="checkbox" component={checkboxField} label="I agree to the Terms and Conditions" validate={acceptance({ message: "Must accept Terms and Conditions" })} />
+        <Field name="tos" type="checkbox" component={checkboxField} label={<span>I agree to the <a href='https://talla.com/terms' target='_blank'>Terms and Conditions</a></span>} validate={acceptance({ message: "Must accept Terms and Conditions" })} />
 
         <button className='btn orange-button cta-button' type="submit">Create Wallet</button>
         <small className="pull-right gray required">*Required</small>

@@ -54,6 +54,13 @@ export const getStakedBalance = () => (dispatch) => {
   });
 }
 
+export const getMinStake = () => async (dispatch) => {
+  let curationCouncil = new CurationCouncil();
+  let minStake = await curationCouncil.getMinStake();
+  let minStakeInTokens = curationCouncil.web3.utils.fromWei(minStake, 'ether');
+  dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'minStake', value: minStake });
+}
+
 export const approveJoinPayment = (amount) => async (dispatch) => {
   dispatch(setInProgress(true))
   dispatch(setPendingTx(true))

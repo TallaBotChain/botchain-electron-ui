@@ -46,7 +46,7 @@ export const textareaField = ({ input, label, readOnly, placeholder, meta: { asy
 export const checkboxField = ({ input, label, type, meta: { asyncValidating, touched, error, warning }, readOnly, placeholder, appendComponent }) => (
   <div className='checkbox'>
     <input {...input} placeholder={placeholder || label} type={type} id={input.name} />
-    <label htmlFor={input.name}>{label}</label>
+    <label className='tos-label' htmlFor={input.name}>{label}</label>
     {touched && ((error && <div className='validation-error'>{error}</div>) || (warning && <div>{warning}</div>))}
     {asyncValidating && (<div>validating...</div>)}
     {appendComponent}

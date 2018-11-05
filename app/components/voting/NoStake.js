@@ -21,10 +21,8 @@ class NoStake extends Component {
             <Col xs={12}>
               <Col md={9} sm={10} xs={12}>
                 <h3 className="state-text">Participating in Curation Council voting requires a stake.</h3>
-                <p className="gray-p">Your stake can be any amount greater than zero.
-                  However, the greater the stake the more you'll be able to vote.
-                  To read more about staking and voting, please refer to <a href="#">this article</a>.
-                  Click the button below to go directly to the Stake screen to submit your first stake.
+                <p className="gray-p">
+                  Your stake can be any amount greater than {this.props.curationCouncil.minStake} BOT. Click the button below to go directly to the Stake screen to submit your first stake.
                 </p>
                 <Link to="/stake" className="btn orange-button small-button">SUBMIT STAKE</Link>
               </Col>
@@ -32,7 +30,7 @@ class NoStake extends Component {
           </Col>
         </Row>
       </div>
-    );
+      );
   }
 }
 

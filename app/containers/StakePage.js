@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 class StakePage extends Component {
 
   componentDidMount() {
+    this.props.getMinStake()
     this.props.getBalance()
     this.props.getStakedBalance()
     this.props.getTransactionList()
@@ -56,6 +57,9 @@ const mapDispatchToProps = dispatch => {
     },
     getTransactionList: () => {
       dispatch(HistoryActions.getStakeHistory());
+    },
+    getMinStake: () => {
+      dispatch(CurationCouncilActions.getMinStake());
     }
   }
 }

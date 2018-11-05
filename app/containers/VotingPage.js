@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 class VotingPage extends Component {
 
   componentDidMount() {
+    this.props.getMinStake();
     this.props.getStakedBalance();
     this.props.getBalances();
   }
@@ -23,7 +24,7 @@ class VotingPage extends Component {
   }
 
   renderNoStake() {
-    return (<NoStake />)
+    return (<NoStake {...this.props} />)
   }
 
   renderInProgress() {
@@ -100,6 +101,9 @@ const mapDispatchToProps = dispatch => {
     },
     payout: () => {
       dispatch( VotingActions.payoutReward() );
+    },
+    getMinStake: () => {
+      dispatch(CurationCouncilActions.getMinStake());
     }
   }
 }
