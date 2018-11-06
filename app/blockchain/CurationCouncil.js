@@ -8,6 +8,10 @@ export default class CurationCouncil extends BaseConnector {
     this.contract = new this.web3.eth.Contract(artifact.abi, remote.getGlobal('config').curation_council_contract);
   }
 
+  getMinStake() {
+    return this.contract.methods.getMinStake().call({from: this.account});
+  }
+
   getJoinedCouncilBlockHeight() {
     return this.contract.methods.getJoinedCouncilBlockHeight(this.account).call({from: this.account});
   }

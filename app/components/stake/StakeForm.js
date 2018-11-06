@@ -33,7 +33,7 @@ class StakeForm extends Component {
           </Col>
           <Col xs={10} xsOffset={1}>
             <span className="form-icon currency-icon"></span>
-            <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': 0, '<=': this.props.walletData.balance, msg: {lessThanOrEqualTo: "insufficient balance"} })]} />
+            <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': this.props.curationCouncil.minStake, '<=': this.props.walletData.balance, msg: {lessThanOrEqualTo: "insufficient balance"} })]} />
             <span className="currency botc">BOTC</span>
           </Col>
         </Row>

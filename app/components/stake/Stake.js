@@ -64,11 +64,8 @@ export default class Stake extends Component {
                   {this.props.curationCouncil.hasPendingTx ? "IN PROGRESS" : "STAKE"}
                 </Button>
               </div>
-              <Col md={6} sm={8} xs={12} componentClass="h3" className="text-left">
-                In order to participate in Curation Council voting you must first stake a fixed amount of Botcoin.
-              </Col>
-              <Col md={8} sm={10} xs={12} componentClass="p" className="gray-p text-left">
-                Your stake can be any amount greater than zero. However, the greater the stake the more you'll be able to vote. To read more about staking and voting, please refer to <a href="#">this article</a>.
+              <Col md={8} sm={8} xs={12} componentClass="h3" className="text-left">
+In order to participate in Curation Council voting, you must first stake a fixed amount of Botcoin. Your stake can be any amount greater than {this.props.curationCouncil.minStake} BOT.
               </Col>
           </div>
           )}
