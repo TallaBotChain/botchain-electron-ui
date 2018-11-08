@@ -10,6 +10,7 @@ export const HistoryActions = {
   REMOVE_FROM_INDEX: 'HISTORY_REMOVE_FROM_INDEX'
 }
 
+/** Returns params for Etherscan API call */
 const defaultAccountApiParams = () => {
   return {
     module: "account",
@@ -19,6 +20,9 @@ const defaultAccountApiParams = () => {
   }
 }
 
+/** Transforms format of transactions array
+ * @param transactions - list of transactions
+ **/
 const normalizeTransactions = (transactions) => {
   let result = { index: [], transactions: {}}
   transactions.map((transaction) => {
@@ -29,14 +33,24 @@ const normalizeTransactions = (transactions) => {
 }
 
 
+/** Sets error
+ * @param error - error string or array
+ **/
 const setError = (error) => {
   return { type: HistoryActions.SET_ATTRIBUTE, key: 'error', value: error };
 }
 
+/** Sets in progress flag used to display in progress message or animation
+ * @param inProgress - boolean value, true if request is in progress
+ **/
 const setInProgress = (inProgress) => {
   return { type: HistoryActions.SET_ATTRIBUTE, key: 'inProgress', value: inProgress }
 }
 
+/** Adds new transaction to history
+ * @param type - transaction type
+ * @param data - transaction data
+ **/
 export const addNewTransaction = (type, data) => (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let newTx = {
@@ -55,11 +69,15 @@ export const addNewTransaction = (type, data) => (dispatch) => {
   dispatch({ type: HistoryActions.ADD_TO_INDEX, key: type, value: [data.txId] });
 }
 
+/** Removes transaction from index
+ * @param type - transaction type
+ * @param txId - transaction hash
+ **/
 export const removeTransaction = (type, txId) => (dispatch) => {
   dispatch({ type: HistoryActions.REMOVE_FROM_INDEX, key: type, value: txId });
 }
 
-//stake history
+/** Retrieves history of joinCouncil/leaveCouncil transactions */
 export const getStakeHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
   let startblock = getState().history.stakeBlockId
@@ -94,7 +112,7 @@ export const getStakeHistory = () => (dispatch, getState) => {
   })
 }
 
-//ethereum history
+/** Retrieves history of Ether transfers */
 export const getEthereumHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
   let startblock = getState().history.ethereumBlockId
@@ -124,7 +142,7 @@ export const getEthereumHistory = () => (dispatch, getState) => {
   })
 }
 
-//botcoin history
+/** Retrieves history of BOT (ERC20) transfers */
 export const getBotcoinHistory = () => (dispatch, getState) => {
   dispatch(setInProgress(true))
   let startblock = getState().history.botcoinBlockId

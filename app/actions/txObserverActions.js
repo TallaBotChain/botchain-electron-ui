@@ -11,6 +11,10 @@ export const txObserverActions = {
   TX_TIMER_STOP: 'TX_TIMER_STOP'
 }
 
+/** Starts transaction status observer
+ * @param tx_id - transaction hash
+ * @param success_callback - function to call when transaction succeeded
+ **/
 export const start = (tx_id, success_callback) => (dispatch) => {
   dispatch({ type: txObserverActions.ADD_TX, tx_id: tx_id, value: {status: TxStatus.IN_PROGRESS} })
   clearInterval(timers[tx_id]);
@@ -18,6 +22,10 @@ export const start = (tx_id, success_callback) => (dispatch) => {
   dispatch({ type: txObserverActions.TX_TIMER_START })
 }
 
+/** Timer tick function
+ * @param tx_id - transaction hash
+ * @param success_callback - function to call when transaction succeeded
+ **/
 const tick = (tx_id, success_callback) => (dispatch) => {
   dispatch({ type: txObserverActions.TX_TIMER_TICK })
   let botcoin = new BotCoin();
@@ -34,6 +42,9 @@ const tick = (tx_id, success_callback) => (dispatch) => {
   })
 }
 
+/** Stops time for transaction
+ * @param tx_id - transaction hash
+ **/
 const stop = (tx_id) => (dispatch) => {
   clearInterval(timers[tx_id]);
   dispatch({ type: txObserverActions.TX_TIMER_STOP })

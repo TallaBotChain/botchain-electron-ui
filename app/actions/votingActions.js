@@ -15,38 +15,56 @@ export const VotingActions = {
   RESET_STATE: 'VOTING_RESET_STATE'
 }
 
+/** Sets error
+ * @param error - error string or array
+ **/
 const setError = (error) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'error', value: error }
 }
 
+/** Sets in progress flag used to display in progress message or animation
+ * @param inProgress - boolean value, true if request is in progress
+ **/
 const setInProgress = (inProgress) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'inProgress', value: inProgress }
 }
 
+/** Sets current reward balance
+ * @param balance - balance in ERC20 tokens
+ **/
 const setRewardBalance = (balance) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'rewardBalance', value: balance }
 }
 
+/** Sets vote transaction id
+ * @param txId - transaction hash
+ **/
 const setVoteTxId = (txId) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxId', value: txId }
 }
 
+/** Sets available reward in tokens
+ * @param val - amount of tokens
+ **/
 const setAvailableReward = (val) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'availableReward', value: val }
 }
 
+/** Gets count of votes in Curation Council smart contract */
 const getTotalSupply = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let totalSupply = await curationCouncil.totalVotes();
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'totalSupply', value: totalSupply});
 }
 
+/** Gets current reward rate */
 const getRewardRate = () => async (dispatch) => {
   let vault = new TokenVault();
   let rewardRate = await vault.curatorRewardRate();
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'curatorRewardRate', value: vault.web3.utils.fromWei(rewardRate, 'ether') });
 }
 
+/** Gets last block information - number and timestamp */
 const getLastBlock = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let lastBlock = await curationCouncil.getLastBlock();
@@ -54,12 +72,16 @@ const getLastBlock = () => async (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'lastBlockTimestamp', value: lastBlock.timestamp });
 }
 
+/** Gets block height when user joined Curation Council */
 const getJoinedCouncilBlockHeight = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let joinedHeight = parseInt(await curationCouncil.getJoinedCouncilBlockHeight());
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'joinedHeight', value: joinedHeight });
 }
 
+/** Gets list of votes
+ * @param shouldSetInProgress - true to set in progress, false to process silently
+ **/
 export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStore) => {
   let curationCouncil = new CurationCouncil();
   if( shouldSetInProgress) dispatch(setInProgress(true));
@@ -118,6 +140,9 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
   }
 }
 
+/** Marks vote voted
+ * @param idx - integer index in CourationCouncil
+ **/
 const markVoted = (idx) => (dispatch, getState) => {
   let votes = getState().voting.votes;
   for(let i=0;i<votes.length;i++) {
@@ -129,6 +154,7 @@ const markVoted = (idx) => (dispatch, getState) => {
   dispatch( getVotes(false) );
 }
 
+/** Gets reward balance available for withdrawal */
 export const getRewardBalance = () => (dispatch) => {
   let vault = new TokenVault();
   vault.getRewardBalance().then((balance) => {
@@ -140,15 +166,22 @@ export const getRewardBalance = () => (dispatch) => {
   });
 }
 
-
+/** Shows vote to user
+ * @param vote - vote object to show
+ **/
 export const showVote = (vote) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: vote }
 }
 
+/** Hides previously shown vote from user */
 export const hideVote = () => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteToShow', value: null }
 }
 
+/** Estimate gas for castVote transaction
+ * @param idx - vote integer index
+ * @param vote - true for Yay, false for Nay
+ **/
 export const castVoteEstGas = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {
@@ -161,6 +194,10 @@ export const castVoteEstGas = (idx, vote) => async (dispatch) => {
   }
 }
 
+/** Perform castVote transaction
+ * @param idx - vote integer index
+ * @param vote - true for Yay, false for Nay
+ **/
 export const castVote = (idx, vote) => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   try {
@@ -176,18 +213,28 @@ export const castVote = (idx, vote) => async (dispatch) => {
   }
 }
 
+/** Adds past vote object to storage
+ * @param idx - vote index
+ * @param vote - vote object
+ * @param txId - vote transaction hash
+ **/
 const addPastVote = (idx, vote, txId) => (dispatch, getState) => {
   let pastVotes = getState().voting.pastVotes;
   pastVotes[idx] = { voteId: idx, voted: vote, txId: txId, mined: false, timestamp: (Date.now() / 1000) };
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }
 
+/** Updates past vote mined status
+ * @param idx - vote index
+ * @param mined - true/false
+ **/
 const alterPastVote = (idx, mined) => (dispatch, getState) => {
   let pastVotes = getState().voting.pastVotes;
   pastVotes[idx].mined = mined;
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'pastVotes', value: pastVotes }
 }
 
+/** Processes castVote mined transaction */
 const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
   console.log("castVoteTxrMined: ", idx);
   dispatch(resetVoteState());
@@ -202,6 +249,7 @@ const castVoteTxMined = (idx) => (status) => (dispatch, getState) => {
   }
 }
 
+/** Resets storage state */
 export const resetVoteState = () => (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxMined', value: false });
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'voteTxId', value: null });
@@ -209,6 +257,7 @@ export const resetVoteState = () => (dispatch) => {
   dispatch(setError(null));
 }
 
+/** Estimates gas for reward payout */
 export const payoutRewardEstGas = () => async (dispatch) => {
   try {
     let tokenVault = new TokenVault();
@@ -221,6 +270,7 @@ export const payoutRewardEstGas = () => async (dispatch) => {
   }
 }
 
+/** Performs reward payout */
 export const payoutReward = () => async (dispatch) => {
   dispatch(resetPayoutState());
   let tokenVault = new TokenVault();
@@ -237,6 +287,7 @@ export const payoutReward = () => async (dispatch) => {
   }
 }
 
+/** Processes minded payout transaction */
 const payoutTxMined = (status) => (dispatch) => {
   dispatch(resetPayoutState());
   dispatch(setInProgress(false));
@@ -249,6 +300,7 @@ const payoutTxMined = (status) => (dispatch) => {
   }
 }
 
+/** Resets payout transaction state */
 export const resetPayoutState = () => (dispatch) => {
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxMined', value: false });
   dispatch({ type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxId', value: null });
@@ -256,10 +308,14 @@ export const resetPayoutState = () => (dispatch) => {
   dispatch(setError(null));
 }
 
+/** Sets payout transaction hash
+ * @param txId - transaction hash
+ * */
 const setPayoutTxId = (txId) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'payoutTxId', value: txId }
 }
 
+/** Retrieves past transactions from etherscan */
 export const getPastTransactions = () => (dispatch) => {
   return axios.get(remote.getGlobal('config').etherscan_api_url, {
     params: {
@@ -280,9 +336,13 @@ export const getPastTransactions = () => (dispatch) => {
     })
 }
 
+/** Utility function to transform array to object */
 const arrayToObject = (arr, keyField) =>
   Object.assign({}, ...arr.map(item => ({[item[keyField]]: item})))
 
+/** Sets array of past votes
+ * @param transactions - array of transactions
+ **/
 const setPastVotes = (transactions) => (dispatch, getState) => {
   let prevPastVotes = getState().voting.pastVotes;
   let curationCouncil = new CurationCouncil();
