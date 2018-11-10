@@ -10,7 +10,7 @@ const initialState = {
   transferTxMined: false,
   transferSuccess: false,
   transactions: [],
-  currency: "BOTC",
+  currency: "BOT",
   usdExchangeRate: 0
 }
 

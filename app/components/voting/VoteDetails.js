@@ -148,7 +148,7 @@ export default class VoteDetails extends Component {
               <Button className="green-button small-button" onClick={this.showApproveModal} disabled={!this.hasEnoughEth()}>APPROVE</Button>
             </Col>
             <Col md={8} xs={12}>
-              <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <span className='botcoin-title'>BOTC</span></small>
+              <small className="state-text">{this.props.voting.voteToShow ? this.props.voting.voteToShow.reward : ""} <span className='botcoin-title'>BOT</span></small>
               <small className="gray-text">Gas Fee: {this.props.voting.voteTxEstGas} ETH</small>
             </Col>
           </Row>

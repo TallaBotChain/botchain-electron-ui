@@ -35,7 +35,7 @@ export default class PayoutModal extends Component {
                 {this.props.voting.payoutTxMined && (
                   <Well>{this.props.voting.payoutSuccess ? "Transaction successfully completed!" : "Transaction failed!"}</Well>
                 )}
-                <h4 className="state-text">Reward Balance: <span className="botcoin-green">{round(this.props.voting.rewardBalance)}</span> <span className="botcoin-title">BOTC</span></h4>
+                <h4 className="state-text">Reward Balance: <span className="botcoin-green">{round(this.props.voting.rewardBalance)}</span> <span className="botcoin-title">BOT</span></h4>
                 {!this.hasEnoughEth() && (
                   <div>
                     <NotEnoughEth />

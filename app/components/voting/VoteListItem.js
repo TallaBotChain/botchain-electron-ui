@@ -63,7 +63,7 @@ export default class VoteListItem extends Component {
         <Row className="text-left">
           <Col xs={2}>{this.voteStatus(vote)}</Col>
           <Col xs={5}>{this.renderBriefRow(vote)}</Col>
-          <Col xs={5} className={((vote.expired || this.props.voting.pastVotes[vote.key]) ? "gray" : "state-text") + " reward text-right"} >{vote.reward} <span className='botcoin-title'>BOTC</span></Col>
+          <Col xs={5} className={((vote.expired || this.props.voting.pastVotes[vote.key]) ? "gray" : "state-text") + " reward text-right"} >{vote.reward} <span className='botcoin-title'>BOT</span></Col>
         </Row>
       </div>
     );
