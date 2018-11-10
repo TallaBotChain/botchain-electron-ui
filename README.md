@@ -1,3 +1,5 @@
+# Botchain client app
+
 ## Dependencies
 
  - Electron react Boilerplate: https://github.com/chentsulin/electron-react-boilerplate
@@ -15,11 +17,11 @@
 
 ## Package
 
-To package apps for the local platform:  
-`yarn package`  
-or  
-`yarn package-linux`  
-`yarn package-win`  
+To package apps for the local platform:
+`yarn package`
+or
+`yarn package-linux`
+`yarn package-win`
 `yarn package-all`
 
 ## Release and Auto-Update

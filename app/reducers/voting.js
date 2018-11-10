@@ -25,6 +25,7 @@ const initialState = {
   updateInterval: null
 }
 
+/** Voting reducer */
 const voting = (state = initialState, action) => {
   switch (action.type) {
   case VotingActions.SET_VOTING_ATTRIBUTE:

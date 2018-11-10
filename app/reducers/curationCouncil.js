@@ -12,6 +12,7 @@ const initialState = {
   minStake: 0
 }
 
+/** Curation Council reducer */
 const curationCouncil = (state = initialState, action) => {
   switch (action.type) {
   case CurationCouncilActions.SET_ATTRIBUTE:

@@ -14,6 +14,7 @@ const initialState = {
   usdExchangeRate: 0
 }
 
+/** Botcoin reducer */
 const botcoin = (state = initialState, action) => {
   switch (action.type) {
   case BotcoinActions.SET_BOTCOIN_ATTRIBUTE:

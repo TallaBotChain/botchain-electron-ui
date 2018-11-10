@@ -9,6 +9,7 @@ const initialState = {
   mnemonic: null
 }
 
+/** Wallet reducer */
 const wallet = (state = initialState, action) => {
   switch (action.type) {
   case WalletActions.SET_WALLET_ATTRIBUTE:

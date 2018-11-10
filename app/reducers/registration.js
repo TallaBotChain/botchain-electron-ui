@@ -8,6 +8,7 @@ const initialState = {
   data: null
 }
 
+/** Registration reducer */
 const registration = (state = initialState, action) => {
   switch (action.type) {
     case RegistrationActions.SET_ATTRIBUTE:
