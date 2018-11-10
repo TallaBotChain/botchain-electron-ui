@@ -1,21 +1,29 @@
 # Botchain client app
 
-## Dependencies
+Botchain network client and wallet app for Windows, OS X and Linux.
+
+## Installation
+
+If you want to install the app from a pre-built version on the [release page](https://github.com/TallaBotChain/botchain-releases/releases), you can simply run the installer after download.
+
+## Development
+
+### Dependencies
 
  - Electron react Boilerplate: https://github.com/chentsulin/electron-react-boilerplate
  - React Bootstrap: https://react-bootstrap.github.io
  - Ethereum Web3js: https://web3js.readthedocs.io/en/1.0/web3-eth.html
  - Electron Builder: https://github.com/electron-userland/electron-builder
 
-## Installation
+### Installation
 
 `yarn install`
 
-## Run
+### Run
 
 `yarn dev`
 
-## Package
+### Package
 
 To package apps for the local platform:
 `yarn package`
@@ -24,11 +32,11 @@ or
 `yarn package-win`
 `yarn package-all`
 
-## Release and Auto-Update
+### Release and Auto-Update
 
 NOTE: Apple dev account is required for signing build.(Auto-update will not work for unsigned app)
 
-Note: GitHub personal access token is required. You can generate by going to https://github.com/settings/tokens/new. The access token should have the **repo** scope/permission!!!
+Note: GitHub personal access token is required. You can generate by going to https://github.com/settings/tokens/new. The access token should have the **repo** scope/permission!
 
 Note: Electron-builder allow configure multiple build targets for the same platform. We used:
  - MAC OS - .dmg
