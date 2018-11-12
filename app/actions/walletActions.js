@@ -85,7 +85,7 @@ export const saveMnemonic = (password) => (dispatch, getState) => {
 }
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 export const setError = (error) => {
     return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'error', value: error };

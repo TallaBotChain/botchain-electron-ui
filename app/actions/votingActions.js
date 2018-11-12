@@ -16,7 +16,7 @@ export const VotingActions = {
 }
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 const setError = (error) => {
   return { type: VotingActions.SET_VOTING_ATTRIBUTE, key: 'error', value: error }
@@ -287,7 +287,7 @@ export const payoutReward = () => async (dispatch) => {
   }
 }
 
-/** Processes minded payout transaction */
+/** Processes mined payout transaction */
 const payoutTxMined = (status) => (dispatch) => {
   dispatch(resetPayoutState());
   dispatch(setInProgress(false));

@@ -34,7 +34,7 @@ const normalizeTransactions = (transactions) => {
 
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 const setError = (error) => {
   return { type: HistoryActions.SET_ATTRIBUTE, key: 'error', value: error };

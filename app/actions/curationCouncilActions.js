@@ -16,7 +16,7 @@ export const CurationCouncilActions = {
 }
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 export const setError = (error) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'error', value: error };
@@ -199,7 +199,7 @@ export const leaveCouncil = () => async (dispatch, getState) => {
   }
 }
 
-/** Process leaveCouncil transaction once minded
+/** Process leaveCouncil transaction once mined
  * @param txId - transaction hash
  * @param status - transaction status
  * @param receipt - transaction receipt

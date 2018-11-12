@@ -9,7 +9,7 @@ export const DeveloperActions = {
 }
 
 /** Set error
- * @param error - error string or array
+ * @param error - error string
  **/
 const setError = (error) => {
   return { type: DeveloperActions.SET_ATTRIBUTE, key: 'error', value: error }

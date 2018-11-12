@@ -23,7 +23,7 @@ export const redirectNext = () => (dispatch) => {
 }
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 export const setError = (error) => {
   return { type: RegistrationActions.SET_ATTRIBUTE, key: 'error', value: error };

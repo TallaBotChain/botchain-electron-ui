@@ -13,7 +13,7 @@ export const EthereumActions = {
 }
 
 /** Sets error
- * @param error - error string or array
+ * @param error - error string
  **/
 export const setError = (error) => {
   return { type: EthereumActions.SET_ETHEREUM_ATTRIBUTE, key: 'error', value: error };
@@ -112,7 +112,7 @@ export const transfer = (to, amount) => async (dispatch) => {
   }
 }
 
-/** Process miden transfer transaction
+/** Process mined transfer transaction
  * @param txId - transaction id (hash)
  * @param status - transaction status
  * @param receipt - transaction receipt
