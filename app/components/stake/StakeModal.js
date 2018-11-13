@@ -25,7 +25,7 @@ export default class StakeModal extends Component {
           <Modal.Title className="text-center"><strong>Submit Stake</strong></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3 className="gray-text text-center">Available Balance: <span className="botc">{round(this.props.walletData.balance)}</span> <small className="botc">BOTC</small></h3>
+          <h3 className="gray-text text-center">Available Balance: <span className="botc">{round(this.props.walletData.balance)}</span> <small className="botc">BOT</small></h3>
           <StakeForm onSubmit={this.handleSubmit} {...this.props} />
         </Modal.Body>
       </Modal>

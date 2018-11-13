@@ -1,3 +1,5 @@
+/* Actions related to curation council smart contract */
+
 import CurationCouncil from '../blockchain/CurationCouncil';
 import * as HistoryActions from '../actions/historyActions';
 import * as BotcoinActions from '../actions/botcoinActions';
@@ -13,36 +15,49 @@ export const CurationCouncilActions = {
   RESET_STATE: 'CURATION_COUNCIL_RESET_STATE'
 }
 
+/** Sets error
+ * @param error - error string
+ **/
 export const setError = (error) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'error', value: error };
 }
 
+/** Sets in progress flag used to display in progress message or animation
+ * @param inProgress - boolean value, true if request is in progress
+ **/
 const setInProgress = (inProgress) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'inProgress', value: inProgress }
 }
 
+/** Sets staked balance
+ * @param balance
+ **/
 const setStakedBalance = (balance) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'stakedBalance', value: balance }
 }
 
+/** Resets redux state for CurationCouncil storage */
 export const resetState = () => {
   return { type: CurationCouncilActions.RESET_STATE }
 }
 
+/** Sets boolean flag if there is a pending transation
+ * @param hasPendingTx - true if pending transaction is present
+ **/
 const setPendingTx = (hasPendingTx) => {
   return { type: CurationCouncilActions.SET_ATTRIBUTE, key: 'hasPendingTx', value: hasPendingTx }
 }
 
+/** Reloads staked balance from blockchain */
 export const reloadStakedBalance = () => (dispatch) => {
   dispatch(setStakedBalance(0));
   dispatch(getStakedBalance());
 }
 
-
+/** Gets staked balance from blockchain */
 export const getStakedBalance = () => (dispatch) => {
   dispatch(setInProgress(true))
   let curationCouncil = new CurationCouncil()
-  // ethers
   curationCouncil.getStakedBalance().then((balance) => {
     dispatch(setStakedBalance(curationCouncil.web3.utils.fromWei(balance, 'ether')))
     dispatch(setInProgress(false))
@@ -54,6 +69,7 @@ export const getStakedBalance = () => (dispatch) => {
   });
 }
 
+/** Gets minimal stake from smart contract and saves in storage */
 export const getMinStake = () => async (dispatch) => {
   let curationCouncil = new CurationCouncil();
   let minStake = await curationCouncil.getMinStake();
@@ -61,6 +77,7 @@ export const getMinStake = () => async (dispatch) => {
   dispatch({ type: CurationCouncilActions.SET_ATTRIBUTE, key: 'minStake', value: minStake });
 }
 
+/** Calls approve method of ERC20 contract to let curation council smart contract withdraw funds */
 export const approveJoinPayment = (amount) => async (dispatch) => {
   dispatch(setInProgress(true))
   dispatch(setPendingTx(true))
@@ -82,6 +99,9 @@ export const approveJoinPayment = (amount) => async (dispatch) => {
   }
 }
 
+/** Estimates gas required in order to stake tokens and join curation council
+ * @param amount - amount of tokens to stake
+ **/
 export const joinCouncilEstGas = (amount) => async (dispatch) => {
   try {
     let botCoin = new BotCoin();
@@ -98,6 +118,10 @@ export const joinCouncilEstGas = (amount) => async (dispatch) => {
   }
 }
 
+/** Sends joinCouncil transaction
+ * @param @amount - stake amount
+ * @param @approveTxId - ERC20 approve transaction hash
+ **/
 export const joinCouncil = (amount, approveTxId) => async (dispatch) => {
   dispatch(setInProgress(true))
   try {
@@ -118,6 +142,12 @@ export const joinCouncil = (amount, approveTxId) => async (dispatch) => {
   }
 }
 
+/** Process joinCouncil transaction once included into blockchain
+ * @param txId - transaction hash
+ * @param status - transaction status
+ * @param receipt - transaction receipt
+ * @param amount - amount of tokens staked
+ **/
 const joinCouncilTxMined = (txId, status, receipt, amount) => (dispatch) => {
   console.log("joinCouncilTxMined +", receipt)
   dispatch(setPendingTx(false))
@@ -133,6 +163,7 @@ const joinCouncilTxMined = (txId, status, receipt, amount) => (dispatch) => {
   dispatch(HistoryActions.addNewTransaction('stake', data))
 }
 
+/** Estimated gas for leaveCouncil transaction */
 export const leaveCouncilEstGas = () => async (dispatch) => {
   dispatch(setInProgress(true))
   try {
@@ -147,6 +178,7 @@ export const leaveCouncilEstGas = () => async (dispatch) => {
   }
 }
 
+/** Sends leaveCouncil transaction to blockchain */
 export const leaveCouncil = () => async (dispatch, getState) => {
   dispatch(setInProgress(true))
   dispatch(setPendingTx(true))
@@ -167,6 +199,12 @@ export const leaveCouncil = () => async (dispatch, getState) => {
   }
 }
 
+/** Process leaveCouncil transaction once mined
+ * @param txId - transaction hash
+ * @param status - transaction status
+ * @param receipt - transaction receipt
+ * @param amount - amount of tokens unstaked
+ **/
 const leaveCouncilTxMined = (txId, status, receipt, amount) => (dispatch) => {
   console.log("leaveCouncilTxMined +", receipt)
   dispatch(setPendingTx(false))

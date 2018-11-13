@@ -14,6 +14,7 @@ const initialState = {
   transactions: {}
 }
 
+/** Transaction histroy reducer */
 const history = (state = initialState, action) => {
   switch (action.type) {
   case HistoryActions.SET_ATTRIBUTE:

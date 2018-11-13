@@ -8,6 +8,7 @@ const initialState = {
   records: {}
 }
 
+/** Developer reducer */
 const developer = (state = initialState, action) => {
   switch (action.type) {
   case DeveloperActions.SET_ATTRIBUTE:
@@ -15,7 +16,7 @@ const developer = (state = initialState, action) => {
   case DeveloperActions.SET_DEVELOPER_ATTRIBUTE:
       return update(state, { records: {[action.address]: {[action.key]: {$set: action.value}}}});
   case DeveloperActions.APPEND:
-      return update(state, { records: {$merge: action.developer}});  
+      return update(state, { records: {$merge: action.developer}});
   case DeveloperActions.RESET_STATE:
       return update(state, {$set: initialState});
   default:

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap';
 import VoteModal from './VoteModal';
 import VoteListItem from './VoteListItem';
+import NoVotes from './NoVotes';
 
 export default class VoteList extends Component {
 
@@ -37,13 +38,15 @@ export default class VoteList extends Component {
     const votes = this.props.votes.map((vote) =>
         <VoteListItem key={vote.key} vote={vote} voteClick={this.voteClick} {...this.props} />
       );
-    return (
-      <Col xs={this.props.voting.voteToShow ? 4 : 12} className='vote-list-container'>
-        <ListGroup>
-          {votes}
-        </ListGroup>
-      </Col>
-    )
+    if( this.props.votes.length > 0 ) {
+      return (
+        <Col xs={this.props.voting.voteToShow ? 4 : 12} className='vote-list-container'>
+          <ListGroup>
+            {votes}
+          </ListGroup>
+        </Col>
+      );
+    } else return <NoVotes />;
   }
 
 }

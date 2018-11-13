@@ -34,7 +34,7 @@ class StakeForm extends Component {
           <Col xs={10} xsOffset={1}>
             <span className="form-icon currency-icon"></span>
             <Field name="amount" type="text" component={inputField} placeholder="Amount" label="Amount" validate={[required(), numericality({ '>': this.props.curationCouncil.minStake, '<=': this.props.walletData.balance, msg: {lessThanOrEqualTo: "insufficient balance"} })]} />
-            <span className="currency botc">BOTC</span>
+            <span className="currency botc">BOT</span>
           </Col>
         </Row>
         <Row className="form-footer">
@@ -46,7 +46,7 @@ class StakeForm extends Component {
               <Row>
                 <Row>
                   <Col xs={8} className="gray-text">
-                    <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>BOTC</small></strong></small></div>
+                    <div><small><strong>Send {this.props.amount ? this.props.amount : 0} <small>BOT</small></strong></small></div>
                     <div><small><small>Gas Fee: {round(this.props.curationCouncil.joinTxEstGas)} <small>ETH</small></small></small></div>
                   </Col>
                   <Col xs={4} className="gray-text right-small">

@@ -11,6 +11,7 @@ const initialState = {
   hasPendingTx: false
 }
 
+/** Ethereum (wallet) reducer */
 const ethereum = (state = initialState, action) => {
   switch (action.type) {
   case EthereumActions.SET_ETHEREUM_ATTRIBUTE:

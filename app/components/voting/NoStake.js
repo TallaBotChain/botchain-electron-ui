@@ -12,7 +12,7 @@ class NoStake extends Component {
         <Row>
           <Col xs={12} className="white-header text-center">
             <p className="gray-text">
-              <small>Staked Balance:</small> 0.000 <span>BOTC</span>
+              <small>Staked Balance:</small> 0.000 <span>BOT</span>
             </p>
           </Col>
         </Row>

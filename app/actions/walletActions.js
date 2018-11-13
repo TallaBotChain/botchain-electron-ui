@@ -8,6 +8,10 @@ export const WalletActions = {
   RESET_STATE: 'WALLET_RESET_STATE'
 }
 
+/** Performs import of wallet using mnemonic phrase. Encrypts private key with password
+ * @param mnemonic - 12 word passphrase
+ * @param password - password to encrypt private key in local storage
+ **/
 export const importMnemonic = (mnemonic,password) => (dispatch) => {
   console.log("importing mnemonic: ", mnemonic);
   dispatch( setError(null) );
@@ -20,6 +24,10 @@ export const importMnemonic = (mnemonic,password) => (dispatch) => {
   }
 }
 
+/** Performs import of private key. encrypts private key with password
+ * @param private_key - hex string of private key
+ * @param password - string password used to encrypt PK for future storage
+ **/
 export const importPrivateKey = (private_key,password) => (dispatch) => {
   console.log("importing PK: ", private_key);
   try {
@@ -34,6 +42,10 @@ export const importPrivateKey = (private_key,password) => (dispatch) => {
   }
 }
 
+/** Performs import from JSON keystore v3
+ * @param json - keystore v3 json
+ * @param password - to encrypt private key at rest
+ **/
 export const importKeystore = (json, password) => (dispatch) => {
   try {
     dispatch( setError(null) );
@@ -47,7 +59,9 @@ export const importKeystore = (json, password) => (dispatch) => {
   }
 }
 
-
+/** Unlocks wallet by decrypting private key
+ * @param password - used to decrypt private key
+ **/
 export const unlockWallet = (password) => (dispatch) => {
   try {
     keyTools.decryptAndLoad(password);
@@ -58,36 +72,48 @@ export const unlockWallet = (password) => (dispatch) => {
   }
 }
 
+/** Generates new mnemonic passphrase */
 export const generateMnemonic = () => {
   let mnemonic = keyTools.generateMnemonic();
   return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'mnemonic', value: mnemonic };
 }
 
+/** Saves mnemonic for future use */
 export const saveMnemonic = (password) => (dispatch, getState) => {
   let state = getState();
   keyTools.applyMnemonic(state.wallet.mnemonic,password);
 }
 
+/** Sets error
+ * @param error - error string
+ **/
 export const setError = (error) => {
     return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'error', value: error };
 }
 
+/** Sets in progress flag used to display in progress message or animation
+ * @param inProgress - boolean value, true if request is in progress
+ **/
 const setInProgress = (inProgress) => {
   return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'inProgress', value: inProgress }
 }
 
-const setBallance = (ballance) => {
-  return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'balance', value: ballance }
+/** Sets Ether balance */
+const setBalance = (balance) => {
+  return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'balance', value: balance }
 }
 
-const setTokenBallance = (tokenBalance) => {
+/** Sets token balance */
+const setTokenBalance = (tokenBalance) => {
   return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'tokenBalance', value: tokenBalance }
 }
 
+/** Resets redux state for wallet storage */
 export const resetState = () => {
   return { type: WalletActions.RESET_STATE}
 }
 
+/** Resets redux state for transfer */
 export const resetTransferState = () => (dispatch) => {
   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferTxMined', value: false });
   dispatch({ type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'transferTxId', value: null });
@@ -95,7 +121,7 @@ export const resetTransferState = () => (dispatch) => {
   dispatch(setError(null))
 }
 
-
+/** updates password used to encrypt private key */
 export const updatePassword = (current_password, password, password_confirmation) => (dispatch, getState) => {
   try {
     keyTools.encryptWithNewPassword(current_password, password);
@@ -106,6 +132,10 @@ export const updatePassword = (current_password, password, password_confirmation
   }
 }
 
+/** Exports wallet
+ * @param format - json, or default - private key
+ * @param password - password to decrypt key
+ **/
 export const exportWallet = (format, password) => (dispatch ) => {
   dispatch( setError(null) );
   try {
@@ -128,6 +158,7 @@ export const exportWallet = (format, password) => (dispatch ) => {
   }
 }
 
+/** Utility function to perform file download **/
 const download = (file_blob, file_name) => {
   var a = window.document.createElement('a');
   a.href = window.URL.createObjectURL(file_blob);
