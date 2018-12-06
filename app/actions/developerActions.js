@@ -48,7 +48,8 @@ export const getDeveloperInfo = (address) => async (dispatch, getStore) => {
     let id = await developerRegistry.getDeveloperId(address)
     let url = await developerRegistry.getDeveloperUrl(id)
     let metadata = await getDeveloperMetadata(url)
-    let developer = { [address]: { developerId: id, url: url, metadata: metadata} }
+    let approvalStatus = await developerRegistry.getDeveloperApproval(id)
+    let developer = { [address]: { developerId: id, url: url, metadata: metadata, approvalStatus: approvalStatus }  }
     dispatch(appendDeveloper(developer))
   } catch (e) {
     console.log(e);

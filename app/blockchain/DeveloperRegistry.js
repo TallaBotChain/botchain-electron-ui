@@ -40,7 +40,6 @@ export default class DeveloperRegistry extends BaseConnector {
    * @param developerId - integer id in registry
    **/
   getDeveloperApproval(developerId) {
-    let contract = this.contract;
-    return contract.methods.approvalStatus(developerId).call({from: this.account});
+    return this.contract.methods.approvalStatus(developerId).call({from: this.account});
   }
 }

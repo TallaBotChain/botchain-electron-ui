@@ -106,11 +106,13 @@ export const getVotes = (shouldSetInProgress = true) => async (dispatch, getStor
     console.log("finalBlock: ", finalBlock);
     let expired = ( finalBlock < lastBlock );
     let votedOnStatus = await curationCouncil.getVotedOnStatus(idx);
-    console.log("votedOnStatus for "+idx+" is ", votedOnStatus);
     let address = await curationCouncil.getRegistrationVoteAddressById(idx);
-    dispatch(DeveloperActions.getDeveloperInfo(address));
+    await dispatch(DeveloperActions.getDeveloperInfo(address));
+    let approvalStatus = getStore().developer.records[address].approvalStatus;
     if( joinedHeight >= initialBlock ) continue; // skip votes created before user joined council
     if( expired && (! votedOnStatus) ) continue; // skip expired and not voted
+    if( approvalStatus && (! votedOnStatus) ) continue; // skip already approved
+
     votes.push( { key: idx,
       name: `Vote ${idx}`,
       reward: curatorRewardRate,
