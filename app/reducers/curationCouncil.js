@@ -1,4 +1,5 @@
 import { CurationCouncilActions } from '../actions/curationCouncilActions.js'
+import { SharedActions } from '../actions/sharedActions.js'
 
 import update from 'immutability-helper';
 
@@ -18,6 +19,7 @@ const curationCouncil = (state = initialState, action) => {
   case CurationCouncilActions.SET_ATTRIBUTE:
       return update(state, {[action.key]: {$set: action.value}});
   case CurationCouncilActions.RESET_STATE:
+  case SharedActions.RESET_APP:
       return update(state, {$set: initialState});
   default:
     return state

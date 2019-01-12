@@ -1,4 +1,5 @@
 import { BotcoinActions } from '../actions/botcoinActions.js'
+import { SharedActions } from '../actions/sharedActions.js'
 
 import update from 'immutability-helper';
 
@@ -20,6 +21,7 @@ const botcoin = (state = initialState, action) => {
   case BotcoinActions.SET_BOTCOIN_ATTRIBUTE:
       return update(state, {[action.key]: {$set: action.value}});
   case BotcoinActions.RESET_STATE:
+  case SharedActions.RESET_APP:
       return update(state, {$set: initialState});
   default:
     return state

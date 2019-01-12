@@ -31,6 +31,8 @@ $blue-hover-link: #2463C7;
 $yellow: #E6C900;
 $green-bg: #DAFCF4;
 $green-input-text: #138F72;
+$network-mainnet: #2eb6af;
+$network-kovan: #7057fe;
 
 @mixin arrow ($top, $left, $color: white) {
   content: '';
@@ -42,6 +44,24 @@ $green-input-text: #138F72;
   border-top: 9px solid transparent;
   border-bottom: 9px solid transparent;
   border-right: 8px solid $color;
+}
+
+.network {
+  color: $gray;
+  .circle {
+    border:solid 1px $gray;
+    border-radius: 6px;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  &.kovan .circle {
+    background-color: $network-kovan;
+  }
+  &.mainnet .circle {
+    background-color: $network-mainnet;
+  }
 }
 
 .gray-text {

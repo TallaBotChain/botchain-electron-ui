@@ -12,7 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
-import { config } from './config';
+import config from './config';
 import AppUpdater from "./AppUpdater";
 
 let mainWindow = null;

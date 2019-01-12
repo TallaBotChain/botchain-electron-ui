@@ -1,4 +1,5 @@
 import { HistoryActions } from '../actions/historyActions.js'
+import { SharedActions } from '../actions/sharedActions.js'
 
 import update from 'immutability-helper';
 
@@ -27,6 +28,7 @@ const history = (state = initialState, action) => {
       let new_index = state[action.key].filter(e => e !== action.value)
       return update(state, {[action.key]: {$set: new_index} });
   case HistoryActions.RESET_STATE:
+  case SharedActions.RESET_APP:
       return update(state, {$set: initialState});
   default:
     return state
