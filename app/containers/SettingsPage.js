@@ -68,8 +68,10 @@ class SettingsPage extends Component {
                 <Col xs={12} className="divider"></Col>
               </Row>
               <div className="bottom">
-                <Col md={6} sm={8} xs={7}>
+                <Col md={8} sm={8} xs={7}>
                   <h3>Ethereum Network</h3>
+                  <p>Change your Ethereum Network using one of the options below.<br/>
+                    Note: Changing network requires you to enter your wallet password again.</p>
                 </Col>
                 <Clearfix />
                 <NetworkForm onSubmit={this.changeNetwork} {...this.props} />
