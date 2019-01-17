@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PasswordForm from '../components/settings/PasswordForm';
 import ExportForm from '../components/settings/ExportForm';
+import NetworkForm from '../components/settings/NetworkForm';
 import * as WalletActions from '../actions/walletActions';
 import { Row, Col, Alert, Clearfix } from 'react-bootstrap';
 
@@ -25,6 +26,11 @@ class SettingsPage extends Component {
   exportWallet = (values) => {
     console.log("Export wallet payload: ", values);
     this.props.exportWallet(values.format, values.password);
+  }
+
+  changeNetwork = (values) => {
+    console.log("Changing network to: ", values.network);
+    this.props.changeNetwork(values.network);
   }
 
   componentDidMount () {
@@ -58,6 +64,19 @@ class SettingsPage extends Component {
                 <ExportForm onSubmit={this.exportWallet} {...this.props}  />
                 <Clearfix />
               </div>
+              <Row>
+                <Col xs={12} className="divider"></Col>
+              </Row>
+              <div className="bottom">
+                <Col md={8} sm={8} xs={7}>
+                  <h3>Ethereum Network</h3>
+                  <p>Change your Ethereum Network using one of the options below.<br/>
+                    Note: Changing network requires you to enter your wallet password again.</p>
+                </Col>
+                <Clearfix />
+                <NetworkForm onSubmit={this.changeNetwork} {...this.props} />
+                <Clearfix />
+              </div>
             </Col>
           </Row>
         </Col>
@@ -68,7 +87,8 @@ class SettingsPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    wallet: state.wallet
+    wallet: state.wallet,
+    initialValues: { network: state.wallet.network }
   }
 }
 
@@ -82,6 +102,9 @@ const mapDispatchToProps = dispatch => {
     },
     cleanError: () => {
       return dispatch(WalletActions.setError(null));
+    },
+    changeNetwork: (network) => {
+      return dispatch(WalletActions.changeNetwork(network));
     }
   }
 }

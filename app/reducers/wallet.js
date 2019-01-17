@@ -1,4 +1,5 @@
 import { WalletActions } from '../actions/walletActions.js'
+import { SharedActions } from '../actions/sharedActions.js'
 
 import update from 'immutability-helper';
 
@@ -15,6 +16,7 @@ const wallet = (state = initialState, action) => {
   case WalletActions.SET_WALLET_ATTRIBUTE:
       return update(state, {[action.key]: {$set: action.value}});
   case WalletActions.RESET_STATE:
+  case SharedActions.RESET_APP:
       return update(state, {$set: initialState});
   default:
     return state

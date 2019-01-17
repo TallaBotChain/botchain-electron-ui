@@ -2,10 +2,26 @@ import BotCoin from '../blockchain/BotCoin';
 import {reset} from 'redux-form';
 import keyTools from '../blockchain/KeyTools';
 import { push } from "react-router-redux";
+import {remote} from 'electron';
+import {resetApp} from './sharedActions';
 
 export const WalletActions = {
   SET_WALLET_ATTRIBUTE: 'SET_WALLET_ATTRIBUTE',
   RESET_STATE: 'WALLET_RESET_STATE'
+}
+
+/** Loads network string from config into redux to use with reduxForm. */
+export const loadNetwork = () => (dispatch) => {
+  dispatch( setNetwork(remote.getGlobal('config').network) );
+}
+
+export const changeNetwork = (anotherNetwork) => (dispatch) => {
+  remote.getGlobal('config').switchTo(anotherNetwork);
+  localStorage.setItem('network', anotherNetwork);
+  keyTools.connect();
+  dispatch(resetApp());
+  dispatch(loadNetwork());
+  dispatch(push('/'));
 }
 
 /** Performs import of wallet using mnemonic phrase. Encrypts private key with password
@@ -66,6 +82,7 @@ export const unlockWallet = (password) => (dispatch) => {
   try {
     keyTools.decryptAndLoad(password);
     dispatch( setError(null) );
+    dispatch( loadNetwork() );
     dispatch( push('/') );
   }catch(ex) {
     dispatch( setError("Wrong password") );
@@ -82,6 +99,13 @@ export const generateMnemonic = () => {
 export const saveMnemonic = (password) => (dispatch, getState) => {
   let state = getState();
   keyTools.applyMnemonic(state.wallet.mnemonic,password);
+}
+
+/** Sets network
+ * @param network - network string
+ **/
+export const setNetwork = (network) => {
+    return { type: WalletActions.SET_WALLET_ATTRIBUTE, key: 'network', value: network };
 }
 
 /** Sets error

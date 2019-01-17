@@ -1,4 +1,5 @@
 import { EthereumActions } from '../actions/ethereumActions.js'
+import { SharedActions } from '../actions/sharedActions.js'
 
 import update from 'immutability-helper';
 
@@ -17,6 +18,7 @@ const ethereum = (state = initialState, action) => {
   case EthereumActions.SET_ETHEREUM_ATTRIBUTE:
       return update(state, {[action.key]: {$set: action.value}});
   case EthereumActions.RESET_STATE:
+  case SharedActions.RESET_APP:
       return update(state, {$set: initialState});
   default:
     return state

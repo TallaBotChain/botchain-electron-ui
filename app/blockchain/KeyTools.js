@@ -21,6 +21,10 @@ class KeyTools {
     this.web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
   }
 
+  connect() {
+    this.web3 = new Web3(new Web3.providers.HttpProvider(remote.getGlobal('config').geth_rpc_url));
+  }
+
   /** Returns true if wallet is present and unlocked */
   get walletReady() {
     return this.privateKeyPresent && this.privateKeyUnlocked;
